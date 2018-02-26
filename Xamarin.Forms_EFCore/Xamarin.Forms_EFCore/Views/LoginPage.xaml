@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.LoginPage"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="15" BackgroundColor="#3563ad">
+
+            <Image x:Name="userimage" VerticalOptions="Center"
+                   HorizontalOptions="End" HeightRequest="30">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding RegisterCommand}"/>
+                </Image.GestureRecognizers>
+
+            </Image>
+
+            <Label VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Prihlásenie"
+                   FontSize="Large"/>
+
+            <Label Margin="0,20,0,0" VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Meno"
+                   FontSize="Medium"/>
+            <Entry Placeholder="" Text="{Binding Username}"/>
+            <Label VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Heslo"
+                   FontSize="Medium"/>
+            <Entry Placeholder="" Text="{Binding Password}"/>
+
+            <Image x:Name="loginimage" VerticalOptions="Center"
+                   HorizontalOptions="Center" HeightRequest="40">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding LoginCommand}"/>
+                </Image.GestureRecognizers>
+
+            </Image>
+            <Label VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Prihlásiť"
+                   FontSize="Small">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoginCommand}" />
+                </Label.GestureRecognizers>
+
+
+            </Label>
+
+
+            <!--<Button Text="Prihlásenie" Command="{Binding LoginCommand}"/>
+            <Button Text="Registrácia" Command="{Binding RegisterCommand}"/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

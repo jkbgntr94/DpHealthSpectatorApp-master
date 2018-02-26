@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="geodata.xml" />
+    <None Remove="id_card.png" />
+    <None Remove="initializationValues.txt" />
+    <None Remove="login2.png" />
+    <None Remove="pulseWeek.txt" />
+    <None Remove="Resources\login.png" />
+    <None Remove="Resources\user_plus.png" />
+    <None Remove="Risk.png" />
+    <None Remove="temperatureWeek.txt" />
+    <None Remove="user_plus.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="id_card.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="geodata.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="initializationValues.txt" />
+    <EmbeddedResource Include="login2.png" />
+    <EmbeddedResource Include="pulseWeek.txt" />
+    <EmbeddedResource Include="logo.jpg" />
+    <EmbeddedResource Include="Resources\login.png" />
+    <EmbeddedResource Include="Resources\user_plus.png" />
+    <EmbeddedResource Include="Risk.png" />
+    <EmbeddedResource Include="temperatureWeek.txt" />
+    <EmbeddedResource Include="user_plus.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PCLStorage" Version="1.0.2" />
+    <PackageReference Include="Plugin.FirebasePushNotification" Version="2.2.3" />
+    <PackageReference Include="Plugin.UserDialogs" Version="1.0.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
+    <PackageReference Include="Xam.Plugin.SecureStorage" Version="1.0.8" />
+    <PackageReference Include="Xam.Plugins.Notifier" Version="2.1.0" />
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.18342" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\InitialPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RegisterPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v7.1\Mono.Android.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\PacientNotFoundView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

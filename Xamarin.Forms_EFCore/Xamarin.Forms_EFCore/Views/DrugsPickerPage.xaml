@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:constants="clr-namespace:XamarinFormsSample;assembly=XamarinFormsXamlSample"
+             x:Class="Xamarin.Forms_EFCore.Views.DrugsPickerPage"
+             Title="Nový liek">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+               
+                <Label VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   Text="Názov lieku"/>
+                <Entry VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Grid.Column="1" Placeholder="" Text="{Binding DrugName}"
+                   WidthRequest="250"
+                   HorizontalTextAlignment="Center"
+                   />
+
+                <Label VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   Text="Počet dávok"
+                   Grid.Row="1"/>
+                <Entry VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Grid.Column="1"  Grid.Row="1" Placeholder="" Text="{Binding DrugDose}"
+                   WidthRequest="250"
+                   HorizontalTextAlignment="Center"
+                   />
+
+                <Label VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   Text="Dlhodobo"
+                   Grid.Row="2"/>
+                <Picker x:Name="SexPicker" SelectedIndex="{Binding RepeatedDrug}" Grid.Column="1"  Grid.Row="2" HorizontalOptions="FillAndExpand">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Áno</x:String>
+                            <x:String>Nie</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   Text="Poznámka"
+                   Grid.Row="3"/>
+                <Entry VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Grid.Column="1"  Grid.Row="3" Placeholder="" Text="{Binding Note}"
+                   WidthRequest="250"
+                   HorizontalTextAlignment="Center"
+                   />
+
+            </Grid>
+            <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Ďalej" Command="{Binding SaveNewDrug}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

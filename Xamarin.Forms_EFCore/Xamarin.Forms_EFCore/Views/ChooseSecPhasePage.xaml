@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.ChooseSecPhasePage"
+             Title="Výber druhej fázy">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="Opissecact" Margin="0,20,0,0"  HorizontalTextAlignment="Center" FontSize="Medium" TextColor="Black" Text="{Binding DescText}"/>
+
+                <ScrollView Grid.Row="1">
+                    <ListView x:Name="CinnostiList" ItemsSource="{Binding ListOfActivity}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="{Binding Name}" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                                        </StackLayout>
+                                        <Switch IsToggled="{Binding ActSwitchIsChecked}" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+
+                <Button Grid.Row="2" VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Ďalej" Command="{Binding ToNextPhases}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

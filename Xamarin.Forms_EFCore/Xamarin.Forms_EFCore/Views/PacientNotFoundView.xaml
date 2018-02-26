@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.PacientNotFoundView"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <StackLayout x:Name="wholePage" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+
+            <StackLayout x:Name="alertSection" Margin="0,100,0,0" VerticalOptions="StartAndExpand">
+            <Image x:Name="riskimage"
+                   HorizontalOptions="Center" VerticalOptions="End" HeightRequest="100">
+            </Image>
+            <Label VerticalOptions="End"
+                   HorizontalOptions="Center"
+                   Text="S týmto zariadením nie je spárovaný žiadny pacient"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"/>
+            </StackLayout>
+
+            <StackLayout x:Name="addPacientSection" Margin="0,0,0,60" VerticalOptions="EndAndExpand">
+            <Image x:Name="idcardimage" 
+                   HorizontalOptions="Center" VerticalOptions="End" HeightRequest="60">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding CreatePacientCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label VerticalOptions="End"
+                   HorizontalOptions="Center"
+                   Text="Pridanie pacienta"
+                   FontSize="Medium">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CreatePacientCommand}" />
+                    </Label.GestureRecognizers>
+
+                </Label>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.HomeScreenPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Button Text="read" Command="{Binding Nacitaj}"/>
+            <Button Text="Limits" Command="{Binding LoadLimits}"/>
+            <Button Text="PulseSekv" Command="{Binding PulseSekvencia}"/>
+            <Button Text="ShowPulzSekv" Command="{Binding ShowPulzSekv}"/>
+            <Button Text="TempSekv" Command="{Binding TempSekv}"/>
+            <Button Text="XMLGeo" Command="{Binding XmlGeo}"/>
+            <Button Text="Inicializacia" Command="{Binding Initialization}"/>
+            <Button Text="TepHranice" Command="{Binding TepHranice}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.AlertSelectionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackLayout Grid.Row="0">
+                    <Label x:Name="Info" Text="V aplikácií sa využíva ......."/>
+                    <Label x:Name="PulseAndTemp" Text="Upozornenia pre tep a teplotu"/>
+                </StackLayout>
+                
+                <StackLayout Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="0">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="PulseSlabe" Text="Slabé"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="PulseSlabePicker" Grid.Column="1" SelectedIndex="{Binding AlertPulseSlabe}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="1">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="PulseStredne" Text="Stredné"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="PulseStrednePicker" Grid.Column="1" SelectedIndex="{Binding AlertPulseStredne}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="2">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="PulseVysoke" Text="Vysoké"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="PulseVysokePicker" Grid.Column="1" SelectedIndex="{Binding AlertPulseVysoke}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </Grid>
+
+                </StackLayout>
+
+                <StackLayout Grid.Row="2">
+                    <Label x:Name="Movement" Text="Upozornenia pre pohyb"/>
+                </StackLayout>
+
+                <StackLayout Grid.Row="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="0">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="LongTimeNoMovement" Text="Dlho bez pohybu"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="LongTimeNoMovementPicker" Grid.Column="1" SelectedIndex="{Binding LongTimeNoMovement}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="1">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="SignalLost" Text="Strata signálu"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="SignalLostPicker" Grid.Column="1" SelectedIndex="{Binding SignalLost}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </Grid>
+
+                </StackLayout>
+
+                <StackLayout Grid.Row="4">
+                    <Label x:Name="Fall" Text="Upozornenia pre pád"/>
+                </StackLayout>
+
+                <StackLayout Grid.Row="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+
+                            <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" Grid.Row="0">
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="0" >
+                                    <Label x:Name="FallDetected" Text="Nastal pád"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand" Grid.Column="1" >
+                                    <Picker x:Name="FallDetectedPicker" Grid.Column="1" SelectedIndex="{Binding FallDetected}">
+                                        <Picker.Items>
+                                            <x:String>Push notifikácia</x:String>
+                                            <x:String>Notifikácia správou</x:String>
+                                            <x:String>Zvukový alarm</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                        
+
+                    </Grid>
+
+                </StackLayout>
+                <StackLayout Grid.Row="6">
+                    <Button Text="Uložiť" Command="{Binding SaveAlerts}"/>
+                </StackLayout>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

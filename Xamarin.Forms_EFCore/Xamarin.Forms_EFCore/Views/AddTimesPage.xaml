@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.AddTimesPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+               <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+               
+                <StackLayout>
+                    <Label VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Text="Čas dávkovania"
+                   />
+                    <TimePicker VerticalOptions="Center"
+                   HorizontalOptions="Center" x:Name = "DoseTime" Time="{Binding DoseTime}" Margin = "0,1"/>
+                    
+                    <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Pridať" Command="{Binding AddNewTime}"/>
+
+                </StackLayout>
+
+
+                <ScrollView Grid.Row="1">
+                    <ListView x:Name="TimesList" ItemsSource="{Binding ContTimesList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Cas}"/>
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+
+
+            </Grid>
+            <StackLayout>
+                <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Potvrdiť" Command="{Binding SetTimes}"/>
+
+            </StackLayout>
+
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.InstructionPage"
+             Title="Opis inicializácie">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <ScrollView>
+                    <Label Text="{Binding InitInstructions}"/>
+                </ScrollView>
+
+                <StackLayout Grid.Row="1">
+                    <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Ďalej" Command="{Binding InitStart}"/>
+
+                </StackLayout>
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
