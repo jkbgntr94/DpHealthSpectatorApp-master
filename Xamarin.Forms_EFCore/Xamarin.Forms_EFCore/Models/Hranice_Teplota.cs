@@ -19,8 +19,5 @@ namespace Xamarin.Forms_EFCore.Models
         public string TimeStamp { get; set; }
 
 
-        public virtual Teplota_Sekvencia Teplota_Sekvencia { get; set; }
-        [ForeignKey("Teplota_Sekvencie")]
-        public int? TeplSekvFk { get; set; }
     }
 }

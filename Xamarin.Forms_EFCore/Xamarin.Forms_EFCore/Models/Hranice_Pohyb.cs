@@ -14,10 +14,8 @@ namespace Xamarin.Forms_EFCore.Models
         public float Xhranica { get; set; }
         public float Yhranica { get; set; }
         public float OkruhHranica { get; set; }
+        public String LimitCas { get; set; }
         public string TimeStamp { get; set; }
 
-        public virtual Pohyb_Sekvencia Pohyb_Sekvencia { get; set; }
-        [ForeignKey("Pohyb_Sekvencia")]
-        public int? PohSekvFk { get; set; }
     }
 }

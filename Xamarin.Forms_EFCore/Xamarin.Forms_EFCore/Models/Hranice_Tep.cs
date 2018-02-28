@@ -17,8 +17,6 @@ namespace Xamarin.Forms_EFCore.Models
         public int Hranica_Vysoke { get; set; }
         public string TimeStamp { get; set; }
 
-        public virtual Tep_Sekvencia Tep_Sekvencia { get; set; }
-        [ForeignKey("Tep_Sekvencia")]
-        public int? TepSekvFK { get; set; }
+        
     }
 }

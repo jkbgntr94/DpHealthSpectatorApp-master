@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms_EFCore.Helpers;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
@@ -94,18 +96,22 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         }
 
-        async void saveAlerts()
+        public void saveAlerts()
         {
+            
+            Settings.AlertPulseSlabe = AlertPulseSlabe;
+            Settings.AlertPulseStredne = AlertPulseStredne;
+            Settings.AlertPulseVysoke = AlertPulseVysoke;
+            Settings.LongTimeNoMovement = LongTimeNoMovement;
+            Settings.SignalLost = SignalLost;
+            Settings.FallDetected = FallDetected;
+            
+            //Console.WriteLine("seruuuusssssssssssss {0} {1} {2} {3} {4} {5}", Settings.AlertPulseSlabe, Settings.AlertPulseStredne, Settings.AlertPulseVysoke, Settings.LongTimeNoMovement, Settings.SignalLost, Settings.FallDetected);
+            
+            //TODO: screen kde prida ostatne potrebne nastavenia, cas pre pohyb, email 
 
-            Console.WriteLine("seruuuusssssssssssss {0} ", AlertPulseSlabe);
-            Console.WriteLine("seruuuusssssssssssss {0} ", AlertPulseStredne);
-            Console.WriteLine("seruuuusssssssssssss {0} ", AlertPulseVysoke);
-
-            Console.WriteLine("seruuuusssssssssssss {0} ", LongTimeNoMovement);
-            Console.WriteLine("seruuuusssssssssssss {0} ", SignalLost);
-
-            Console.WriteLine("seruuuusssssssssssss {0} ", FallDetected);
-            SendEmailMessage();
+            //SendEmailMessage();
+            //GeneratePushAlert();
         }
 
 

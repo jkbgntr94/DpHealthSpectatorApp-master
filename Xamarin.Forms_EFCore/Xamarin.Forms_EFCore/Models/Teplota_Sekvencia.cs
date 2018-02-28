@@ -19,5 +19,10 @@ namespace Xamarin.Forms_EFCore.Models
         public virtual Profile Profile { get; set; }
         [ForeignKey("Profile")]
         public int? ProfileFK { get; set; }
+
+
+        public virtual Hranice_Teplota Hranice_Teplota { get; set; }
+        [ForeignKey("Hranice_Teplota")]
+        public int? Hranice_TeplotaFk { get; set; }
     }
 }
