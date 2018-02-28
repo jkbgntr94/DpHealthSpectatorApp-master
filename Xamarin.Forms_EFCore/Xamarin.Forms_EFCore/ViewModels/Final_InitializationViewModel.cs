@@ -21,8 +21,54 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
             ToAlertSelection = new Command(toAlertSelection);
 
-            //createLimits();
-           
+            DatabaseContext context = new DatabaseContext();
+
+
+
+            //kontrolne vypisovanie dat z databazy
+            var value = context.Pulse.ToList();
+
+            foreach (var p in value)
+            {
+                System.Diagnostics.Debug.WriteLine("pulse " + p.Hodnota);
+            }
+
+            var value1 = context.Profiles.ToList();
+
+            foreach (var p in value1)
+            {
+                System.Diagnostics.Debug.WriteLine("profile " + p.Meno);
+            }
+
+            var value2 = context.Drugs.ToList();
+
+            foreach (var p in value2)
+            {
+                System.Diagnostics.Debug.WriteLine("profile " + p.Nazov);
+            }
+
+            var value3 = context.PulseLimit.ToList();
+
+            foreach (var p in value3)
+            {
+                System.Diagnostics.Debug.WriteLine("profile " + p.Hranica_Stredne);
+            }
+            var valuet = context.TemperatureLimit.ToList();
+
+            foreach (var p in valuet)
+            {
+                System.Diagnostics.Debug.WriteLine("profile " + p.Hranica_Stredne);
+            }
+
+            var value4 = context.Activities.ToList();
+
+            foreach (var p in value4)
+            {
+                System.Diagnostics.Debug.WriteLine("profile " + p.Name);
+            }
+
+            
+
         }
 
         async void toAlertSelection()

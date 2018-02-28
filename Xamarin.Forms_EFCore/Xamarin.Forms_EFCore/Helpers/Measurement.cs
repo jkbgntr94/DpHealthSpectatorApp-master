@@ -68,7 +68,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             {
                 throw e;
             }
-
+            
             var all = databaseContext.Pulse.ToList();
             foreach (var a in all)
             {
@@ -120,6 +120,7 @@ namespace Xamarin.Forms_EFCore.Helpers
 
             }
             occurs.Sort();
+
 
             IEnumerable<IGrouping<int, int>> occurrDict = occurs.GroupBy(k => k);
 
@@ -243,6 +244,9 @@ namespace Xamarin.Forms_EFCore.Helpers
             };
             context.TemperatureLimit.Add(htemp);
 
+            var allPulse = context.Pulse.ToList();
+            context.Pulse.RemoveRange(allPulse);
+            
             try
             {
                 context.SaveChanges();

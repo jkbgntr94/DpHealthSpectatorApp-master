@@ -79,6 +79,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public ICommand ToPhase2 { get; private set; }
 
         DatabaseContext _context;
+        private Activities currentAct;
+        private string measuredValuesForDb;
 
         public Phase2ViewModel(Queue<Activities> aktivity_in)
         {
@@ -89,11 +91,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
             if (aktivity.Count > 0)
             {
-                Activities currentAct = aktivity.Dequeue();
+                currentAct = aktivity.Dequeue();
                 ActualActivity = "Zostáva činností: " + aktivity.Count + " - " + currentAct.Name;
             }
             else
             {
+                storeActivityToDb();
                 Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
             }
 
@@ -118,11 +121,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             Measurement m = new Measurement();
             valuesForList = m.getValuesForList();
 
-            /*for (int i = 1; i <= 20; i++)
-            {
-                MeasureValues(i);
-            }*/
-            //TODO: ukladanie nameranych dat do suboru
+            measuredValuesForDb = string.Empty;
         }
 
         public void MeasureValues()
@@ -137,6 +136,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                     measuredValues.Add(k.ToString());
 
+                    measuredValuesForDb = measuredValuesForDb + k.ToString() + " ";
                     valuesForList.RemoveAt(0);
                 }
 
@@ -156,9 +156,28 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void toPhase2()
         {
-
-
+            storeActivityToDb();
             await Application.Current.MainPage.Navigation.PushAsync(new ChooseSecPhasePage());
+
+        }
+
+        private void storeActivityToDb()
+        {
+            Activities act = currentAct;
+            act.Value = measuredValuesForDb;
+
+            _context.Activities.Add(act);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.ToString());
+            }
+            System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++ activity " + act.Name + " " + act.ActSwitchIsChecked + " " + act.Value + " " + act.StressIsChecked);
+            
 
         }
 
@@ -243,9 +262,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             if (aktivity.Count > 0)
             {
+                storeActivityToDb();
                 Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
             } else
             {
+                storeActivityToDb();
+
                 Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
             }
 

@@ -11,8 +11,11 @@ namespace Xamarin.Forms_EFCore.Models
         [Key]
         public int ActivityId { get; set; }
         public string Name { get; set; }
+        public string Value { get; set; }
         public Boolean ActSwitchIsChecked { get; set; }
 
         public Boolean StressIsChecked { get; set; }
     }
+
+
 }

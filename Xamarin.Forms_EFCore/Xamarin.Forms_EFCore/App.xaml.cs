@@ -12,7 +12,7 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.Phase1());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.InitialPage());
         }
 
         protected override void OnStart() {

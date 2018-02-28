@@ -88,13 +88,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             Measurement m = new Measurement();
             valuesForList = m.getValuesForList();
-                
-
-            /*for (int i = 1; i <= 20; i++)
-            {
-                MeasureValues(i);
-            }*/ 
-            //TODO: ukladanie nameranych dat do suboru
+      
         }
 
         public void MeasureValues()
@@ -131,12 +125,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void toPhase2()
         {
             Measurement m = new Measurement();
-            //m.loadValues();
-            //m.createLimits();
-
+            m.loadValues();
+            m.createLimits();
+            
             await Application.Current.MainPage.Navigation.PushAsync(new ChooseSecPhasePage());
             
         }
+
 
         /*------------------------------*/
         private void StartTimerCommand()

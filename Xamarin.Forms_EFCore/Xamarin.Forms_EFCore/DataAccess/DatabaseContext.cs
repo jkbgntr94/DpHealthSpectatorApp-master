@@ -46,7 +46,8 @@ namespace Xamarin.Forms_EFCore.DataAccess {
         public DbSet<Lieky_Sekvencia> DrugsSekv { get; set; }
 
         public DbSet<User> Users { get; set; }
-        
+
+        public DbSet<Activities> Activities { get; set; }
 
         public DatabaseContext() {
             //this.Database.EnsureDeleted();
