@@ -51,7 +51,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void Register()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+            if (_context.Users.Any())
+            {
+                UserDialogs.Instance.Alert("V systéme existuje používateľ", "Nepovolená registrácia", "OK");
+
+            }
+            else
+                await Application.Current.MainPage.Navigation.PushAsync(new RegisterPage());
 
         }
 
@@ -61,11 +67,25 @@ namespace Xamarin.Forms_EFCore.ViewModels
             try
             {
                 var prihlas = _context.Users.Where(b => b.Login == Username).ToArray();
-
+                System.Diagnostics.Debug.WriteLine(prihlas[0].Login + "Hello World!" + prihlas[0].Password);
                 if ((prihlas[0].Login == Username) && (prihlas[0].Password == Password))
                 {
                     UserDialogs.Instance.Alert("", "Úspešné prihlásenie", "OK");
-                    await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+
+
+                    if (_context.Profiles.Any())
+                    {
+                        await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.Navigation.PushAsync(new PacientNotFoundView());
+
+                    }
+
+
+
                 }
                
 

@@ -134,7 +134,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void toDrugs()
         {
 
-            //SaveProfile();
+            SaveProfile();
 
             await Application.Current.MainPage.Navigation.PushAsync(new ChoosedDrugsPage());
 

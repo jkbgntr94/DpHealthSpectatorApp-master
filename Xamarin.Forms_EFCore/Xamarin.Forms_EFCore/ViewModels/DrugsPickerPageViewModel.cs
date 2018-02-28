@@ -105,10 +105,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void saveNewDrug()
         {
-
-            /*
-             TODO: Dorobit navazovanie na lognuteho usera
-             */
+            
             int index = GetDrugIndex();
 
             try

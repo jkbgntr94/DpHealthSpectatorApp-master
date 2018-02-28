@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -17,11 +18,12 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             /*Definovanie cesty suboru*/
             Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initializationValues.txt");
+            
             List<Json> objects = new List<Json>();
 
             /*nahranie dat a sparsovanie*/
             int i = 0;
-
+            
             List<int> occurs = new List<int>();
             using (StreamReader sr = new StreamReader(stream))
             {
@@ -30,6 +32,12 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
                     objects.Add(obj);
                     //System.Diagnostics.Debug.WriteLine(i++ +" --- " + obj.body.heart_rate.value + " -- " + Convert.ToInt32(obj.body.heart_rate.value));
+
+
+                    String create_date =  obj.header.creation_date_time;
+                    float value = obj.body.heart_rate.value;
+                    System.Diagnostics.Debug.WriteLine("KOKOTINAAAAAAA " + create_date + "   " + value);
+
                     occurs.Add(Convert.ToInt32(obj.body.heart_rate.value));
                     
                 }

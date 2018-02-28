@@ -81,7 +81,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 }
             }
 
-            await Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivityCorr));
+            await Application.Current.MainPage.Navigation.PushAsync(new Phase2StressPage(aktivityCorr));
 
         }
 

@@ -41,11 +41,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
         }
 
+        private List<int> valuesForList = new List<int>();
+        private int loopCounter;
 
         /*---------------------------------------*/
         private Timer _timer;
 
-        private TimeSpan _totalSeconds = new TimeSpan(0, 0, 0, 10);
+        private TimeSpan _totalSeconds = new TimeSpan(0, 0, 0, 40);
 
         public TimeSpan TotalSeconds
 
@@ -83,11 +85,10 @@ namespace Xamarin.Forms_EFCore.ViewModels
             aktivity = aktivity_in;
             foreach (var aktiv in aktivity)
             {
-                System.Diagnostics.Debug.WriteLine("aktivitka " + aktiv.ActSwitchIsChecked + " " + aktiv.Name);
+                System.Diagnostics.Debug.WriteLine("aktivitka " + aktiv.ActSwitchIsChecked + " " + aktiv.Name + " " + aktiv.StressIsChecked);
             }
             if (aktivity.Count > 0)
             {
-                //TODO: TU SA MI TO KURVY
                 Activities currentAct = aktivity.Dequeue();
                 ActualActivity = "Zostáva činností: " + aktivity.Count + " - " + currentAct.Name;
             }
@@ -114,18 +115,36 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             StartTimerCommand();
 
-            for (int i = 1; i <= 20; i++)
+            Measurement m = new Measurement();
+            valuesForList = m.getValuesForList();
+
+            /*for (int i = 1; i <= 20; i++)
             {
                 MeasureValues(i);
-            }
+            }*/
             //TODO: ukladanie nameranych dat do suboru
         }
 
-        public void MeasureValues(int k)
+        public void MeasureValues()
         {
 
-            measuredValues.Add(k.ToString());
+            int k = 0;
+            try
+            {
+                if (valuesForList.Count > 0)
+                {
+                    k = valuesForList[0];
 
+                    measuredValues.Add(k.ToString());
+
+                    valuesForList.RemoveAt(0);
+                }
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception : " + e.Source);
+            }
 
         }
 
@@ -166,18 +185,22 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
 
             if (_totalSeconds.TotalSeconds == 0)
-
             {
 
                 //do something after hitting 0, in this example it just stops/resets the timer
 
                 StopTimerCommand();
             }
+            else if (loopCounter == 10)
+            { //TODO: SWAP TO PULSE MEASURE INTERVAL
+                loopCounter = 0;
+                MeasureValues();
+            }
 
             else
 
             {
-
+                loopCounter++;
                 TotalSeconds = _totalSeconds.Subtract(new TimeSpan(0, 0, 0, 1));
 
             }

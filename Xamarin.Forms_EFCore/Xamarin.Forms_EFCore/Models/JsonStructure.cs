@@ -17,7 +17,7 @@ namespace Xamarin.Forms_EFCore.Models
         public class Header
         {
             public string id { get; set; }
-            public DateTime creation_date_time { get; set; }
+            public string creation_date_time { get; set; }
             public Acquisition_Provenance acquisition_provenance { get; set; }
             public string user_id { get; set; }
             public Schema_Id schema_id { get; set; }
