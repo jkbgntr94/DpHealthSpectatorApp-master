@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.DashboardPage">
+    <ContentPage.Content>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Label x:Name="DeshDesc" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Posledné hodnoty"/>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                <Label x:Name="DeshPulse" XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Tep"/>
+                <Label x:Name="DeshTemp" XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" Text="Teplota"/>
+
+                <Label x:Name="DeshPulseValue" XAlign="Center" HorizontalOptions="Center" FontSize="16" Grid.Row="1" Grid.Column="0" Text="{Binding PulseValue}"/>
+                <Label x:Name="DeshTempValue" XAlign="Center" HorizontalOptions="Center" FontSize="16" Grid.Row="1" Grid.Column="1" Text="{Binding TempValue}"/>
+
+                <Label x:Name="DeshMotion" XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="2" Grid.Column="0" Text="Pohyb"/>
+                <Label x:Name="DeshFall" XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="2" Grid.Column="1" Text="Pád"/>
+                
+                <Label x:Name="DeshMotionValue" XAlign="Center" HorizontalOptions="Center" FontSize="16" Grid.Row="3" Grid.Column="0" Text="{Binding MotionValue}"/>
+                <Label x:Name="DeshFallValue" XAlign="Center" HorizontalOptions="Center" FontSize="16" Grid.Row="3" Grid.Column="1" Text="{Binding FallValue}"/>
+
+            </Grid>
+            <Label x:Name="DeshDescAlerts" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="2" Grid.Column="0" Text="Posledné upozornenia"/>
+            <StackLayout Grid.Row="3">
+                <ListView x:Name="AlertsList" ItemsSource="{Binding Alerts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding }"/>
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

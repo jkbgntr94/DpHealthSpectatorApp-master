@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.AdditionalSettingsPage">
+    <ContentPage.Content>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+         
+            <Label x:Name="AddSettDesc" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Pridajte email kam budú chodiť emailové upozornenia a zvoľte maximálnu dĺžku zotrvania bez pohybu (počas dňa)"/>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label x:Name="EmailAddSett" Text="E-mail" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Email}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="1"/>
+
+                <Label x:Name="TimeAddSett" Text="Čas v minútach" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0" />
+                <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Time}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+            <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Ďalej" Grid.Row="2" Grid.Column="0" Command="{Binding ToMainPage}"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

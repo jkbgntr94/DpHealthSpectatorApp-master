@@ -99,12 +99,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public void saveAlerts()
         {
             
-            Settings.AlertPulseSlabe = AlertPulseSlabe;
-            Settings.AlertPulseStredne = AlertPulseStredne;
-            Settings.AlertPulseVysoke = AlertPulseVysoke;
-            Settings.LongTimeNoMovement = LongTimeNoMovement;
-            Settings.SignalLost = SignalLost;
-            Settings.FallDetected = FallDetected;
+            SettingsController.AlertPulseSlabe = AlertPulseSlabe;
+            SettingsController.AlertPulseStredne = AlertPulseStredne;
+            SettingsController.AlertPulseVysoke = AlertPulseVysoke;
+            SettingsController.LongTimeNoMovement = LongTimeNoMovement;
+            SettingsController.SignalLost = SignalLost;
+            SettingsController.FallDetected = FallDetected;
             
             //Console.WriteLine("seruuuusssssssssssss {0} {1} {2} {3} {4} {5}", Settings.AlertPulseSlabe, Settings.AlertPulseStredne, Settings.AlertPulseVysoke, Settings.LongTimeNoMovement, Settings.SignalLost, Settings.FallDetected);
             

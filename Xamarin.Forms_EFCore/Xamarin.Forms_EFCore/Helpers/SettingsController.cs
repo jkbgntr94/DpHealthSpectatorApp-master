@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Xamarin.Forms_EFCore.Helpers
 {
-    public static class Settings
+    public static class SettingsController
     {
         private static ISettings AppSettings => CrossSettings.Current;
 
