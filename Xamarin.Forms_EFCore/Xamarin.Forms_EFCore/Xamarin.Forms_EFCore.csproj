@@ -5,19 +5,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fall.png" />
     <None Remove="geodata.xml" />
+    <None Remove="home.png" />
     <None Remove="id_card.png" />
     <None Remove="initializationValues.txt" />
     <None Remove="login2.png" />
+    <None Remove="movement.png" />
+    <None Remove="pulse.png" />
+    <None Remove="pulse100.txt" />
     <None Remove="pulseWeek.txt" />
     <None Remove="Resources\login.png" />
     <None Remove="Resources\user_plus.png" />
     <None Remove="Risk.png" />
+    <None Remove="temperature.png" />
+    <None Remove="temperature100.txt" />
     <None Remove="temperatureWeek.txt" />
     <None Remove="user_plus.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="fall.png" />
+    <EmbeddedResource Include="home.png" />
     <EmbeddedResource Include="id_card.png" />
   </ItemGroup>
 
@@ -27,11 +36,16 @@
     </Content>
     <EmbeddedResource Include="initializationValues.txt" />
     <EmbeddedResource Include="login2.png" />
+    <EmbeddedResource Include="movement.png" />
+    <EmbeddedResource Include="pulse.png" />
+    <EmbeddedResource Include="pulse100.txt" />
     <EmbeddedResource Include="pulseWeek.txt" />
     <EmbeddedResource Include="logo.jpg" />
     <EmbeddedResource Include="Resources\login.png" />
     <EmbeddedResource Include="Resources\user_plus.png" />
     <EmbeddedResource Include="Risk.png" />
+    <EmbeddedResource Include="temperature.png" />
+    <EmbeddedResource Include="temperature100.txt" />
     <EmbeddedResource Include="temperatureWeek.txt" />
     <EmbeddedResource Include="user_plus.png" />
   </ItemGroup>
@@ -79,6 +93,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Phase2StressPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TemperatureVisualPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

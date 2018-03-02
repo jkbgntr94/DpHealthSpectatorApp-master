@@ -36,8 +36,6 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
                     String create_date =  obj.header.creation_date_time;
                     float value = obj.body.heart_rate.value;
-                    System.Diagnostics.Debug.WriteLine("KOKOTINAAAAAAA " + create_date + "   " + value);
-
                     occurs.Add(Convert.ToInt32(obj.body.heart_rate.value));
                     
                 }

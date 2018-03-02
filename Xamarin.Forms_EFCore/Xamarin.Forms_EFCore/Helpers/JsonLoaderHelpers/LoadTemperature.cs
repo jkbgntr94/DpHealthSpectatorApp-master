@@ -19,7 +19,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             /*Definovanie cesty suboru*/
             try
             {
-                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperatureWeek.txt");
+                //Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperatureWeek.txt");
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperature100.txt");
                 List<Json> objects = new List<Json>();
                 /*nahranie dat a sparsovanie*/
                 int i = 0;
@@ -33,6 +34,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     Teplota tmp = context.Temperature.FirstOrDefault(t => t.TeplotaId == context.Temperature.Max(x => x.TeplotaId));
                     index = tmp.TeplotaId;
                 }
+
+                index++;
                 using (StreamReader sr = new StreamReader(stream))
                 {
 
@@ -40,7 +43,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     {
                         Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
                         //objects.Add(obj);
-                       // System.Diagnostics.Debug.WriteLine(i++ + " pppppp+ " + obj.header.creation_date_time.ToString() + " + " + obj.body.body_temperature.value);
+                        System.Diagnostics.Debug.WriteLine(i++ + " pppppp+ " + obj.header.creation_date_time.ToString() + " + " + obj.body.body_temperature.value);
                         
 
                         Teplota teplota = new Teplota

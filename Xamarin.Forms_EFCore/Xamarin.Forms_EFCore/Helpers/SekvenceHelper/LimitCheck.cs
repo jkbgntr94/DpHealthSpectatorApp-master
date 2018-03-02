@@ -16,25 +16,25 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
             if((hodnota >= hranice.Hranica_Slabe_Min) && (hodnota <= hranice.Hranica_Slabe_Max))
             {
-                return 0;
+                return 0;//ok
             }else if(hodnota < hranice.Hranica_Slabe_Min)
             {
-                return -1;
+                return -1;//low
             }else if((hodnota > hranice.Hranica_Slabe_Max) && (hodnota <= hranice.Hranica_Stredne))
             {
 
-                return 1;
+                return 1;//slabe
 
 
             }else if((hodnota > hranice.Hranica_Stredne) && (hodnota <= hranice.Hranica_Vysoke))
             {
-                return 2;
+                return 2;//stredne
             }else if(hodnota > hranice.Hranica_Vysoke)
             {
-                return 3;
+                return 3;//vysoke
             }else
             {
-                return 404;
+                return 404;//error
             }
 
 
@@ -73,5 +73,22 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                 return 404;
             }
         }
+
+        public string getStringValuePulseAndTempLimit(int value)
+        {
+            String alert;
+
+            if (value == 0) alert = "OK";
+            else if (value == -1) alert = "Slabé Nízke";
+            else if (value == 1) alert = "Slabé";
+            else if (value == 2) alert = "Stredné";
+            else if (value == 3) alert = "Vysoké";
+            else alert = "NA";
+
+
+            return alert;
+        }
+
+       
     }
 }

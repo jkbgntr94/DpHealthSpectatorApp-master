@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
+using Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers;
 using Xamarin.Forms_EFCore.Models;
+using Xamarin.Forms_EFCore.Views;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
@@ -82,15 +86,27 @@ namespace Xamarin.Forms_EFCore.ViewModels
         }
 
         DatabaseContext _context;
+        public ICommand TempVisualCommand { get; private set; }
+        public ICommand PulseVisualCommand { get; private set; }
+        public ICommand DashboardCommand { get; private set; }
+        public ICommand MovementVisualCommand { get; private set; }
+        public ICommand FallVisualCommand { get; private set; }
 
         public DashboardViewModel()
         {
             _context = new DatabaseContext();
-
+            TempVisualCommand = new Command(tempVisualCommand);
+            PulseVisualCommand = new Command(pulseVisualCommand);
+            DashboardCommand = new Command(dashboardCommand);
+            MovementVisualCommand = new Command(movementVisualCommand);
+            FallVisualCommand = new Command(fallVisualCommand);
             /* PulseValue = 10.ToString();
              TempValue = 15.ToString();
              MotionValue = "Spalna";
              FallValue = "NA";*/
+
+            //TestDataDbFiller filler = new TestDataDbFiller();
+
             setValues();
 
         }
@@ -101,6 +117,42 @@ namespace Xamarin.Forms_EFCore.ViewModels
             setTemperatureValue();
             setMovementValue();
             setFallValue();
+            setAlertListValue();
+
+        }
+
+        async void tempVisualCommand()
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new TemperatureVisualPage());
+
+        }
+
+        async void pulseVisualCommand()
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+
+        }
+
+        async void dashboardCommand()
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+
+        }
+
+        async void movementVisualCommand()
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+
+        }
+
+        async void fallVisualCommand()
+        {
+
+            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
 
         }
 
@@ -177,6 +229,39 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
 
         }
+
+        public void setAlertListValue()
+        {
+            
+            if (_context.PulseSekv.Any())
+            {
+                Tep_Sekvencia ts = _context.PulseSekv.FirstOrDefault(t => t.TepSekvId == _context.PulseSekv.Max(x => x.TepSekvId));
+
+                Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+
+
+
+                String tepSekvString = "Tep " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
+
+                Alerts.Add(tepSekvString);
+            }
+
+
+            if (_context.TemperatureSekv.Any())
+            {
+                Teplota_Sekvencia ts = _context.TemperatureSekv.FirstOrDefault(t => t.TeplSekvId == _context.TemperatureSekv.Max(x => x.TeplSekvId));
+
+                Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+
+                String teplSekvString = "Teplota " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
+                Alerts.Add(teplSekvString);
+
+            }
+
+            //TODO: ZOBRAZENIE POHYBU
+        }
+
+       
 
     }
 }
