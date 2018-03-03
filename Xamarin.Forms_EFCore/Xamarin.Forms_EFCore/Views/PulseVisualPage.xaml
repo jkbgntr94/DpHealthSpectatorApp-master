@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.Views.TemperatureVisualPage">
+             x:Class="Xamarin.Forms_EFCore.Views.PulseVisualPage">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,30 +19,30 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="Temperature" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Teplota"/>
-            <Image x:Name="tempimage" VerticalOptions="Center"
+            <Label x:Name="Pulse" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Tep"/>
+            <Image x:Name="pulseimage" VerticalOptions="Center"
                    HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
             </Image>
 
-            <Label x:Name="TempAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding TempAlert}"/>
-            
-            
-            <Label x:Name="TempTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="3" Grid.Column="0" Text="{Binding TempTime}"/>
-            
-            
-            <Label x:Name="TempValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="4" Grid.Column="0" Text="{Binding TempValue}"/>
+            <Label x:Name="PulseAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding PulseAlert}"/>
 
-            <Label x:Name="TempDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="5" Grid.Column="0" Text="{Binding TempDuration}"/>
+
+            <Label x:Name="PulseTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="3" Grid.Column="0" Text="{Binding PulseTime}"/>
+
+
+            <Label x:Name="PulseValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="4" Grid.Column="0" Text="{Binding PulseValue}"/>
+
+            <Label x:Name="PulseDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="5" Grid.Column="0" Text="{Binding PulseDuration}"/>
 
             <StackLayout Grid.Row="6" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
-                   
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
-                                        <Label Text="{Binding TempId}" TextColor="Black" />
+                                        <Label Text="{Binding PulseId}" TextColor="Black" />
                                         <Label Text="{Binding Value}" TextColor="Black"/>
                                         <Label Text="{Binding Date}" TextColor="Black"/>
                                         <Label Text="{Binding Time}" TextColor="Black"/>
@@ -111,8 +111,8 @@
                 </StackLayout>
 
             </Grid>
-            
-            
+
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

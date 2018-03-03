@@ -7,18 +7,17 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
-using Xamarin.Forms_EFCore.Views;
-using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
+using Xamarin.Forms_EFCore.Views;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
-    class TemperatureVisualViewModel : BaseViewModel
+    class PulseVisualViewModel : BaseViewModel
     {
         DatabaseContext _context;
-        
-        private TemperatureObj selectedSequence;
-        public TemperatureObj SelectedSequence
+
+        private PulseObj selectedSequence;
+        public PulseObj SelectedSequence
         {
             get
             {
@@ -26,7 +25,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
             set
             {
-                if(selectedSequence != value)
+                if (selectedSequence != value)
                 {
                     selectedSequence = value;
                     HandleSelectedItem();
@@ -42,10 +41,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         }
 
-
-
-        private ObservableCollection<TemperatureObj> sequenceList = new ObservableCollection<TemperatureObj>();
-        public ObservableCollection<TemperatureObj> SequenceList
+        private ObservableCollection<PulseObj> sequenceList = new ObservableCollection<PulseObj>();
+        public ObservableCollection<PulseObj> SequenceList
         {
             get
             {
@@ -58,73 +55,59 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
         }
 
-        private string tempAlert;
-        public string TempAlert
+        private string pulseAlert;
+        public string PulseAlert
         {
             get
             {
-                return tempAlert;
+                return pulseAlert;
             }
             set
             {
-                tempAlert = value;
-                this.OnPropertyChanged("TempAlert");
+                pulseAlert = value;
+                this.OnPropertyChanged("PulseAlert");
             }
         }
 
-        private string tempTime;
-        public string TempTime
+        private string pulseTime;
+        public string PulseTime
         {
             get
             {
-                return tempTime;
+                return pulseTime;
             }
             set
             {
-                tempTime = value;
-                this.OnPropertyChanged("TempTime");
+                pulseTime = value;
+                this.OnPropertyChanged("PulseTime");
             }
         }
 
-        private string tempValue;
-        public string TempValue
+        private string pulseValue;
+        public string PulseValue
         {
             get
             {
-                return tempValue;
+                return pulseValue;
             }
             set
             {
-                tempValue = value;
-                this.OnPropertyChanged("TempValue");
+                pulseValue = value;
+                this.OnPropertyChanged("PulseValue");
             }
         }
 
-        private string tempDuration;
-        public string TempDuration
+        private string pulseDuration;
+        public string PulseDuration
         {
             get
             {
-                return tempDuration;
+                return pulseDuration;
             }
             set
             {
-                tempDuration = value;
-                this.OnPropertyChanged("TempDuration");
-            }
-        }
-
-        private string alert;
-        public string Alert
-        {
-            get
-            {
-                return alert;
-            }
-            set
-            {
-                alert = value;
-
+                pulseDuration = value;
+                this.OnPropertyChanged("PulseDuration");
             }
         }
 
@@ -134,9 +117,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public ICommand MovementVisualCommand { get; private set; }
         public ICommand FallVisualCommand { get; private set; }
 
-        
-
-        public TemperatureVisualViewModel()
+        public PulseVisualViewModel()
         {
             _context = new DatabaseContext();
             TempVisualCommand = new Command(tempVisualCommand);
@@ -144,16 +125,19 @@ namespace Xamarin.Forms_EFCore.ViewModels
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
-            
+
 
             fillList();
+
+
         }
+
 
         private void fillList()
         {
-            if (_context.TemperatureSekv.Any())
+            if (_context.PulseSekv.Any())
             {
-                var listTemp = _context.TemperatureSekv.ToList();
+                var listTemp = _context.PulseSekv.ToList();
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
                 foreach (var t in listTemp)
                 {
@@ -164,46 +148,48 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         DateTime endtime = DateTime.Parse(t.TimeClose);
                         durationTime = (endtime - convertedDate).TotalMinutes.ToString();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         System.Diagnostics.Debug.WriteLine("Exception parse date " + e.ToString());
                         durationTime = "NA";
                     }
 
-                    TemperatureObj tem = new TemperatureObj()
+                    PulseObj tem = new PulseObj()
                     {
-                        TempId = t.TeplSekvId,
-                        Value = t.Sekvencia + "C",
+                        PulseId = t.TepSekvId,
+                        Value = t.Sekvencia + "BPM",
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         Duration = durationTime,
                         Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
                     };
-                    
-                        SequenceList.Add(tem);
+
+                    SequenceList.Add(tem);
 
                 }
                 fillPageWithSequence(SequenceList.First());
-                
+
             }
             else
             {
-                TempAlert = "Neexistuje žiadna sekvencia";
+                PulseAlert = "Neexistuje žiadna sekvencia";
 
             }
-            
+
             //SequenceList.Reverse();
 
         }
 
-        private void fillPageWithSequence(TemperatureObj to)
+        private void fillPageWithSequence(PulseObj to)
         {
-            TempAlert = to.Alert;
-            TempTime = to.Date + " " + to.Time;
-            TempValue = to.Value;
-            TempDuration = to.Duration;
+            PulseAlert = to.Alert;
+            PulseTime = to.Date + " " + to.Time;
+            PulseValue = to.Value;
+            PulseDuration = to.Duration;
 
         }
+
+
 
         async void tempVisualCommand()
         {
