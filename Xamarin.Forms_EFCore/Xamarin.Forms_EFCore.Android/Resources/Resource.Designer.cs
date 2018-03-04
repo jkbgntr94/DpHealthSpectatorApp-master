@@ -63,6 +63,7 @@ namespace Xamarin.Forms_EFCore.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::CocosSharp.Forms.Android.Resource.String.library_name = global::Xamarin.Forms_EFCore.Droid.Resource.String.library_name;
 			global::Plugin.LocalNotifications.Resource.Drawable.plugin_lc_smallicon = global::Xamarin.Forms_EFCore.Droid.Resource.Drawable.plugin_lc_smallicon;
 			global::Splat.Resource.String.library_name = global::Xamarin.Forms_EFCore.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Xamarin.Forms_EFCore.Droid.Resource.Attribute.actionBarSize;

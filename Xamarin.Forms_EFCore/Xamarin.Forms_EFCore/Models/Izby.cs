@@ -13,9 +13,13 @@ namespace Xamarin.Forms_EFCore.Models
 
         public string Nazov { get; set; }
 
-        public float Xhodnota { get; set; }
+        public float LavaXhodnota { get; set; }
 
-        public float Yhodnota { get; set; }
+        public float LavaYhodnota { get; set; }
+
+        public float PravaXhodnota { get; set; }
+
+        public float PravaYhodnota { get; set; }
 
         public int Vonku { get; set; }
 

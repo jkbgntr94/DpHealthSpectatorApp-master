@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.AddRoomsPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                   <!-- <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>-->
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--<Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Max koordináty"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Grid.Column="0">
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding MaxX}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="X"/>
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding MaxY}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="Y"/>
+
+                </StackLayout>
+                <BoxView BackgroundColor="#DCDCDC" Grid.Row="2" HeightRequest="2"></BoxView>
+                -->
+                <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Názov"/>
+                
+                    <Entry VerticalOptions="Center"
+                           WidthRequest="250" Text="{Binding NameRoom}"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           Placeholder="Názov"
+                           Grid.Row="1" Grid.Column="0"/>
+
+                <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="2" Grid.Column="0" Text="Ľavá dolná poloha"/>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="3" Grid.Column="0">
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding LeftDownX}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="X"/>
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding LeftDownY}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="Y"/>
+
+                </StackLayout>
+
+                <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="4" Grid.Column="0" Text="Pravá horná poloha"/>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="5" Grid.Column="0">
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding RightUpX}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="X"/>
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="50" Text="{Binding RightUpY}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                           Placeholder="Y"/>
+
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="Center" Grid.Row="6" Grid.Column="0">
+                <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Ulož" Command="{Binding SaveRoom}"/>
+                    <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Hotovo" Command="{Binding Finish}"/>
+                </StackLayout>
+                
+                <StackLayout Grid.Row="7">
+                    <ListView x:Name="RoomsList" ItemsSource="{Binding Rooms}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding }"/>
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
