@@ -32,7 +32,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     Teplota t = context.Temperature.Where(c => c.TeplotaId == a.TeplotaId).First();
                     t.TeplSekvFk = 1;
-                    System.Diagnostics.Debug.WriteLine("Novasekvencia " + t.TeplotaId + " " + a.TeplotaId + " " + t.Hodnota + " + " + t.TeplSekvFk);
+                    //System.Diagnostics.Debug.WriteLine("Novasekvencia " + t.TeplotaId + " " + a.TeplotaId + " " + t.Hodnota + " + " + t.TeplSekvFk);
 
                     context.TemperatureSekv.Add(tmps);
                     context.Temperature.Update(t);
@@ -54,7 +54,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     try
                     {
                         tmps = context.TemperatureSekv.FirstOrDefault(t => t.TimeClose == "");
-                        System.Diagnostics.Debug.WriteLine("otvorena sekvencia " + tmps.TeplSekvId + " " + tmps.Sekvencia);
+                        //System.Diagnostics.Debug.WriteLine("otvorena sekvencia " + tmps.TeplSekvId + " " + tmps.Sekvencia);
                     }
                     catch (Exception e)
                     {
@@ -159,7 +159,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     t.TepSekvId = 1;
 
 
-                    System.Diagnostics.Debug.WriteLine("Novasekvencia " + t.TepId + " " + a.TepId + " " + t.Hodnota + " + " + t.TepSekvId);
+                    //System.Diagnostics.Debug.WriteLine("Novasekvencia " + t.TepId + " " + a.TepId + " " + t.Hodnota + " + " + t.TepSekvId);
 
                     context.PulseSekv.Add(tepS);
                     context.Pulse.Update(t);
@@ -182,7 +182,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     try
                     {
                         tepS = context.PulseSekv.FirstOrDefault(t => t.TimeClose == "");
-                        System.Diagnostics.Debug.WriteLine("otvorena sekvencia " + tepS.TepSekvId + " " + tepS.Sekvencia);
+                        //System.Diagnostics.Debug.WriteLine("otvorena sekvencia " + tepS.TepSekvId + " " + tepS.Sekvencia);
                     }
                     catch (Exception e)
                     {
@@ -257,6 +257,19 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
 
                 }
+
+            }
+        }
+
+        public void MovementSequencer(DatabaseContext context)
+        {
+            var allMovements = context.Movement.ToList();
+
+            foreach(var mov in allMovements)
+            {
+
+                //TODO: vytvaranie sekvencii z pohybu
+
 
             }
         }

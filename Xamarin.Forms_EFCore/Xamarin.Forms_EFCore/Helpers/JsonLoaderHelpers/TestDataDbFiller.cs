@@ -22,6 +22,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             Helpers.JsonLoaderHelpers.LoadLimits loaderL = new Helpers.JsonLoaderHelpers.LoadLimits();
             loaderL.LoadPulseLimits(_context);
             loaderL.LoadTemperatureLimits(_context);
+            loaderL.LoadMovementLimits(_context);
 
             SequenceCreator sq = new SequenceCreator();
             sq.PulseSequencer(_context);
@@ -30,6 +31,14 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             loader.LoadPulseJson(_context);
             temploader.LoadTemperatureJson(_context);
+
+            LoadMovement moveLoader = new LoadMovement();
+            moveLoader.GenerateMovementData(_context);
+
+            LoadRooms loadRooms = new LoadRooms();
+            loadRooms.LoadRoomsData(_context);
+
+
 
         }
     }

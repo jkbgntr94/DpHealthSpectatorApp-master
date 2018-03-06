@@ -43,7 +43,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     {
                         Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
                         //objects.Add(obj);
-                        System.Diagnostics.Debug.WriteLine(i++ + " pppppp+ " + obj.header.creation_date_time.ToString() + " + " + obj.body.body_temperature.value);
+                        //System.Diagnostics.Debug.WriteLine(i++ + " pppppp+ " + obj.header.creation_date_time.ToString() + " + " + obj.body.body_temperature.value);
                         
 
                         Teplota teplota = new Teplota

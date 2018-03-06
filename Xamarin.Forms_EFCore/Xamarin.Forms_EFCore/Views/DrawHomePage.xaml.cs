@@ -31,7 +31,7 @@ namespace Xamarin.Forms_EFCore.Views
             CreateBottomHalf(grid);
 
             addRoom.Clicked += (sender, e) => {
-                Application.Current.MainPage.Navigation.PushAsync(new ChooseSecPhasePage());
+                Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
             };
 
         }

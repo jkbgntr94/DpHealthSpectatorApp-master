@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers;
+using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Views;
 
@@ -141,9 +142,17 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             Finish = new Command(finish);
 
             //TestDataDbFiller filler = new TestDataDbFiller();
-            
 
+            //System.Diagnostics.Debug.WriteLine("****************************** finished ");
+            RoomsDetection rd = new RoomsDetection(); 
+            var poh = _context.Movement.ToList();
+            foreach(var p in poh)
+            {
+                var izba = rd.findRoom(p);
 
+                System.Diagnostics.Debug.WriteLine("DETEGOVANA IZBA " + izba.Nazov + " poh x: " + p.Xhodnota + " poh y: " + p.Yhodnota + " lava izba: " + izba.LavaXhodnota + "/" + izba.LavaYhodnota + " prava izba: " + izba.PravaXhodnota + "/" + izba.PravaYhodnota);
+
+            }
 
         }
 
@@ -152,14 +161,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
             await Application.Current.MainPage.Navigation.PushAsync(new DrawHomePage());
 
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("****************************** " + e.ToString());
-            }
+           
 
         }
 
@@ -192,7 +194,15 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
             _context.Rooms.Add(izbaNova);
 
-            
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("****************************** " + e.ToString());
+            }
+
             Rooms.Add(NameRoom);
 
         }

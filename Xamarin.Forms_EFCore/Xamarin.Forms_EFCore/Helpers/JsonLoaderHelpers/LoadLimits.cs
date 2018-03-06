@@ -58,5 +58,29 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
         }
 
+        public void LoadMovementLimits(DatabaseContext context)
+        {
+            HelpMethods helpm = new HelpMethods();
+
+            Hranice_Pohyb hranpoh = new Hranice_Pohyb
+            {
+                Xhranica = 150,
+                Yhranica = 150,
+                OkruhHranica = 10,
+                LimitCas = "20",
+                TimeStamp = helpm.GetActualTime()
+
+            };
+            context.MovementLimit.Add(hranpoh);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

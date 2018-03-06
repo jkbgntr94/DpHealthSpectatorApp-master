@@ -12,6 +12,7 @@
     <None Remove="initializationValues.txt" />
     <None Remove="login2.png" />
     <None Remove="movement.png" />
+    <None Remove="movementSample.txt" />
     <None Remove="pulse.png" />
     <None Remove="pulse100.txt" />
     <None Remove="pulseWeek.txt" />
@@ -37,6 +38,7 @@
     <EmbeddedResource Include="initializationValues.txt" />
     <EmbeddedResource Include="login2.png" />
     <EmbeddedResource Include="movement.png" />
+    <EmbeddedResource Include="movementSample.txt" />
     <EmbeddedResource Include="pulse.png" />
     <EmbeddedResource Include="pulse100.txt" />
     <EmbeddedResource Include="pulseWeek.txt" />
@@ -84,6 +86,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\MovementVisualPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\AdditionalSettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

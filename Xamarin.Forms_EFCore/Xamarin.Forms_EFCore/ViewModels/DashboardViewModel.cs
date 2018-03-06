@@ -105,7 +105,10 @@ namespace Xamarin.Forms_EFCore.ViewModels
              MotionValue = "Spalna";
              FallValue = "NA";*/
 
-            //TestDataDbFiller filler = new TestDataDbFiller();
+            //new TestDataDbFiller();
+
+           
+            
 
             setValues();
 
