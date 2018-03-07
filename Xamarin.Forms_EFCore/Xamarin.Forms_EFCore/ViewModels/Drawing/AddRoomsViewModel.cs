@@ -141,10 +141,10 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             SaveRoom = new Command(saveRoom);
             Finish = new Command(finish);
 
-            //TestDataDbFiller filler = new TestDataDbFiller();
+            TestDataDbFiller filler = new TestDataDbFiller();
 
             //System.Diagnostics.Debug.WriteLine("****************************** finished ");
-            RoomsDetection rd = new RoomsDetection(); 
+            /*RoomsDetection rd = new RoomsDetection(); 
             var poh = _context.Movement.ToList();
             foreach(var p in poh)
             {
@@ -152,7 +152,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
                 System.Diagnostics.Debug.WriteLine("DETEGOVANA IZBA " + izba.Nazov + " poh x: " + p.Xhodnota + " poh y: " + p.Yhodnota + " lava izba: " + izba.LavaXhodnota + "/" + izba.LavaYhodnota + " prava izba: " + izba.PravaXhodnota + "/" + izba.PravaYhodnota);
 
-            }
+            }*/
+            
 
         }
 

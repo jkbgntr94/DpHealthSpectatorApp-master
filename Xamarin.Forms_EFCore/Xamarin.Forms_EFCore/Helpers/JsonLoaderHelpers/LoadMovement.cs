@@ -40,15 +40,15 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     Models.HelpModels.Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.HelpModels.Json>(sr.ReadLine());
                     objects.Add(obj);
                     System.Diagnostics.Debug.WriteLine("************** + " + obj.x + " " + obj.y);
-                    HelpMethods helpm = new HelpMethods();
+                    
                     Pohyb pohyb = new Pohyb
                     {
                         PohybId = index++,
                         Xhodnota = obj.x,
                         Yhodnota = obj.y,
-                        TimeStamp = helpm.GetActualTime()
+                        TimeStamp = DateTime.Now.ToShortTimeString()
 
-                    };
+                };
                     context.Movement.Add(pohyb);
 
 
@@ -102,7 +102,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                     PohybId = index++,
                     Xhodnota = rnd.Next(1, 150),
                     Yhodnota = rnd.Next(1, 150),
-                    TimeStamp = helpm.GetActualTime()
+                    TimeStamp = DateTime.Now.ToShortTimeString()
 
                 };
                 context.Movement.Add(pohyb);

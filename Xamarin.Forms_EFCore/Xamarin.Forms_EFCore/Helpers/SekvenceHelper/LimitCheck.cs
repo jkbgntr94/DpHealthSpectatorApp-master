@@ -89,6 +89,76 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             return alert;
         }
 
+
+        public bool checkMovementValue(DatabaseContext context, Pohyb p, Pohyb_Sekvencia pohS)
+        {
+            Hranice_Pohyb hpoh = context.MovementLimit.FirstOrDefault(t => t.HranicePohybId == context.MovementLimit.Max(x => x.HranicePohybId));
+            float hranica = hpoh.OkruhHranica;
+
+            if(((pohS.Xhodnota - hranica) <= p.Xhodnota) && ((pohS.Xhodnota + hranica) >= p.Xhodnota) && ((pohS.Yhodnota - hranica) <= p.Yhodnota) && ((pohS.Yhodnota + hranica) >= p.Yhodnota))
+            {//neprekracuje limit vo vzdialenosti
+
+                //skontroluj ci patri do rovnakej izby
+                if(pohS.IzbyFK == new RoomsDetection().findRoom(p).IzbaID)
+                {
+                    return true;
+
+                }
+                else
+                {
+
+                    return false;
+                }
+
+                
+            }
+            else
+            {
+
+                return false;
+            }
+            
+        }
+
+        public int checkTimeLimitMovement(DatabaseContext context, Pohyb_Sekvencia pohS)
+        {
+            Hranice_Pohyb hpoh = context.MovementLimit.FirstOrDefault(t => t.HranicePohybId == context.MovementLimit.Max(x => x.HranicePohybId));
+
+            int zot = 0;
+            Int32.TryParse(pohS.Cas_Zotrvania, out zot);
+
+            int hran = 0;
+            Int32.TryParse(hpoh.LimitCas, out hran);
+
+            if(zot > hran)
+            {
+                return 1;
+
+            }
+            else
+            {
+                return 0;
+            }
+            
+        }
+        public int checkIfOutside(DatabaseContext context, Pohyb pohyb)
+        {
+
+            Hranice_Pohyb hpoh = context.MovementLimit.FirstOrDefault(t => t.HranicePohybId == context.MovementLimit.Max(x => x.HranicePohybId));
+            
+            if ((pohyb.Xhodnota < 0) || (pohyb.Yhodnota < 0) || (pohyb.Xhodnota > hpoh.Xhranica) || (pohyb.Yhodnota > hpoh.Yhranica))
+            {
+                return 1;
+
+
+            }
+            else
+            {
+
+                return 0;
+            }
+            
+        }
        
     }
 }

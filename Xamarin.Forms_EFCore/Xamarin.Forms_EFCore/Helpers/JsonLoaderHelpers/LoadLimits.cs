@@ -18,7 +18,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                             Hranica_Slabe_Max = 90,
                             Hranica_Stredne = 100,
                             Hranica_Vysoke = 120,
-                            TimeStamp = helpm.GetActualTime()
+                            TimeStamp = DateTime.Now.ToShortTimeString()
 
                         };
             context.PulseLimit.Add(tep_limit);
@@ -43,7 +43,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 Hranica_Slabe_Max = 37.0f,
                 Hranica_Stredne = 38.2f,
                 Hranica_Vysoke = 39.0f,
-                TimeStamp = helpm.GetActualTime()
+                TimeStamp = DateTime.Now.ToShortTimeString()
 
             };
             context.TemperatureLimit.Add(hrantep);
@@ -66,9 +66,9 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             {
                 Xhranica = 150,
                 Yhranica = 150,
-                OkruhHranica = 10,
-                LimitCas = "20",
-                TimeStamp = helpm.GetActualTime()
+                OkruhHranica = 30,
+                LimitCas = "120",
+                TimeStamp = DateTime.Now.ToShortTimeString()
 
             };
             context.MovementLimit.Add(hranpoh);
