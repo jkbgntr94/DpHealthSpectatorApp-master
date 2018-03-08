@@ -16,5 +16,19 @@ namespace Xamarin.Forms_EFCore.ViewModels
 		{
 			InitializeComponent ();
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            movImg.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
+
+            tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
+            pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
+            dashboardImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.home.png");
+            movementImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
+            fallImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.fall.png");
+
+            BindingContext = new MovementVisualViewModel();
+        }
+    }
 }

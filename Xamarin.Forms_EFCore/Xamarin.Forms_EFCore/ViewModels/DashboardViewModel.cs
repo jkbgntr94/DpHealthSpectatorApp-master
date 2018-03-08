@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers;
+using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Views;
 
@@ -94,6 +95,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         public DashboardViewModel()
         {
+            //new DatabaseContext(999);
+
             _context = new DatabaseContext();
             TempVisualCommand = new Command(tempVisualCommand);
             PulseVisualCommand = new Command(pulseVisualCommand);
@@ -107,8 +110,26 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             //new TestDataDbFiller();
 
-           
-            
+            /*Pohyb pohyba = new Pohyb
+            {
+                PohybId = 999, 
+                Xhodnota = 160,
+                Yhodnota = 15,
+                TimeStamp = DateTime.Now.AddMinutes(101).ToShortTimeString()
+
+            };
+            _context.Movement.Add(pohyba);
+
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            */
 
             setValues();
 
@@ -148,7 +169,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void movementVisualCommand()
         {
 
-            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
 
         }
 
@@ -201,9 +222,20 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                 Pohyb pohyb = _context.Movement.FirstOrDefault(t => t.PohybId == _context.Movement.Max(x => x.PohybId));
 
-                //MotionValue = pohyb.Hodnota.ToString();
-                //TREBA ZISKAT NAZOV IZBY
-                MotionValue = "IZBA";
+                RoomsDetection roomsDetection = new RoomsDetection();
+                Izby izba = roomsDetection.findRoom(pohyb);
+                if(izba == null)
+                {
+                    MotionValue = "Vonku";
+
+                }
+                else
+                {
+                    MotionValue = roomsDetection.findRoom(pohyb).Nazov;
+
+                }
+
+                
             }
             else
             {
@@ -259,6 +291,31 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 String teplSekvString = "Teplota " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
                 Alerts.Add(teplSekvString);
 
+            }
+
+            if (_context.MovementSekv.Any())
+            {
+                var pohyb_Sekvencia_list = _context.MovementSekv.ToList();
+
+                foreach (var p in pohyb_Sekvencia_list)
+                {
+                    if (p.Upozornenie_Cas != 0)
+                    {
+                        String pohSekvString = "Pohyb [" + p.Xhodnota + "," + p.Yhodnota + "] " + p.TimeStamp + " Prekročený čas";
+                        Alerts.Add(pohSekvString);
+                        break;
+
+                    }
+                    else if (p.Upozornenie_Hranica != 0)
+                    {
+                        String pohSekvString = "Pohyb [" + p.Xhodnota + "," + p.Yhodnota + "] " + p.TimeStamp + " Vonku";
+                        Alerts.Add(pohSekvString);
+                        break;
+
+                    }
+
+
+                }
             }
 
             //TODO: ZOBRAZENIE POHYBU

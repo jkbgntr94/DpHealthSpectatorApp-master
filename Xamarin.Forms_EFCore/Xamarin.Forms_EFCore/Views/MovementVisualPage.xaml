@@ -3,10 +3,116 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Xamarin.Forms_EFCore.ViewModels.MovementVisualPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="44"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="Movement" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Pohyb"/>
+            <Image x:Name="movImg" VerticalOptions="Center"
+                   HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
+            </Image>
+
+            <Label x:Name="MovAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding MovAlert}"/>
+
+
+            <Label x:Name="MovTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="3" Grid.Column="0" Text="{Binding MovTime}"/>
+
+
+            <Label x:Name="RoomValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="4" Grid.Column="0" Text="{Binding RoomValue}"/>
+
+            <Label x:Name="MovDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="5" Grid.Column="0" Text="{Binding MovDuration}"/>
+
+            <StackLayout Grid.Row="6" Grid.Column="0">
+                <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Label Text="{Binding PohId}" TextColor="Black" />
+                                        <Label Text="{Binding RoomName}" TextColor="Black"/>
+                                        <Label Text="{Binding Date}" TextColor="Black"/>
+                                        <Label Text="{Binding Time}" TextColor="Black"/>
+                                        <Label Text="{Binding Alert}" TextColor="Black"  />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="7"></BoxView>
+            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Spacing="0" Grid.Column="0">
+                    <Image HeightRequest="30" x:Name="tempImage"/>
+                    <Label Text="Teplota" FontSize="10" HorizontalOptions="Center"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding TempVisualCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <StackLayout Spacing="0" Grid.Column="1">
+                    <Image HeightRequest="30" x:Name="pulseImage"/>
+                    <Label Text="Tep" FontSize="10" HorizontalOptions="Center"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding PulseVisualCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <StackLayout Spacing="0" Grid.Column="2">
+                    <Image HeightRequest="30" x:Name="dashboardImage"/>
+                    <Label Text="Domov" FontSize="10" HorizontalOptions="Center"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding DashboardCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <StackLayout Spacing="0" Grid.Column="3">
+                    <Image HeightRequest="30" x:Name="movementImage"/>
+                    <Label Text="Pohyb" FontSize="10" HorizontalOptions="Center"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding MovementVisualCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <StackLayout Spacing="0" Grid.Column="4">
+                    <Image HeightRequest="30" x:Name="fallImage"/>
+                    <Label Text="Pád" FontSize="10" HorizontalOptions="Center"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Command="{Binding FallVisualCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+            </Grid>
+
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

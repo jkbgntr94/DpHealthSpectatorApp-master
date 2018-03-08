@@ -288,25 +288,51 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             foreach (var mov in allMovements)
             {
                 Izby izba = new RoomsDetection().findRoom(mov);
-
-
+                
+               
                 /*Inicializacia ak ziadna sekvencia neexistuje*/
                 if (!context.MovementSekv.Any())
                 {
-                    Pohyb_Sekvencia pohS = new Pohyb_Sekvencia
+                    Pohyb_Sekvencia pohS = null;
+                    if (izba == null)
                     {
-                        PohSekvId = 1,
-                        Xhodnota = mov.Xhodnota,
-                        Yhodnota = mov.Yhodnota,
-                        TimeStamp = mov.TimeStamp,
-                        Cas_Zotrvania = "",
-                        Upozornenie_Cas = 0,
-                        Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
-                        //Hranice_Pohyb = hpoh,
-                        HranicePohybFK = hpoh.HranicePohybId,
-                        //Izby = izba,
-                        IzbyFK = izba.IzbaID
-                    };
+                        pohS = new Pohyb_Sekvencia
+                        {
+                            PohSekvId = 1,
+                            Xhodnota = mov.Xhodnota,
+                            Yhodnota = mov.Yhodnota,
+                            TimeStamp = mov.TimeStamp,
+                            Cas_Zotrvania = "",
+                            Upozornenie_Cas = 0,
+                            Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
+                            //Hranice_Pohyb = hpoh,
+                            HranicePohybFK = hpoh.HranicePohybId,
+                            
+                        };
+
+                    }
+                    else
+                    {
+                        pohS = new Pohyb_Sekvencia
+                        {
+                            PohSekvId = 1,
+                            Xhodnota = mov.Xhodnota,
+                            Yhodnota = mov.Yhodnota,
+                            TimeStamp = mov.TimeStamp,
+                            Cas_Zotrvania = "",
+                            Upozornenie_Cas = 0,
+                            Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
+                            //Hranice_Pohyb = hpoh,
+                            HranicePohybFK = hpoh.HranicePohybId,
+                            //Izby = izba,
+                            IzbyFK = izba.IzbaID
+                        };
+
+                    }
+
+                    
+
+                    //TODO: ked je izba prazdna vytvor to bez izby
 
                     Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                     p.PohSekvFK = 1;
@@ -369,10 +395,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         pohS.Upozornenie_Cas = limitCheck.checkTimeLimitMovement(context, pohS);
 
-
-
-
-
+                       
                         context.MovementSekv.Update(pohS);
                         context.Movement.Remove(mov);
                         //context.Movement.Update(mov);
@@ -390,24 +413,47 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     {
                         
                         Pohyb_Sekvencia last = context.MovementSekv.FirstOrDefault(t => t.PohSekvId == context.MovementSekv.Max(x => x.PohSekvId));
-
-                        Pohyb_Sekvencia pohnew = new Pohyb_Sekvencia
+                        Pohyb_Sekvencia pohnew = null;
+                        if (izba == null)
                         {
-                            PohSekvId = last.PohSekvId + 1,
-                            Xhodnota = mov.Xhodnota,
-                            Yhodnota = mov.Yhodnota,
-                            TimeStamp = mov.TimeStamp,
-                            Cas_Zotrvania = "",
-                            Upozornenie_Cas = 0,
-                            Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
-                            //Hranice_Pohyb = hpoh,
-                            HranicePohybFK = hpoh.HranicePohybId,
-                            //Izby = izba,
-                            IzbyFK = izba.IzbaID
-                        };
+                            pohnew = new Pohyb_Sekvencia
+                            {
+                                PohSekvId = last.PohSekvId + 1,
+                                Xhodnota = mov.Xhodnota,
+                                Yhodnota = mov.Yhodnota,
+                                TimeStamp = mov.TimeStamp,
+                                Cas_Zotrvania = "",
+                                Upozornenie_Cas = 0,
+                                Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
+                                //Hranice_Pohyb = hpoh,
+                                HranicePohybFK = hpoh.HranicePohybId,
+                               
+                            };
+
+                        }
+                        else
+                        {
+                            pohnew = new Pohyb_Sekvencia
+                            {
+                                PohSekvId = last.PohSekvId + 1,
+                                Xhodnota = mov.Xhodnota,
+                                Yhodnota = mov.Yhodnota,
+                                TimeStamp = mov.TimeStamp,
+                                Cas_Zotrvania = "",
+                                Upozornenie_Cas = 0,
+                                Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
+                                //Hranice_Pohyb = hpoh,
+                                HranicePohybFK = hpoh.HranicePohybId,
+                                //Izby = izba,
+                                IzbyFK = izba.IzbaID
+                            };
+
+                        }
+
+                        
 
                         Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
-                        p.PohSekvFK = last.PohSekvId + 1;
+                        //p.PohSekvFK = last.PohSekvId + 1;
                         //p.Pohyb_Sekvencia = pohnew;
 
                         System.Diagnostics.Debug.WriteLine("Spracovavana hodnota nepatri do aktualne otvorenej sekvencie");

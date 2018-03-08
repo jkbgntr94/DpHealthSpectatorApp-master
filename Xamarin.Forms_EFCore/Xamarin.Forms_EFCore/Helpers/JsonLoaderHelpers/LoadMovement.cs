@@ -32,7 +32,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 index = poh.PohybId;
                 index++;
             }
-
+            int i = 0;
             using (StreamReader sr = new StreamReader(stream))
             {
                 while(sr.Peek() >= 0)
@@ -46,9 +46,9 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                         PohybId = index++,
                         Xhodnota = obj.x,
                         Yhodnota = obj.y,
-                        TimeStamp = DateTime.Now.ToShortTimeString()
+                        TimeStamp = DateTime.Now.AddMinutes(i++).ToShortTimeString()
 
-                };
+                    };
                     context.Movement.Add(pohyb);
 
 
@@ -87,27 +87,41 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
             else
             {
+                insertNearPoints(context);
                 Pohyb poh = context.Movement.FirstOrDefault(p => p.PohybId == context.Movement.Max(t => t.PohybId));
                 index = poh.PohybId;
                 index++;
             }
 
+            
+
             for (int i = 0; i <= 100; i++)
             {
                 Random rnd = new Random();
 
-                HelpMethods helpm = new HelpMethods();
+               
                 Pohyb pohyb = new Pohyb
                 {
                     PohybId = index++,
                     Xhodnota = rnd.Next(1, 150),
                     Yhodnota = rnd.Next(1, 150),
-                    TimeStamp = DateTime.Now.ToShortTimeString()
+                    TimeStamp = DateTime.Now.AddMinutes(i).ToShortTimeString()
 
                 };
                 context.Movement.Add(pohyb);
 
             }
+
+            Pohyb pohyba = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 160,
+                Yhodnota = 15,
+                TimeStamp = DateTime.Now.AddMinutes(101).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyba);
+
 
             try
             {
@@ -117,6 +131,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             {
                 throw e;
             }
+
+            insertNearPoints(context);
 
             /*Vypis tabulky z DB*/
 
@@ -129,6 +145,82 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
 
 
+        }
+
+        public void insertNearPoints(DatabaseContext context)
+        {
+            int index = 1;
+
+            if (!context.Movement.Any())
+            {
+
+                index = 1;
+            }
+            else
+            {
+                Pohyb poh = context.Movement.FirstOrDefault(p => p.PohybId == context.Movement.Max(t => t.PohybId));
+                index = poh.PohybId;
+                index++;
+            }
+
+            Pohyb pohyb = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 10,
+                Yhodnota = 10,
+                TimeStamp = DateTime.Now.AddMinutes(1).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyb);
+
+            pohyb = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 20,
+                Yhodnota = 20,
+                TimeStamp = DateTime.Now.AddMinutes(2).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyb);
+
+            pohyb = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 10,
+                Yhodnota = 20,
+                TimeStamp = DateTime.Now.AddMinutes(2).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyb);
+
+            pohyb = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 0,
+                Yhodnota = 30,
+                TimeStamp = DateTime.Now.AddMinutes(2).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyb);
+
+            pohyb = new Pohyb
+            {
+                PohybId = index++,
+                Xhodnota = 15,
+                Yhodnota = 25,
+                TimeStamp = DateTime.Now.AddMinutes(2).ToShortTimeString()
+
+            };
+            context.Movement.Add(pohyb);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
     }

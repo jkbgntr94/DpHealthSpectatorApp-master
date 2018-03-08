@@ -53,7 +53,12 @@ namespace Xamarin.Forms_EFCore.DataAccess {
             //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
-
+        public DatabaseContext(int a)
+        {
+            if(a == 999) 
+            this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 

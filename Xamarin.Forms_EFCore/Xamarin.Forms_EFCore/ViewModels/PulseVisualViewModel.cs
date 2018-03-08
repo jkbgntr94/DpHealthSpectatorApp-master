@@ -215,7 +215,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void movementVisualCommand()
         {
 
-            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
 
         }
 
