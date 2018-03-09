@@ -31,5 +31,27 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
             return null;
         }
+
+        public Izby findRoomByCoord(float x, float y)
+        {
+            
+
+            DatabaseContext context = new DatabaseContext();
+
+            var izby = context.Rooms.ToList();
+
+            foreach (var izba in izby)
+            {
+                if ((x >= izba.LavaXhodnota * 10) && (x <= izba.PravaXhodnota * 10) && (y >= izba.LavaYhodnota * 10) && (y <= izba.PravaYhodnota * 10))
+                {
+
+                    return izba;
+
+                }
+
+            }
+
+            return null;
+        }
     }
 }

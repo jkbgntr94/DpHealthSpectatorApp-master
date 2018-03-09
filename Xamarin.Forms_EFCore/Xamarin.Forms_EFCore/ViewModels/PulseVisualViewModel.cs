@@ -222,7 +222,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void fallVisualCommand()
         {
 
-            await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
 
         }
     }

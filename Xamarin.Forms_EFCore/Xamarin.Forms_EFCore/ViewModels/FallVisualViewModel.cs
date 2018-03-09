@@ -15,93 +15,49 @@ using Xamarin.Forms_EFCore.Views;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
-    class MovementVisualViewModel : BaseViewModel
+    public class FallVisualViewModel : BaseViewModel
     {
 
-
-        private string movAlert;
-        public string MovAlert
+        private string fallTime;
+        public string FallTime
         {
             get
             {
-                return movAlert;
+                return fallTime;
             }
             set
             {
-                movAlert = value;
-                this.OnPropertyChanged("MovAlert");
+                fallTime = value;
+                this.OnPropertyChanged("FallTime");
             }
         }
-
-        private string movTime;
-        public string MovTime
+        private ObservableCollection<FallObj> fallList = new ObservableCollection<FallObj>();
+        public ObservableCollection<FallObj> FallList
         {
             get
             {
-                return movTime;
+                return fallList;
             }
             set
             {
-                movTime = value;
-                this.OnPropertyChanged("MovTime");
-            }
-        }
-
-        private string roomValue;
-        public string RoomValue
-        {
-            get
-            {
-                return roomValue;
-            }
-            set
-            {
-                roomValue = value;
-                this.OnPropertyChanged("RoomValue");
-            }
-        }
-
-        private string movDuration;
-        public string MovDuration
-        {
-            get
-            {
-                return movDuration;
-            }
-            set
-            {
-                movDuration = value;
-                this.OnPropertyChanged("MovDuration");
-            }
-        }
-
-        private ObservableCollection<MovementObj> sequenceList = new ObservableCollection<MovementObj>();
-        public ObservableCollection<MovementObj> SequenceList
-        {
-            get
-            {
-                return sequenceList;
-            }
-            set
-            {
-                sequenceList = value;
+                fallList = value;
 
             }
         }
 
 
-        private MovementObj selectedSequence;
-        public MovementObj SelectedSequence
+        private FallObj selectedFall;
+        public FallObj SelectedFall
         {
             get
             {
-                return selectedSequence;
+                return selectedFall;
             }
             set
             {
-                if (selectedSequence != value)
+                if (selectedFall != value)
                 {
-                    selectedSequence = value;
+                    selectedFall = value;
                     HandleSelectedItem();
 
                 }
@@ -111,12 +67,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void HandleSelectedItem()
         {
-            fillPageWithSequence(SelectedSequence);
+            fillPageWithFall(SelectedFall);
 
         }
 
         public delegate void MyEventAction(float x, float y);
-        public event MyEventAction MyEvent;
+        public event MyEventAction MyEventFall;
+
 
 
 
@@ -126,94 +83,83 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public ICommand DashboardCommand { get; private set; }
         public ICommand MovementVisualCommand { get; private set; }
         public ICommand FallVisualCommand { get; private set; }
-
-        public MovementVisualViewModel()
+        public FallVisualViewModel()
         {
-            //new DatabaseContext(999);
-            //new TestDataDbFiller();
+
             _context = new DatabaseContext();
+           /* LoadFall loadFall = new LoadFall();
+            loadFall.GenerateFallData(_context);
+            */
+            
             TempVisualCommand = new Command(tempVisualCommand);
             PulseVisualCommand = new Command(pulseVisualCommand);
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
-
             fillList();
         }
+
 
         private void fillList()
         {
             RoomsDetection roomsDetection = new RoomsDetection();
 
-            if (_context.MovementSekv.Any())
+            if (_context.Akcelerometers.Any())
             {
-                var movSekvList = _context.MovementSekv.ToList();
+                var FallValueList = _context.Akcelerometers.ToList();
 
-                foreach(var movSekv in movSekvList)
+                foreach (var fallValue in FallValueList)
                 {
-                    DateTime convertedDate = DateTime.Parse(movSekv.TimeStamp);
+                    DateTime convertedDate = DateTime.Parse(fallValue.TimeStamp);
 
                     Izby izba = null;
                     String izbaName = "";
-                    try { 
-                    izba = _context.Rooms.Where(t => t.IzbaID == movSekv.IzbyFK).First();
+                    try
+                    {
+                        izba = roomsDetection.findRoomByCoord(fallValue.Xhodnota,fallValue.Yhodnota);
                         izbaName = izba.Nazov;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         izbaName = "Vonku";
 
                     }
-                    string alert = "NA";
 
-                    if(movSekv.Upozornenie_Cas != 0)
+                    FallObj fallObj = new FallObj
                     {
-                        alert = "Čas";
-
-                    }else if (movSekv.Upozornenie_Hranica != 0)
-                    {
-                        alert = "Hranica";
-
-                    }
-
-
-                    MovementObj movObj = new MovementObj
-                    {
-                        PohId = movSekv.PohSekvId,
+                        FallId = fallValue.AkcelerometerID,
                         RoomName = izbaName,
-                        Alert = alert,
+                        xValue = fallValue.Xhodnota,
+                        yValue = fallValue.Yhodnota,
                         Date = convertedDate.ToShortDateString(),
-                        Time = convertedDate.ToLongTimeString(),
-                        Duration = movSekv.Cas_Zotrvania,
-                        xValue = movSekv.Xhodnota,
-                        yValue = movSekv.Yhodnota
+                        Time = convertedDate.ToLongTimeString()
+
                     };
 
-                    SequenceList.Add(movObj);
+                    FallList.Add(fallObj);
 
                 }
-                fillPageWithSequence(SequenceList.First());
+                fillPageWithFall(FallList.First());
 
             }
-            else {
+            else
+            {
 
-                MovAlert = "Neexistuje žiadna sekvencia";
+                FallTime = "Neexistuje žiadna sekvencia";
             }
 
 
         }
 
-        private void fillPageWithSequence(MovementObj mo)
+        private void fillPageWithFall(FallObj fo)
         {
+            FallTime = fo.Date + " " + fo.Time;
             
-            MovAlert = mo.Alert;
-            RoomValue = mo.RoomName;
-            MovTime = mo.Date + " " + mo.Time;
-            MovDuration = mo.Duration;
 
-            MyEvent?.Invoke(mo.xValue, mo.yValue);
+            MyEventFall?.Invoke(fo.xValue, fo.yValue);
 
         }
+
 
 
         async void tempVisualCommand()
@@ -253,6 +199,4 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
 
     }
-
-
 }

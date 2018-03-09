@@ -13,14 +13,14 @@ using Xamarin.Forms_EFCore.ViewModels.Drawing;
 namespace Xamarin.Forms_EFCore.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MovementVisualPage : ContentPage
+	public partial class FallVisualPage : ContentPage
 	{
-        private GameScene rawGameScene;
-        private GameScene gameScene;
+
+        private GameSceneFall gameScene;
         private CCGameView _gameView;
         private float _x;
         private float _y;
-        public MovementVisualPage ()
+        public FallVisualPage ()
 		{
 			InitializeComponent ();
 		}
@@ -28,10 +28,8 @@ namespace Xamarin.Forms_EFCore.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //movImg.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
 
-
-            CreateTopHalf(homeVisual);
+            CreateTopHalf(homeVisualFall);
 
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
@@ -39,14 +37,14 @@ namespace Xamarin.Forms_EFCore.Views
             movementImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
             fallImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.fall.png");
 
-            BindingContext = new MovementVisualViewModel();
+            BindingContext = new FallVisualViewModel();
 
-            var vm = (MovementVisualViewModel)this.BindingContext;
-            vm.MyEvent += (x, y) => { AddPoint(x, y); };
+            var vm = (FallVisualViewModel)this.BindingContext;
+            vm.MyEventFall += (x, y) => { AddPoint(x, y); };
         }
 
         private void CreateTopHalf(StackLayout stack)
-        {        
+        {
             stack.Children.Clear();
             var gameView = new CocosSharpView()
             {
@@ -68,32 +66,17 @@ namespace Xamarin.Forms_EFCore.Views
                 // This sets the game "world" resolution to 100x100:
                 gameView.DesignResolution = new CCSizeI(150, 150);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
-                gameScene = new GameScene(gameView);
+                gameScene = new GameSceneFall(gameView);
                 // Starts CocosSharp:
                 gameView.RunWithScene(gameScene);
                 _gameView = gameView;
             }
         }
 
-
-        private void AddLayer(float x, float y)
-        {
-            _x = x; _y = y;
-            
-            var agameScene = rawGameScene;
-
-            var gameView = _gameView;
-
-
-            agameScene.AddLayer(GameScene.newLayer(x,y));
-            gameView.RunWithScene(agameScene);
-        }
-
-
         private void AddPoint(float x, float y)
         {
             _x = x; _y = y;
-            
+
             var gameView = new CocosSharpView()
             {
                 // Notice it has the same properties as other XamarinForms Views
@@ -104,8 +87,8 @@ namespace Xamarin.Forms_EFCore.Views
             };
             // We'll add it to the top half (row 0)
 
-            homeVisual.Children.Clear();
-            homeVisual.Children.Add(gameView);
+            homeVisualFall.Children.Clear();
+            homeVisualFall.Children.Add(gameView);
 
         }
 
@@ -117,7 +100,7 @@ namespace Xamarin.Forms_EFCore.Views
                 // This sets the game "world" resolution to 100x100:
                 gameView.DesignResolution = new CCSizeI(150, 150);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
-                gameScene = new GameScene(gameView,_x,_y);
+                gameScene = new GameSceneFall(gameView, _x, _y);
                 // Starts CocosSharp:
                 gameView.RunWithScene(gameScene);
             }
