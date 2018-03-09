@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
+using Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers;
 using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
@@ -114,6 +115,10 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         }
 
+        public delegate void MyEventAction(float x, float y);
+        public event MyEventAction MyEvent;
+
+
 
         DatabaseContext _context;
         public ICommand TempVisualCommand { get; private set; }
@@ -124,8 +129,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         public MovementVisualViewModel()
         {
-
-
+            //new DatabaseContext(999);
+            //new TestDataDbFiller();
             _context = new DatabaseContext();
             TempVisualCommand = new Command(tempVisualCommand);
             PulseVisualCommand = new Command(pulseVisualCommand);
@@ -133,7 +138,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
 
-
+            fillList();
         }
 
         private void fillList()
@@ -147,8 +152,18 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 foreach(var movSekv in movSekvList)
                 {
                     DateTime convertedDate = DateTime.Parse(movSekv.TimeStamp);
-                    Izby izba = _context.Rooms.Where(t => t.IzbaID == movSekv.IzbyFK).First();
 
+                    Izby izba = null;
+                    String izbaName = "";
+                    try { 
+                    izba = _context.Rooms.Where(t => t.IzbaID == movSekv.IzbyFK).First();
+                        izbaName = izba.Nazov;
+                    }
+                    catch(Exception e)
+                    {
+                        izbaName = "Vonku";
+
+                    }
                     string alert = "NA";
 
                     if(movSekv.Upozornenie_Cas != 0)
@@ -165,11 +180,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     MovementObj movObj = new MovementObj
                     {
                         PohId = movSekv.PohSekvId,
-                        RoomName = izba.Nazov,
+                        RoomName = izbaName,
                         Alert = alert,
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
-                        Duration = movSekv.Cas_Zotrvania
+                        Duration = movSekv.Cas_Zotrvania,
+                        xValue = movSekv.Xhodnota,
+                        yValue = movSekv.Yhodnota
                     };
 
                     SequenceList.Add(movObj);
@@ -188,10 +205,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void fillPageWithSequence(MovementObj mo)
         {
+            
             MovAlert = mo.Alert;
             RoomValue = mo.RoomName;
             MovTime = mo.Date + " " + mo.Time;
             MovDuration = mo.Duration;
+
+            MyEvent?.Invoke(mo.xValue, mo.yValue);
 
         }
 

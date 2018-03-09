@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.ViewModels.MovementVisualPage">
+             x:Class="Xamarin.Forms_EFCore.Views.MovementVisualPage">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -20,10 +20,17 @@
             </Grid.ColumnDefinitions>
 
             <Label x:Name="Movement" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Pohyb"/>
-            <Image x:Name="movImg" VerticalOptions="Center"
+
+            <StackLayout x:Name="homeVisual"  VerticalOptions="Center"
+                   HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
+                
+                
+            </StackLayout>
+            
+            <!--<Image x:Name="movImg" VerticalOptions="Center"
                    HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
             </Image>
-
+-->
             <Label x:Name="MovAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding MovAlert}"/>
 
 

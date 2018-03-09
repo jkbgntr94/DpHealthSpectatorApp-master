@@ -13,5 +13,7 @@ namespace Xamarin.Forms_EFCore.Models.ObjectsForList
         public string Time { get; set; }
         public string Duration { get; set; }
         public string Alert { get; set; }
+        public float xValue { get; set; }
+        public float yValue { get; set; }
     }
 }

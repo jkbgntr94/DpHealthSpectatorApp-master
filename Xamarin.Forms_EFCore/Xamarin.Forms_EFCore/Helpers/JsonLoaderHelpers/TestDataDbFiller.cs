@@ -37,6 +37,9 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             LoadRooms loadRooms = new LoadRooms();
             loadRooms.LoadRoomsData(_context);
+
+            LoadFall loadFall = new LoadFall();
+            loadFall.GenerateFallData(_context);
             
             sq.MovementSequencer(_context);
 
