@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.ViewModels.Drawing;
 
 namespace Xamarin.Forms_EFCore.Views
@@ -71,7 +72,7 @@ namespace Xamarin.Forms_EFCore.Views
              if (gameView != null)
              {
                  // This sets the game "world" resolution to 100x100:
-                 gameView.DesignResolution = new CCSizeI(150, 150);
+                 gameView.DesignResolution = new CCSizeI(SettingsController.MaxX, SettingsController.MaxY);
                  // GameScene is the root of the CocosSharp rendering hierarchy:
                  gameScene = new GameScene(gameView);
                  // Starts CocosSharp:

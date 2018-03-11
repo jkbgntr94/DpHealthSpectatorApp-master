@@ -229,14 +229,33 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void movementVisualCommand()
         {
 
-            await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
 
         }
 
         async void fallVisualCommand()
         {
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
 
-            await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+            
 
         }
     }

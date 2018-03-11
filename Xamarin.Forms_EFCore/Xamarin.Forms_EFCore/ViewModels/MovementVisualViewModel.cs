@@ -118,6 +118,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public delegate void MyEventAction(float x, float y);
         public event MyEventAction MyEvent;
 
+        public delegate void MovePageAction();
+        public event MovePageAction movePageFromMov;
+
+        public delegate void GoToHeatmap();
+        public event GoToHeatmap toHeatmap;
 
 
         DatabaseContext _context;
@@ -126,6 +131,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public ICommand DashboardCommand { get; private set; }
         public ICommand MovementVisualCommand { get; private set; }
         public ICommand FallVisualCommand { get; private set; }
+        public ICommand HeatmapCommand { get; private set; }
 
         public MovementVisualViewModel()
         {
@@ -137,6 +143,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
+            HeatmapCommand = new Command(heatmapCommand);
 
             fillList();
         }
@@ -219,38 +226,62 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void tempVisualCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new TemperatureVisualPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
         async void pulseVisualCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new PulseVisualPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
         async void dashboardCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
         async void movementVisualCommand()
         {
+         /*   try
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
 
-            await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }*/
+
 
         }
 
         async void fallVisualCommand()
         {
+            movePageFromMov?.Invoke();
 
-            await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+            /*  try
+              {
+                  await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+
+              }
+              catch (Exception e)
+              {
+                  System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+              }
+              */
 
         }
 
+        async void heatmapCommand()
+        {
+
+            toHeatmap?.Invoke();
+            //await Application.Current.MainPage.Navigation.PushAsync(new HeatMapPage());
+
+        }
 
     }
 

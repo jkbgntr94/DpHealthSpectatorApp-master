@@ -51,5 +51,15 @@ namespace Xamarin.Forms_EFCore.Helpers
             get => AppSettings.GetValueOrDefault(nameof(Email), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(Email), value);
         }
+        public static int MaxX
+        {
+            get => AppSettings.GetValueOrDefault(nameof(MaxX), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(MaxX), value);
+        }
+        public static int MaxY
+        {
+            get => AppSettings.GetValueOrDefault(nameof(MaxY), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(MaxY), value);
+        }
     }
 }

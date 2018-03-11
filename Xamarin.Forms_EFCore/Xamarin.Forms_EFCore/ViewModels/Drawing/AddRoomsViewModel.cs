@@ -17,8 +17,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 {
     public class AddRoomsViewModel : BaseViewModel
     {
-      /*  private string maxX;
-        public string MaxX
+        private int maxX;
+        public int MaxX
         {
             get
             {
@@ -31,8 +31,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
         }
 
-        private string maxY;
-        public string MaxY
+        private int maxY;
+        public int MaxY
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 maxY = value;
 
             }
-        }*/
+        }
 
         private string nameRoom;
         public string NameRoom
@@ -141,7 +141,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             SaveRoom = new Command(saveRoom);
             Finish = new Command(finish);
 
-            TestDataDbFiller filler = new TestDataDbFiller();
+            //TestDataDbFiller filler = new TestDataDbFiller();
 
             //System.Diagnostics.Debug.WriteLine("****************************** finished ");
             /*RoomsDetection rd = new RoomsDetection(); 
@@ -159,6 +159,10 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
         async void finish()
         {
+            //System.Diagnostics.Debug.WriteLine("MAX KOORD" + MaxX + " " + MaxY);
+
+            SettingsController.MaxX = MaxX;
+            SettingsController.MaxY = MaxY;
 
             await Application.Current.MainPage.Navigation.PushAsync(new DrawHomePage());
 

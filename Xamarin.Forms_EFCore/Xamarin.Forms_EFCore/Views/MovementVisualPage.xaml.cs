@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.ViewModels;
 using Xamarin.Forms_EFCore.ViewModels.Drawing;
 
@@ -29,7 +30,7 @@ namespace Xamarin.Forms_EFCore.Views
         {
             base.OnAppearing();
             //movImg.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
-
+            heatImg.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.heat-map.png");
 
             CreateTopHalf(homeVisual);
 
@@ -43,6 +44,12 @@ namespace Xamarin.Forms_EFCore.Views
 
             var vm = (MovementVisualViewModel)this.BindingContext;
             vm.MyEvent += (x, y) => { AddPoint(x, y); };
+
+            var vma = (MovementVisualViewModel)this.BindingContext;
+            vma.movePageFromMov += () => { goToFall(); };
+
+            var vmb = (MovementVisualViewModel)this.BindingContext;
+            vm.toHeatmap += () => { goToHeat(); };
         }
 
         private void CreateTopHalf(StackLayout stack)
@@ -66,7 +73,7 @@ namespace Xamarin.Forms_EFCore.Views
             if (gameView != null)
             {
                 // This sets the game "world" resolution to 100x100:
-                gameView.DesignResolution = new CCSizeI(150, 150);
+                gameView.DesignResolution = new CCSizeI(SettingsController.MaxX, SettingsController.MaxY);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
                 gameScene = new GameScene(gameView);
                 // Starts CocosSharp:
@@ -115,12 +122,48 @@ namespace Xamarin.Forms_EFCore.Views
             if (gameView != null)
             {
                 // This sets the game "world" resolution to 100x100:
-                gameView.DesignResolution = new CCSizeI(150, 150);
+                gameView.DesignResolution = new CCSizeI(SettingsController.MaxX, SettingsController.MaxY);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
                 gameScene = new GameScene(gameView,_x,_y);
                 // Starts CocosSharp:
                 gameView.RunWithScene(gameScene);
             }
+        }
+
+        async void goToFall()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new FallVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+        }
+
+        async void goToHeat()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new HeatMapPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
         }
 
     }

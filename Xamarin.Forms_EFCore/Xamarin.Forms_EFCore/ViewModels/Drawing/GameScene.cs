@@ -126,5 +126,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             return layer;
         }
 
+       
+
     }
 }

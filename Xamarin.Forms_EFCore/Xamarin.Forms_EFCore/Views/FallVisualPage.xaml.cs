@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.ViewModels;
 using Xamarin.Forms_EFCore.ViewModels.Drawing;
 
@@ -41,6 +42,9 @@ namespace Xamarin.Forms_EFCore.Views
 
             var vm = (FallVisualViewModel)this.BindingContext;
             vm.MyEventFall += (x, y) => { AddPoint(x, y); };
+
+            var vma = (FallVisualViewModel)this.BindingContext;
+            vma.movePage += () => { goToMovement(); };
         }
 
         private void CreateTopHalf(StackLayout stack)
@@ -64,7 +68,7 @@ namespace Xamarin.Forms_EFCore.Views
             if (gameView != null)
             {
                 // This sets the game "world" resolution to 100x100:
-                gameView.DesignResolution = new CCSizeI(150, 150);
+                gameView.DesignResolution = new CCSizeI(SettingsController.MaxX, SettingsController.MaxY);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
                 gameScene = new GameSceneFall(gameView);
                 // Starts CocosSharp:
@@ -98,12 +102,30 @@ namespace Xamarin.Forms_EFCore.Views
             if (gameView != null)
             {
                 // This sets the game "world" resolution to 100x100:
-                gameView.DesignResolution = new CCSizeI(150, 150);
+                gameView.DesignResolution = new CCSizeI(SettingsController.MaxX, SettingsController.MaxY);
                 // GameScene is the root of the CocosSharp rendering hierarchy:
                 gameScene = new GameSceneFall(gameView, _x, _y);
                 // Starts CocosSharp:
                 gameView.RunWithScene(gameScene);
             }
+        }
+
+        async void goToMovement()
+        {
+            try
+            {
+                
+                Navigation.InsertPageBefore(new MovementVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+               // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
         }
 
     }

@@ -332,8 +332,6 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     
 
-                    //TODO: ked je izba prazdna vytvor to bez izby
-
                     Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                     p.PohSekvFK = 1;
                     System.Diagnostics.Debug.WriteLine("Inicializacia ak ziadna sekvencia neexistuje");

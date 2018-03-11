@@ -74,7 +74,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public delegate void MyEventAction(float x, float y);
         public event MyEventAction MyEventFall;
 
-
+        public delegate void MovePageAction();
+        public event MovePageAction movePage;
 
 
         DatabaseContext _context;
@@ -165,35 +166,53 @@ namespace Xamarin.Forms_EFCore.ViewModels
         async void tempVisualCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new TemperatureVisualPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
         async void pulseVisualCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new PulseVisualPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
         async void dashboardCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
-            Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count - 1]);
 
         }
 
-        async void movementVisualCommand()
+        public void movementVisualCommand()
         {
+            movePage?.Invoke();
 
-            await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+            /* try
+             {
+                 await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+             }
+             catch (Exception e)
+             {
+                 System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+             }*/
+
 
         }
 
         async void fallVisualCommand()
         {
 
-            await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+          /*  try
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+          */
 
         }
 
