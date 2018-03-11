@@ -32,7 +32,10 @@ namespace Xamarin.Forms_EFCore.Views
             CreateBottomHalf(grid);
 
             addRoom.Clicked += (sender, e) => {
-                Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+
+                goToDash();
+
+               // Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
             };
 
         }
@@ -80,6 +83,23 @@ namespace Xamarin.Forms_EFCore.Views
              }
          }
 
+        async void goToDash()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new DashboardPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+        }
 
      }
 
