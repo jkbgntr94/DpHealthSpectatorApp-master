@@ -66,49 +66,34 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Spacing="0" Grid.Column="0">
+                <StackLayout x:Name="tempLayout" Spacing="0" Grid.Column="0">
                     <Image HeightRequest="30" x:Name="tempImage"/>
                     <Label Text="Teplota" FontSize="10" HorizontalOptions="Center"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                        Command="{Binding TempVisualCommand}"/>
-                    </StackLayout.GestureRecognizers>
+                
                 </StackLayout>
 
-                <StackLayout Spacing="0" Grid.Column="1">
+                <StackLayout x:Name="pulseLayout" Spacing="0" Grid.Column="1">
                     <Image HeightRequest="30" x:Name="pulseImage"/>
                     <Label Text="Tep" FontSize="10" HorizontalOptions="Center"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                        Command="{Binding PulseVisualCommand}"/>
-                    </StackLayout.GestureRecognizers>
+                    
                 </StackLayout>
 
-                <StackLayout Spacing="0" Grid.Column="2">
+                <StackLayout x:Name="dashLayout" Spacing="0" Grid.Column="2">
                     <Image HeightRequest="30" x:Name="dashboardImage"/>
                     <Label Text="Domov" FontSize="10" HorizontalOptions="Center"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                        Command="{Binding DashboardCommand}"/>
-                    </StackLayout.GestureRecognizers>
+                   
                 </StackLayout>
 
-                <StackLayout Spacing="0" Grid.Column="3">
+                <StackLayout x:Name="movementLayout" Spacing="0" Grid.Column="3">
                     <Image HeightRequest="30" x:Name="movementImage"/>
                     <Label Text="Pohyb" FontSize="10" HorizontalOptions="Center"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                        Command="{Binding MovementVisualCommand}"/>
-                    </StackLayout.GestureRecognizers>
+                   
                 </StackLayout>
 
-                <StackLayout Spacing="0" Grid.Column="4">
+                <StackLayout x:Name="fallLayout" Spacing="0" Grid.Column="4">
                     <Image HeightRequest="30" x:Name="fallImage"/>
                     <Label Text="Pád" FontSize="10" HorizontalOptions="Center"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer
-                        Command="{Binding FallVisualCommand}"/>
-                    </StackLayout.GestureRecognizers>
+                    
                 </StackLayout>
 
             </Grid>

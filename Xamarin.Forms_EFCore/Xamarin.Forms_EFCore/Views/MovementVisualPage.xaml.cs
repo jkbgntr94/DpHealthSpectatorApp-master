@@ -50,6 +50,126 @@ namespace Xamarin.Forms_EFCore.Views
 
             var vmb = (MovementVisualViewModel)this.BindingContext;
             vm.toHeatmap += () => { goToHeat(); };
+
+            var temptgr = new TapGestureRecognizer();
+            temptgr.Tapped += (s, e) => OnTempClicked();
+            tempLayout.GestureRecognizers.Add(temptgr);
+
+            var pulsetgr = new TapGestureRecognizer();
+            pulsetgr.Tapped += (s, e) => OnPulseClicked();
+            pulseLayout.GestureRecognizers.Add(pulsetgr);
+
+            var dashtgr = new TapGestureRecognizer();
+            dashtgr.Tapped += (s, e) => OnDashClicked();
+            dashLayout.GestureRecognizers.Add(dashtgr);
+
+            var movtgr = new TapGestureRecognizer();
+            movtgr.Tapped += (s, e) => OnMovClicked();
+            movementLayout.GestureRecognizers.Add(movtgr);
+
+            var falltgr = new TapGestureRecognizer();
+            falltgr.Tapped += (s, e) => OnFallClicked();
+            fallLayout.GestureRecognizers.Add(falltgr);
+
+        }
+
+        async void OnTempClicked()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new TemperatureVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+
+
+        }
+
+        async void OnPulseClicked()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new PulseVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+
+
+        }
+
+        async void OnDashClicked()
+        {
+
+            try
+            {
+
+                Navigation.InsertPageBefore(new DashboardPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+
+        }
+        async void OnMovClicked()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new MovementVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+
+
+        }
+
+        async void OnFallClicked()
+        {
+            try
+            {
+
+                Navigation.InsertPageBefore(new FallVisualPage(), this);
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+
+
         }
 
         private void CreateTopHalf(StackLayout stack)

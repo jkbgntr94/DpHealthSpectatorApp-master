@@ -162,18 +162,20 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     try
                     {
                         DateTime endtime = DateTime.Parse(t.TimeClose);
-                        durationTime = (endtime - convertedDate).TotalMinutes.ToString();
+                        double time = (endtime - convertedDate).TotalMinutes;
+                        var x = time - Math.Truncate(time);
+                        durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec"; 
                     }
                     catch(Exception e)
                     {
                         System.Diagnostics.Debug.WriteLine("Exception parse date " + e.ToString());
                         durationTime = "NA";
                     }
-
+                    
                     TemperatureObj tem = new TemperatureObj()
                     {
                         TempId = t.TeplSekvId,
-                        Value = t.Sekvencia + "C",
+                        Value = t.Sekvencia.ToString("n2") + " °C",
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         Duration = durationTime,

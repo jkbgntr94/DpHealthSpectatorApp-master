@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="date-time.png" />
+    <None Remove="duration.png" />
     <None Remove="fall.png" />
     <None Remove="geodata.xml" />
     <None Remove="heat-map.png" />
@@ -24,9 +26,12 @@
     <None Remove="temperature100.txt" />
     <None Remove="temperatureWeek.txt" />
     <None Remove="user_plus.png" />
+    <None Remove="value.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="date-time.png" />
+    <EmbeddedResource Include="duration.png" />
     <EmbeddedResource Include="fall.png" />
     <EmbeddedResource Include="heat-map.png" />
     <EmbeddedResource Include="home.png" />
@@ -52,6 +57,7 @@
     <EmbeddedResource Include="temperature100.txt" />
     <EmbeddedResource Include="temperatureWeek.txt" />
     <EmbeddedResource Include="user_plus.png" />
+    <EmbeddedResource Include="value.png" />
   </ItemGroup>
 
   <ItemGroup>

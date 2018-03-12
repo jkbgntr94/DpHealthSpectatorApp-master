@@ -12,7 +12,7 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.AddRoomsPage());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.TemperatureVisualPage());
         }
 
         protected override void OnStart() {
