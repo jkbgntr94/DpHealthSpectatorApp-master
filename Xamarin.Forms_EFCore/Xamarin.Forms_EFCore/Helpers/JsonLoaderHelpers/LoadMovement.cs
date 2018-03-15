@@ -223,5 +223,56 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
         }
 
+        public void GenerateMovementOneSample()
+        {
+            DatabaseContext context = new DatabaseContext();
+            int index = 1;
+
+            if (!context.Movement.Any())
+            {
+
+                index = 1;
+            }
+            else
+            {
+                Pohyb poh = context.Movement.FirstOrDefault(p => p.PohybId == context.Movement.Max(t => t.PohybId));
+                index = poh.PohybId;
+                index++;
+            }
+
+
+
+              Random rnd = new Random();
+
+
+                Pohyb pohyb = new Pohyb
+                {
+                    PohybId = index++,
+                    Xhodnota = rnd.Next(1, 150),
+                    Yhodnota = rnd.Next(1, 150),
+                    TimeStamp = DateTime.Now.ToShortTimeString()
+
+                };
+                context.Movement.Add(pohyb);
+
+
+
+            System.Diagnostics.Debug.WriteLine("pohyb " + pohyb.PohybId);
+
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+           
+
+
+        }
+
     }
 }

@@ -63,7 +63,11 @@ namespace Xamarin.Forms_EFCore.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::Xamarin.Forms_EFCore.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::CocosSharp.Forms.Android.Resource.String.ApplicationName = global::Xamarin.Forms_EFCore.Droid.Resource.String.ApplicationName;
+			global::CocosSharp.Forms.Android.Resource.String.Hello = global::Xamarin.Forms_EFCore.Droid.Resource.String.Hello;
 			global::CocosSharp.Forms.Android.Resource.String.library_name = global::Xamarin.Forms_EFCore.Droid.Resource.String.library_name;
+			global::PCLStorage.Resource.String.ApplicationName = global::Xamarin.Forms_EFCore.Droid.Resource.String.ApplicationName;
+			global::PCLStorage.Resource.String.Hello = global::Xamarin.Forms_EFCore.Droid.Resource.String.Hello;
 			global::Plugin.LocalNotifications.Resource.Drawable.plugin_lc_smallicon = global::Xamarin.Forms_EFCore.Droid.Resource.Drawable.plugin_lc_smallicon;
 			global::Splat.Resource.String.library_name = global::Xamarin.Forms_EFCore.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Xamarin.Forms_EFCore.Droid.Resource.Attribute.actionBarSize;
@@ -3736,6 +3740,12 @@ namespace Xamarin.Forms_EFCore.Droid
 		
 		public partial class String
 		{
+			
+			// aapt resource value: 0x7f090040
+			public const int ApplicationName = 2131296320;
+			
+			// aapt resource value: 0x7f09003f
+			public const int Hello = 2131296319;
 			
 			// aapt resource value: 0x7f090015
 			public const int abc_action_bar_home_description = 2131296277;

@@ -95,6 +95,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         public DashboardViewModel()
         {
+            
             //new DatabaseContext(999);
 
             _context = new DatabaseContext();

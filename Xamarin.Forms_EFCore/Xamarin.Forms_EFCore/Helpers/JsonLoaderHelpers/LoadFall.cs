@@ -73,5 +73,56 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
         }
 
+
+
+        public void GenerateFallOneSample()
+        {
+
+            DatabaseContext context = new DatabaseContext();
+
+            int index = 1;
+
+            if (!context.Akcelerometers.Any())
+            {
+
+                index = 1;
+            }
+            else
+            {
+
+                Akcelerometer pada = context.Akcelerometers.FirstOrDefault(p => p.AkcelerometerID == context.Akcelerometers.Max(t => t.AkcelerometerID));
+                index = pada.AkcelerometerID;
+                index++;
+            }
+
+
+                Random rnd = new Random();
+
+
+                Akcelerometer pad = new Akcelerometer
+                {
+                    AkcelerometerID = index++,
+                    Xhodnota = rnd.Next(1, 150),
+                    Yhodnota = rnd.Next(1, 150),
+                    Zhodnota = rnd.Next(1, 150),
+                    TimeStamp = DateTime.Now.ToShortTimeString()
+                    
+                };
+                context.Akcelerometers.Add(pad);
+
+            System.Diagnostics.Debug.WriteLine("pad " + pad.Xhodnota + " " + pad.TimeStamp + " " + pad.Yhodnota);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+        }
+
     }
 }

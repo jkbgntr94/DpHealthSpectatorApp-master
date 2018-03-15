@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCLStorage;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,8 +35,9 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             {
                 Tep tmp = context.Pulse.FirstOrDefault(t => t.TepId == context.Pulse.Max(x => x.TepId));
                 index = tmp.TepId;
+                index++;
             }
-            index++;
+            
 
             using (StreamReader sr = new StreamReader(stream))
              {
@@ -81,5 +83,93 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
               */
         }
 
+
+        public async void createFileFromFile()
+        {
+            try { 
+                var assembly = typeof(LoadTemperature).GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.pulse100.txt");
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+                IFile pulseFile = await rootFolder.CreateFileAsync("pulseData.txt", CreationCollisionOption.ReplaceExisting);
+
+                String text;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    text = sr.ReadToEnd();
+
+                }
+                pulseFile.WriteAllTextAsync(text);
+            }catch(Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Zapis pulz suboru do zariadenia: " + e.ToString());
+
+                }
 }
+
+
+        public async void readFileByLines()
+        {
+            try {
+                DatabaseContext context = new DatabaseContext();
+
+            IFileSystem fileSystem = FileSystem.Current;
+            IFolder rootFolder = fileSystem.LocalStorage;
+
+            IFile tempFile = await rootFolder.GetFileAsync("pulseData.txt");
+
+            string newFileText; string line;
+            string fileText = await tempFile.ReadAllTextAsync();
+            using (System.IO.StringReader reader = new System.IO.StringReader(fileText))
+            {
+                line = reader.ReadLine();
+                System.Diagnostics.Debug.WriteLine("pulse " + line);
+                newFileText = reader.ReadToEnd();
+            }
+
+            tempFile.WriteAllTextAsync(newFileText);
+
+            Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(line);
+
+            int index = 1;
+            if (!context.Pulse.Any())
+            {
+                index = 1;
+            }
+            else
+            {
+                Tep tmp = context.Pulse.FirstOrDefault(t => t.TepId == context.Pulse.Max(x => x.TepId));
+                index = tmp.TepId;
+            }
+            index++;
+
+            Tep tep = new Tep
+            {
+                TepId = index++,
+                TimeStamp = obj.header.creation_date_time.ToString(),
+                Hodnota = obj.body.heart_rate.value
+
+
+            };
+            context.Pulse.Add(tep);
+            try
+            {
+                context.SaveChanges();
+                tep = null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Citanie pulz suboru zo zariadenia: " + e.ToString());
+
+            }
+
+
+        }
+
+    }
 }

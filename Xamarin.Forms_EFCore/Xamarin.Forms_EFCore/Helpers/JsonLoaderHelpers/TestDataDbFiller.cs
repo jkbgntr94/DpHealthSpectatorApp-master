@@ -11,7 +11,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
         DatabaseContext _context;
         public TestDataDbFiller()
         {
-            _context = new DatabaseContext();
+            /*_context = new DatabaseContext();
 
             LoadPulse loader = new LoadPulse();
             loader.LoadPulseJson(_context);
@@ -41,7 +41,19 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             LoadFall loadFall = new LoadFall();
             loadFall.GenerateFallData(_context);
             
-            sq.MovementSequencer(_context);
+            sq.MovementSequencer(_context);*/
+
+        }
+
+        public void loadMandatoryData()
+        {
+            _context = new DatabaseContext();
+            Helpers.JsonLoaderHelpers.LoadLimits loaderL = new Helpers.JsonLoaderHelpers.LoadLimits();
+            loaderL.LoadPulseLimits(_context);
+            loaderL.LoadTemperatureLimits(_context);
+            loaderL.LoadMovementLimits(_context);
+
+
 
         }
     }
