@@ -45,16 +45,28 @@
 
             </Grid>
             <Label x:Name="DeshDescAlerts" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="2" Grid.Column="0" Text="Posledné upozornenia"/>
-            <StackLayout Grid.Row="3">
-                <ListView x:Name="AlertsList" ItemsSource="{Binding Alerts}">
+           
+            <StackLayout Grid.Row="3" >
+                <ListView x:Name="AlertsList" ItemsSource="{Binding Alerts}" SelectedItem="{Binding SelectedAlerts}" >
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding }"/>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Label Text="{Binding Name}" TextColor="Black" />
+                                        <Label Text="{Binding Value}" TextColor="Black"/>
+                                        <Label Text="{Binding Date}" TextColor="Black"/>
+                                        <Label Text="{Binding Time}" TextColor="Black"/>
+                                        <Label Text="{Binding Alert}" TextColor="Black"  />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
                         </DataTemplate>
-
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
+
 
             <BoxView BackgroundColor="#DCDCDC" Grid.Row="4"></BoxView>
             <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="5">

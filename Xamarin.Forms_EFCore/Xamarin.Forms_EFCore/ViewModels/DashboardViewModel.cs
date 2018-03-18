@@ -10,14 +10,42 @@ using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers;
 using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
+using Xamarin.Forms_EFCore.Models.ObjectsForList;
 using Xamarin.Forms_EFCore.Views;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
     class DashboardViewModel : BaseViewModel
     {
-        private ObservableCollection<string> alerts = new ObservableCollection<string>();
-        public ObservableCollection<string> Alerts
+
+
+        private AlertSequenceObj selectedAlerts;
+        public AlertSequenceObj SelectedAlerts
+        {
+            get
+            {
+                return selectedAlerts;
+            }
+            set
+            {
+                if (selectedAlerts != value)
+                {
+                    selectedAlerts = value;
+                    HandleSelectedItem();
+
+                }
+
+            }
+        }
+
+        private void HandleSelectedItem()
+        {
+            movePageSequence(SelectedAlerts);
+
+        }
+
+        private ObservableCollection<AlertSequenceObj> alerts = new ObservableCollection<AlertSequenceObj>();
+        public ObservableCollection<AlertSequenceObj> Alerts
         {
             get
             {
@@ -131,6 +159,9 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 throw e;
             }
             */
+
+            SettingsController.MaxX = 150;
+            SettingsController.MaxY = 150;
 
             setValues();
 
@@ -271,58 +302,276 @@ namespace Xamarin.Forms_EFCore.ViewModels
             
             if (_context.PulseSekv.Any())
             {
-                Tep_Sekvencia ts = _context.PulseSekv.FirstOrDefault(t => t.TepSekvId == _context.PulseSekv.Max(x => x.TepSekvId));
+
+                var all = _context.PulseSekv.OrderBy(x => x.TimeStart).ToList();
+                all.Reverse();
+                Tep_Sekvencia ts = null;
+                foreach (var a in all)
+                {
+                    ts = a;
+                    if (a.Upozornenie != 0) break;
+
+                }
+                
+               // Tep_Sekvencia ts = _context.PulseSekv.FirstOrDefault(t => t.TepSekvId == _context.PulseSekv.Max(x => x.TepSekvId));
 
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+                if(ts != null)
+                {
+                    DateTime convertedDate = DateTime.Parse(ts.TimeStart);
+
+                    AlertSequenceObj myObj = new AlertSequenceObj
+                    {
+                        Name = "Tep",
+                        Value = ts.Sekvencia + " BPM",
+                        Date = convertedDate.ToShortDateString(),
+                        Time = convertedDate.ToLongTimeString(),
+                        Alert = loader.getStringValuePulseAndTempLimit(ts.Upozornenie)
+
+                    };
+                    Alerts.Add(myObj);
+
+                }
+                else
+                {
+                    AlertSequenceObj myObj = new AlertSequenceObj
+                    {
+                        Name = "Tep",
+                        Alert = "Neexistuje upozornenie"
+
+                    };
+                    Alerts.Add(myObj);
+
+                }
 
 
+                //String tepSekvString = "Tep " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
 
-                String tepSekvString = "Tep " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
 
-                Alerts.Add(tepSekvString);
             }
+            else
+            {
+                AlertSequenceObj myObj = new AlertSequenceObj
+                {
+                    Name = "Tep",
+                    Alert = "Neexistuje sekvencia"
+
+                };
+                Alerts.Add(myObj);
+
+            }
+
 
 
             if (_context.TemperatureSekv.Any())
             {
-                Teplota_Sekvencia ts = _context.TemperatureSekv.FirstOrDefault(t => t.TeplSekvId == _context.TemperatureSekv.Max(x => x.TeplSekvId));
+
+                var all = _context.TemperatureSekv.OrderBy(x => x.TimeStart).ToList();
+                all.Reverse();
+                Teplota_Sekvencia ts = null;
+                foreach (var a in all)
+                {
+                    ts = a;
+                    if (a.Upozornenie != 0) break;
+
+                }
 
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+                if (ts != null)
+                {
+                    DateTime convertedDate = DateTime.Parse(ts.TimeStart);
 
-                String teplSekvString = "Teplota " + ts.Sekvencia + " " + ts.TimeStart + " " + loader.getStringValuePulseAndTempLimit(ts.Upozornenie);
-                Alerts.Add(teplSekvString);
+                    AlertSequenceObj myObj = new AlertSequenceObj
+                    {
+                        Name = "Teplota",
+                        Value = ts.Sekvencia.ToString("n2") + " °C",
+                        Date = convertedDate.ToShortDateString(),
+                        Time = convertedDate.ToLongTimeString(),
+                        Alert = loader.getStringValuePulseAndTempLimit(ts.Upozornenie)
+
+                    };
+                    Alerts.Add(myObj);
+
+                }
+                else
+                {
+                    AlertSequenceObj myObj = new AlertSequenceObj
+                    {
+                        Name = "Teplota",
+                        Alert = "Neexistuje upozornenie"
+
+                    };
+                    Alerts.Add(myObj);
+
+                }
+
+
 
             }
+            else
+            {
+                AlertSequenceObj myObj = new AlertSequenceObj
+                {
+                    Name = "Teplota",
+                    Alert = "Neexistuje sekvencia"
+
+                };
+                Alerts.Add(myObj);
+
+            }
+
+
+
 
             if (_context.MovementSekv.Any())
             {
-                var pohyb_Sekvencia_list = _context.MovementSekv.ToList();
+               
+                var all = _context.MovementSekv.OrderBy(x => x.TimeStamp).ToList();
+                all.Reverse();
 
-                foreach (var p in pohyb_Sekvencia_list)
+                Pohyb_Sekvencia ps = null;
+                foreach (var a in all)
                 {
-                    if (p.Upozornenie_Cas != 0)
-                    {
-                        String pohSekvString = "Pohyb [" + p.Xhodnota + "," + p.Yhodnota + "] " + p.TimeStamp + " Prekročený čas";
-                        Alerts.Add(pohSekvString);
-                        break;
-
-                    }
-                    else if (p.Upozornenie_Hranica != 0)
-                    {
-                        String pohSekvString = "Pohyb [" + p.Xhodnota + "," + p.Yhodnota + "] " + p.TimeStamp + " Vonku";
-                        Alerts.Add(pohSekvString);
-                        break;
-
-                    }
-
+                    ps = a;
+                    if (a.Upozornenie_Cas != 0) break;
+                    if (a.Upozornenie_Hranica != 0) break;
 
                 }
+
+                if (ps != null)
+                {
+                    DateTime convertedDate = DateTime.Parse(ps.TimeStamp);
+
+                    if(ps.Upozornenie_Cas != 0)
+                    {
+                        AlertSequenceObj myObj = new AlertSequenceObj
+                        {
+                            Name = "Pohyb",
+                            Date = convertedDate.ToShortDateString(),
+                            Time = convertedDate.ToLongTimeString(),
+                            Alert = "Čas"
+
+                        };
+                        Alerts.Add(myObj);
+
+
+
+                    }else if (ps.Upozornenie_Hranica != 0)
+                    {
+                        AlertSequenceObj myObj = new AlertSequenceObj
+                        {
+                            Name = "Pohyb",
+                            Date = convertedDate.ToShortDateString(),
+                            Time = convertedDate.ToLongTimeString(),
+                            Alert = "Hranica"
+
+                        };
+                        Alerts.Add(myObj);
+
+
+
+                    }
+                    else
+                    {
+                        AlertSequenceObj myObj = new AlertSequenceObj
+                        {
+                            Name = "Pohyb",
+                            Alert = "Neexistuje upozornenie"
+
+                        };
+                        Alerts.Add(myObj);
+
+                    }
+                    
+                }
+                else
+                {
+                    AlertSequenceObj myObj = new AlertSequenceObj
+                    {
+                        Name = "Pohyb",
+                        Alert = "Neexistuje upozornenie"
+
+                    };
+                    Alerts.Add(myObj);
+
+                }
+
+
+
             }
+            else
+            {
+                AlertSequenceObj myObj = new AlertSequenceObj
+                {
+                    Name = "Pohyb",
+                    Alert = "Neexistuje sekvencia"
+
+                };
+                Alerts.Add(myObj);
+
+            }
+
+
+
+            if (_context.Akcelerometers.Any())
+            {
+                var pad = _context.Akcelerometers.FirstOrDefault(t => t.AkcelerometerID == _context.Akcelerometers.Max(x => x.AkcelerometerID));
+
+                DateTime convertedDate = DateTime.Parse(pad.TimeStamp);
+                RoomsDetection roomsDetection = new RoomsDetection();
+
+               
+                Izby izba = roomsDetection.findRoomByCoord(pad.Xhodnota, pad.Yhodnota);
+                string izbameno = "Vonku";
+                try
+                {
+                    izbameno = izba.Nazov;
+                }catch(Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+                }
+                
+
+                AlertSequenceObj myObj = new AlertSequenceObj
+                {
+                    Name = "Pád",
+                    Date = convertedDate.ToShortDateString(),
+                    Time = convertedDate.ToLongTimeString(),
+                    Value = izbameno,
+                    Alert = "Nastal pád"
+
+                };
+                Alerts.Add(myObj);
+
+
+            }
+            else
+            {
+                AlertSequenceObj myObj = new AlertSequenceObj
+                {
+                    Name = "Pád",
+                    Alert = "Pád nenastal"
+
+                };
+                Alerts.Add(myObj);
+
+            }
+
 
             //TODO: ZOBRAZENIE POHYBU
         }
 
-       
+       public void movePageSequence(AlertSequenceObj alertSequenceObj)
+        {
+            if (alertSequenceObj.Name.Equals("Teplota"))
+            {
+                
+
+            }
+
+
+        }
 
     }
 }

@@ -9,8 +9,9 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 {
     public class LoadRooms
     {
-        public void LoadRoomsData(DatabaseContext context)
+        public void LoadRoomsData(/*DatabaseContext context*/)
         {
+            DatabaseContext context = new DatabaseContext();
             int index = 1;
 
             if (!context.Rooms.Any())

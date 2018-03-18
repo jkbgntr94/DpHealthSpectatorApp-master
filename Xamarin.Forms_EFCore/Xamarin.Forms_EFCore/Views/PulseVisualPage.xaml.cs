@@ -21,7 +21,14 @@ namespace Xamarin.Forms_EFCore.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            pulseimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
+            //pulseimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
+
+
+            alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
+            timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time.png");
+            valueIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.value.png");
+            durationIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.duration.png");
+
 
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");

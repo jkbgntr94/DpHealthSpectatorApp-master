@@ -111,6 +111,133 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
         }
 
+        private string heightTwelve;
+        public string HeightTwelve
+        {
+            get
+            {
+                return heightTwelve;
+            }
+            set
+            {
+                heightTwelve = value;
+
+            }
+        }
+
+        private string middleTwelve;
+        public string MiddleTwelve
+        {
+            get
+            {
+                return middleTwelve;
+            }
+            set
+            {
+                middleTwelve = value;
+
+            }
+        }
+
+        private string lowTwelve;
+        public string LowTwelve
+        {
+            get
+            {
+                return lowTwelve;
+            }
+            set
+            {
+                lowTwelve = value;
+
+            }
+        }
+
+        private string okTwelve;
+        public string OkTwelve
+        {
+            get
+            {
+                return okTwelve;
+            }
+            set
+            {
+                okTwelve = value;
+
+            }
+        }
+
+        private string heightDay;
+        public string HeightDay
+        {
+            get
+            {
+                return heightDay;
+            }
+            set
+            {
+                heightDay = value;
+
+            }
+        }
+
+        private string middleDay;
+        public string MiddleDay
+        {
+            get
+            {
+                return middleDay;
+            }
+            set
+            {
+                middleDay = value;
+
+            }
+        }
+
+        private string lowDay;
+        public string LowDay
+        {
+            get
+            {
+                return lowDay;
+            }
+            set
+            {
+                lowDay = value;
+
+            }
+        }
+
+        private string okDay;
+        public string OkDay
+        {
+            get
+            {
+                return okDay;
+            }
+            set
+            {
+                okDay = value;
+
+            }
+        }
+
+        private ImageSource pulseImageSource;
+        public ImageSource PulseImageSource
+        {
+            get
+            {
+                return pulseImageSource;
+            }
+            set
+            {
+                pulseImageSource = value;
+                this.OnPropertyChanged("PulseImageSource");
+
+            }
+        }
+
         public ICommand TempVisualCommand { get; private set; }
         public ICommand PulseVisualCommand { get; private set; }
         public ICommand DashboardCommand { get; private set; }
@@ -135,10 +262,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void fillList()
         {
+            int low = 0; int height = 0; int middle = 0; int ok = 0;
+            int lowDay = 0; int heightDay = 0; int middleDay = 0; int okDay = 0;
             if (_context.PulseSekv.Any())
             {
                 var listTemp = _context.PulseSekv.ToList();
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+                DateTime actualForSummary = DateTime.Parse("2017-01-01T12:04:19Z");
                 foreach (var t in listTemp)
                 {
                     DateTime convertedDate = DateTime.Parse(t.TimeStart);
@@ -154,13 +284,56 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         durationTime = "NA";
                     }
 
+                    if (actualForSummary <= convertedDate.AddHours(12))
+                    {
+                        switch (t.Upozornenie)
+                        {
+                            case 0:
+                                ok++;
+                                break;
+                            case 1:
+                                low++;
+                                break;
+                            case 2:
+                                middle++;
+                                break;
+                            case 3:
+                                height++;
+                                break;
+
+                        }
+
+                    }
+
+                    if (actualForSummary <= convertedDate.AddHours(24))
+                    {
+                        switch (t.Upozornenie)
+                        {
+                            case 0:
+                                okDay++;
+                                break;
+                            case 1:
+                                lowDay++;
+                                break;
+                            case 2:
+                                middleDay++;
+                                break;
+                            case 3:
+                                heightDay++;
+                                break;
+
+                        }
+
+                    }
+
                     PulseObj tem = new PulseObj()
                     {
                         PulseId = t.TepSekvId,
-                        Value = t.Sekvencia + "BPM",
+                        Value = t.Sekvencia + " BPM",
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         Duration = durationTime,
+                        Upozornenie = t.Upozornenie,
                         Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
                     };
 
@@ -176,6 +349,16 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             }
 
+            HeightTwelve = "Vysoké: " + height.ToString() + "x";
+            MiddleTwelve = "Stredné: " + middle.ToString() + "x";
+            LowTwelve = "Slabé: " + low.ToString() + "x";
+            OkTwelve = "OK: " + ok.ToString() + "x";
+
+            HeightDay = "Vysoké: " + heightDay.ToString() + "x";
+            MiddleDay = "Stredné: " + middleDay.ToString() + "x";
+            LowDay = "Slabé: " + lowDay.ToString() + "x";
+            OkDay = "OK: " + okDay.ToString() + "x";
+
             //SequenceList.Reverse();
 
         }
@@ -186,6 +369,24 @@ namespace Xamarin.Forms_EFCore.ViewModels
             PulseTime = to.Date + " " + to.Time;
             PulseValue = to.Value;
             PulseDuration = to.Duration;
+
+            int upoz = to.Upozornenie;
+
+            switch (upoz)
+            {
+                case 0:
+                    PulseImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.pulseOk.png"); break;
+                case 1:
+                    PulseImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.pulseLow.png"); break;
+                case 2:
+                    PulseImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.pulseMiddle.png"); break;
+                case 3:
+                    PulseImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.pulseHigh.png"); break;
+                default:
+                    PulseImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
+                    break;
+
+            }
 
         }
 

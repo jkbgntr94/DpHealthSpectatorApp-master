@@ -332,12 +332,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     
 
-                    Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
-                    p.PohSekvFK = 1;
-                    System.Diagnostics.Debug.WriteLine("Inicializacia ak ziadna sekvencia neexistuje");
+                    /*Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                    p.PohSekvFK = 1;*/
+                    System.Diagnostics.Debug.WriteLine("POHYB Inicializacia ak ziadna sekvencia neexistuje");
 
                     context.MovementSekv.Add(pohS);
-                    //context.Movement.Remove(mov);
+                    context.Movement.Remove(mov);
 
                     //context.Movement.Update(p);
 
@@ -362,15 +362,15 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
                     catch (Exception e)
                     {
-                        System.Diagnostics.Debug.WriteLine("Nemozem najst otvorenu sekvenciu");
+                        System.Diagnostics.Debug.WriteLine("POHYB EXC Nemozem najst otvorenu sekvenciu");
                     }
 
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
                     if (limitCheck.checkMovementValue(context, mov, pohS))
                     {
-                        System.Diagnostics.Debug.WriteLine("Spracovavana hodnota patri do aktualne otvorenej sekvencie");
+                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie");
                         //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
-                        mov.PohSekvFK = pohS.PohSekvId;
+                        //mov.PohSekvFK = pohS.PohSekvId;
 
                         //cas zotrvania
                         DateTime convertedDate = DateTime.Parse(pohS.TimeStamp);
@@ -450,14 +450,14 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         
 
-                        Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                        //Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                         //p.PohSekvFK = last.PohSekvId + 1;
                         //p.Pohyb_Sekvencia = pohnew;
 
-                        System.Diagnostics.Debug.WriteLine("Spracovavana hodnota nepatri do aktualne otvorenej sekvencie");
+                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie");
 
                         context.MovementSekv.Add(pohnew);
-                        //context.Movement.Remove(mov);
+                        context.Movement.Remove(mov);
                         //context.Movement.Update(p);
 
                         try

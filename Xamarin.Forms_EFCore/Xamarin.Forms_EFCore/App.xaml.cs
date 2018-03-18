@@ -21,7 +21,13 @@ namespace Xamarin.Forms_EFCore {
         protected override void OnStart() {
             //TODO: START HERE IF EXIST PROFILE/ ELSE START ON INIT FINISH
             //new DatabaseContext(999);
+
             AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
+
+
+           /* LoadRooms loadRooms = new LoadRooms();
+            loadRooms.LoadRoomsData();*/
+
             TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
             testDataDbFiller.loadMandatoryData();
             asyncDataLoader.LoadData();

@@ -1,16 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.Views.PulseVisualPage">
+             x:Class="Xamarin.Forms_EFCore.Views.PulseVisualPage"
+             Title="Tep">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="44"/>
@@ -19,22 +23,72 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="Pulse" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Tep"/>
-            <Image x:Name="pulseimage" VerticalOptions="Center"
-                   HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
-            </Image>
 
-            <Label x:Name="PulseAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding PulseAlert}"/>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame OutlineColor="Black" HasShadow="True" CornerRadius="25" Grid.Row="0" Grid.Column="0" BackgroundColor="#edeeef" VerticalOptions="Start">
+                    <StackLayout  Orientation="Vertical" Spacing="1">
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="12" FontAttributes="Bold" Text="Prehľad 12h"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding HeightTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding MiddleTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding LowTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding OkTwelve}"/>
+
+                    </StackLayout>
+                </Frame>
+
+                <Image x:Name="pulseimage" VerticalOptions="Center" Source="{Binding PulseImageSource}"
+                   HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="70">
+                </Image>
 
 
-            <Label x:Name="PulseTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="3" Grid.Column="0" Text="{Binding PulseTime}"/>
+                <Frame OutlineColor="Black" HasShadow="True" CornerRadius="25" Grid.Row="0" Grid.Column="2" BackgroundColor="#edeeef" VerticalOptions="End">
+                    <StackLayout Orientation="Vertical" Spacing="1">
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="12" FontAttributes="Bold" Text="Prehľad 24h"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding HeightDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding MiddleDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding LowDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding OkDay}"/>
+
+                    </StackLayout>
+                </Frame>
 
 
-            <Label x:Name="PulseValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="4" Grid.Column="0" Text="{Binding PulseValue}"/>
+            </Grid>
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="1"></BoxView>
 
-            <Label x:Name="PulseDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="5" Grid.Column="0" Text="{Binding PulseDuration}"/>
+            <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="alertIcon" HeightRequest="30"></Image>
+                <Label x:Name="PulseAlert" FontSize="18" Text="{Binding PulseAlert}"/>
+            </StackLayout>
 
-            <StackLayout Grid.Row="6" Grid.Column="0">
+            <StackLayout Grid.Row="3" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="timeIcon" HeightRequest="30"></Image>
+                <Label x:Name="PulseTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseTime}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="4" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="valueIcon" HeightRequest="30"></Image>
+                <Label x:Name="PulseValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseValue}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="5" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="durationIcon" HeightRequest="30"></Image>
+                <Label x:Name="PulseDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseDuration}"/>
+            </StackLayout>
+
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="6"></BoxView>
+            <Label x:Name="ListHeader" XAlign="Center" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" Text="Sekvencie"/>
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="8"></BoxView>
+            <StackLayout Grid.Row="9" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
 
                     <ListView.ItemTemplate>
@@ -55,8 +109,8 @@
                 </ListView>
             </StackLayout>
 
-            <BoxView BackgroundColor="#DCDCDC" Grid.Row="7"></BoxView>
-            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="8">
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="10"></BoxView>
+            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="11">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

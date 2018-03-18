@@ -279,6 +279,21 @@ namespace Xamarin.Forms_EFCore.ViewModels
             fillList();
         }
 
+        public TemperatureVisualViewModel(int index)
+        {
+            _context = new DatabaseContext();
+            TempVisualCommand = new Command(tempVisualCommand);
+            PulseVisualCommand = new Command(pulseVisualCommand);
+            DashboardCommand = new Command(dashboardCommand);
+            MovementVisualCommand = new Command(movementVisualCommand);
+            FallVisualCommand = new Command(fallVisualCommand);
+
+
+            fillList();
+            fillPageWithAlert(index);
+        }
+
+
         private void fillList()
         {
             int low = 0; int height = 0; int middle = 0; int ok = 0;
@@ -347,10 +362,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         }
 
                     }
-
-
-
-
+                    
                     TemperatureObj tem = new TemperatureObj()
                     {
                         TempId = t.TeplSekvId,
@@ -358,6 +370,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         Duration = durationTime,
+                        Upozornenie = t.Upozornenie,
                         Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
                     };
                     
@@ -387,13 +400,72 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         }
 
+        private void fillPageWithAlert(int index)
+        {
+            var t = _context.TemperatureSekv.Where(x => x.TeplSekvId == index).First();
+            Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
+
+            DateTime convertedDate = DateTime.Parse(t.TimeStart);
+            String durationTime = null;
+            try
+            {
+                DateTime endtime = DateTime.Parse(t.TimeClose);
+                double time = (endtime - convertedDate).TotalMinutes;
+                var x = time - Math.Truncate(time);
+                durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception parse date " + e.ToString());
+                durationTime = "NA";
+            }
+
+            TemperatureObj tem = new TemperatureObj()
+            {
+                TempId = t.TeplSekvId,
+                Value = t.Sekvencia.ToString("n2") + " °C",
+                Date = convertedDate.ToShortDateString(),
+                Time = convertedDate.ToLongTimeString(),
+                Duration = durationTime,
+                Upozornenie = t.Upozornenie,
+                Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
+            };
+
+            fillPageWithSequence(tem);
+
+
+        }
+
         private void fillPageWithSequence(TemperatureObj to)
         {
+
             TempAlert = to.Alert;
             TempTime = to.Date + " " + to.Time;
             TempValue = to.Value;
             TempDuration = to.Duration;
-            TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureCold.png");
+
+            int upoz = to.Upozornenie;
+
+            switch (upoz)
+            {
+                case 0:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureOk.png"); break;
+                case 1:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureLow.png"); break;
+                case -1:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureCold.png"); break;
+                case 2:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureMiddle.png"); break;
+                case 3:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureHigh.png"); break;
+                default:
+                    TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
+                    break;
+
+            }
+
+            
+            
 
         }
 
