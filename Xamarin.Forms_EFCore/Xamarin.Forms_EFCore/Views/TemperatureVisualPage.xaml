@@ -14,6 +14,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="44"/>
@@ -22,10 +23,46 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image x:Name="tempimage" VerticalOptions="Center"
-                   HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" HeightRequest="100">
-            </Image>
-            
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame OutlineColor="Black" HasShadow="True" CornerRadius="25" Grid.Row="0" Grid.Column="0" BackgroundColor="#edeeef" VerticalOptions="Start">
+                    <StackLayout  Orientation="Vertical" Spacing="1">
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="12" FontAttributes="Bold" Text="Prehľad 12h"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding HeightTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding MiddleTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding LowTwelve}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding OkTwelve}"/>
+
+                    </StackLayout>
+                </Frame>
+
+                <Image x:Name="tempimage" VerticalOptions="Center"
+                   HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="70">
+                </Image>
+
+
+                <Frame OutlineColor="Black" HasShadow="True" CornerRadius="25" Grid.Row="0" Grid.Column="2" BackgroundColor="#edeeef" VerticalOptions="End">
+                    <StackLayout Orientation="Vertical" Spacing="1">
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="12" FontAttributes="Bold" Text="Prehľad 24h"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding HeightDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding MiddleDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding LowDay}"/>
+                        <Label XAlign="Center" HorizontalOptions="Center" FontSize="10" Text="{Binding OkDay}"/>
+
+                    </StackLayout>
+                </Frame>
+
+
+            </Grid>
             <BoxView BackgroundColor="#DCDCDC" Grid.Row="1"></BoxView>
 
             <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
@@ -50,9 +87,9 @@
 
             
             <BoxView BackgroundColor="#DCDCDC" Grid.Row="6"></BoxView>
-            <Label x:Name="ListHeader" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" Text="Sekvencie"/>
-
-            <StackLayout Grid.Row="8" Grid.Column="0">
+            <Label x:Name="ListHeader" XAlign="Center" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" Text="Sekvencie"/>
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="8"></BoxView>
+            <StackLayout Grid.Row="9" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
                    
                     <ListView.ItemTemplate>
@@ -73,8 +110,8 @@
                 </ListView>
             </StackLayout>
 
-            <BoxView BackgroundColor="#DCDCDC" Grid.Row="9"></BoxView>
-            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="10">
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="10"></BoxView>
+            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="11">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
