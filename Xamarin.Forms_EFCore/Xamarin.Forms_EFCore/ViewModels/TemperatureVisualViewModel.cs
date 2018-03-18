@@ -393,7 +393,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             TempTime = to.Date + " " + to.Time;
             TempValue = to.Value;
             TempDuration = to.Duration;
-            TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature_high.png");
+            TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperatureCold.png");
 
         }
 
