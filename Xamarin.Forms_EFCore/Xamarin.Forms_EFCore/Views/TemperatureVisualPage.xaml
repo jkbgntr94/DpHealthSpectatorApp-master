@@ -45,7 +45,7 @@
                     </StackLayout>
                 </Frame>
 
-                <Image x:Name="tempimage" VerticalOptions="Center"
+                <Image x:Name="tempimage" VerticalOptions="Center" Source="{Binding TemperatureImageSource}"
                    HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="70">
                 </Image>
 

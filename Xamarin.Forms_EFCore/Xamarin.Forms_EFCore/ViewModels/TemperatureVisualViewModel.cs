@@ -240,6 +240,22 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
         }
 
+        private ImageSource temperatureImageSource;
+        public ImageSource TemperatureImageSource
+        {
+            get
+            {
+                return temperatureImageSource;
+            }
+            set
+            {
+                temperatureImageSource = value;
+                this.OnPropertyChanged("TemperatureImageSource");
+
+            }
+        }
+
+
 
 
         public ICommand TempVisualCommand { get; private set; }
@@ -377,6 +393,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             TempTime = to.Date + " " + to.Time;
             TempValue = to.Value;
             TempDuration = to.Duration;
+            TemperatureImageSource = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature_high.png");
 
         }
 

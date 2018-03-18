@@ -21,7 +21,7 @@ namespace Xamarin.Forms_EFCore.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            tempimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
+            //tempimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
 
             alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
             timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time.png");
