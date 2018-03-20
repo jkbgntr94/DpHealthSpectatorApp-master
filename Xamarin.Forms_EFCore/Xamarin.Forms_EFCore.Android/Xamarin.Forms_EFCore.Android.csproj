@@ -159,6 +159,12 @@
     <Reference Include="Plugin.Settings.Abstractions, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugins.Settings.3.1.1\lib\MonoAndroid10\Plugin.Settings.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.SimpleAudioPlayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.SimpleAudioPlayer.1.0.2\lib\MonoAndroid10\Plugin.SimpleAudioPlayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.SimpleAudioPlayer.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.SimpleAudioPlayer.1.0.2\lib\MonoAndroid10\Plugin.SimpleAudioPlayer.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Remotion.Linq.2.1.1\lib\portable-net45+win+wpa81+wp80\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -382,6 +388,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="initializationValues.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\notification.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\notification-icq.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

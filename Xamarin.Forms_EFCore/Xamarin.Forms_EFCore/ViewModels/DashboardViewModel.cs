@@ -40,7 +40,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void HandleSelectedItem()
         {
-            movePageSequence(SelectedAlerts);
+            //movePageSequence(SelectedAlerts);
 
         }
 
@@ -219,7 +219,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                 Tep tep = _context.Pulse.FirstOrDefault(t => t.TepId == _context.Pulse.Max(x => x.TepId));
 
-                PulseValue = tep.Hodnota.ToString();
+                PulseValue = ((int)Math.Round(tep.Hodnota)).ToString() + " BPM";
 
             }
             else
@@ -237,7 +237,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                 Teplota teplota = _context.Temperature.FirstOrDefault(t => t.TeplotaId == _context.Temperature.Max(x => x.TeplotaId));
 
-                TempValue = teplota.Hodnota.ToString();
+                TempValue = teplota.Hodnota.ToString("n2") + " °C";
 
             }
             else
@@ -562,16 +562,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             //TODO: ZOBRAZENIE POHYBU
         }
 
-       public void movePageSequence(AlertSequenceObj alertSequenceObj)
-        {
-            if (alertSequenceObj.Name.Equals("Teplota"))
-            {
-                
-
-            }
-
-
-        }
+      
 
     }
 }

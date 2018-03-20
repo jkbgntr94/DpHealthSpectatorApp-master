@@ -13,6 +13,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
         public void TemperatureSequencer(DatabaseContext context)
         {
 
+
             var all1 = context.Temperature.ToList();
             LimitCheck limitCheck = new LimitCheck();
 
@@ -33,6 +34,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         //Hranice_Teplota = htep,
                         Hranice_TeplotaFk = htep.Hranice_TeplotaId
                     };
+
+                    if(tmps.Upozornenie != 0)
+                    {
+                        new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie,a.TeplotaId);
+
+                    }
 
                     Teplota t = context.Temperature.Where(c => c.TeplotaId == a.TeplotaId).First();
                     t.TeplSekvFk = 1;
@@ -63,6 +70,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     catch (Exception e)
                     {
                         throw e;
+                    }
+
+                    if (tmps.Upozornenie != 0)
+                    {
+                        new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
+
                     }
 
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
@@ -120,6 +133,11 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             Hranice_TeplotaFk = htep.Hranice_TeplotaId
                         };
 
+                        if (tmps1.Upozornenie != 0)
+                        {
+                            new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps1.Upozornenie, a.TeplotaId);
+
+                        }
                         context.TemperatureSekv.Add(tmps1);
 
                         a.TeplSekvFk = ts.TeplSekvId + 1;  //naviaz pulz na sekvenciu
@@ -332,14 +350,14 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     
 
-                    /*Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
-                    p.PohSekvFK = 1;*/
+                    Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                    p.PohSekvFK = 1;
                     System.Diagnostics.Debug.WriteLine("POHYB Inicializacia ak ziadna sekvencia neexistuje");
 
                     context.MovementSekv.Add(pohS);
-                    context.Movement.Remove(mov);
+                    //context.Movement.Remove(mov);
 
-                    //context.Movement.Update(p);
+                    context.Movement.Update(p);
 
                     try
                     {
@@ -369,8 +387,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     if (limitCheck.checkMovementValue(context, mov, pohS))
                     {
                         System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie");
-                        //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
-                        //mov.PohSekvFK = pohS.PohSekvId;
+                        mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
+                        mov.PohSekvFK = pohS.PohSekvId;
 
                         //cas zotrvania
                         DateTime convertedDate = DateTime.Parse(pohS.TimeStamp);
@@ -395,8 +413,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                        
                         context.MovementSekv.Update(pohS);
-                        context.Movement.Remove(mov);
-                        //context.Movement.Update(mov);
+                        //context.Movement.Remove(mov);
+                        context.Movement.Update(mov);
                         try
                         {
                             context.SaveChanges();
@@ -450,15 +468,18 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         
 
-                        //Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
-                        //p.PohSekvFK = last.PohSekvId + 1;
+                        Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                        p.PohSekvFK = last.PohSekvId + 1;
+
+                        var toDelete = context.Movement.Where(c => c.PohSekvFK == last.PohSekvId).ToList();
                         //p.Pohyb_Sekvencia = pohnew;
 
                         System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie");
-
+                        
                         context.MovementSekv.Add(pohnew);
-                        context.Movement.Remove(mov);
-                        //context.Movement.Update(p);
+                        //context.Movement.Remove(mov);
+                        context.RemoveRange(toDelete);
+                        context.Movement.Update(p);
 
                         try
                         {

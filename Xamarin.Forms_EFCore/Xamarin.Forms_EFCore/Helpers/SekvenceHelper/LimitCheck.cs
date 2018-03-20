@@ -22,7 +22,6 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                 return -1;//low
             }else if((hodnota > hranice.Hranica_Slabe_Max) && (hodnota <= hranice.Hranica_Stredne))
             {
-
                 return 1;//slabe
 
 
@@ -44,7 +43,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
         public int CheckTemperatureLimits(DatabaseContext context, float hodnota)
         {
             Hranice_Teplota hranice = context.TemperatureLimit.FirstOrDefault(t => t.Hranice_TeplotaId == context.TemperatureLimit.Max(x => x.Hranice_TeplotaId));
-
+            
             if ((hodnota >= hranice.Hranica_Slabe_Min) && (hodnota <= hranice.Hranica_Slabe_Max))
             {
                 return 0;
@@ -55,7 +54,6 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             }
             else if ((hodnota > hranice.Hranica_Slabe_Max) && (hodnota <= hranice.Hranica_Stredne))
             {
-
                 return 1;
 
 
