@@ -55,16 +55,30 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public void FillDrugList()
         {
             ContDrugList.Clear();
-            var mojeLieky = _context.Drugs.ToList();
-            int i = 0;
-            System.Diagnostics.Debug.WriteLine("Moje som  tu ");
-            foreach (var a in mojeLieky)
-            {
-                System.Diagnostics.Debug.WriteLine("moje lieky" + i++ + a.Nazov);
-                ContDrugList.Add(a);
+            if (_context.Drugs.Any()) {
+                var mojeLieky = _context.Drugs.ToList();
+                int i = 0;
+                System.Diagnostics.Debug.WriteLine("Moje som  tu ");
+                foreach (var a in mojeLieky)
+                {
+                    System.Diagnostics.Debug.WriteLine("moje lieky" + i++ + a.Nazov);
+                    ContDrugList.Add(a);
 
+
+                }
+            }else
+            {
+                Lieky liek = new Lieky
+                {
+                    Nazov = "V systéme nie je žiaden liek"
+
+                };
+                
+                ContDrugList.Add(liek);
 
             }
+
+            
         }
 
         async void addNewDrug()
@@ -76,7 +90,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void toDashboard()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new InstructionPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new AddRoomsPage());
         }
     }
 }

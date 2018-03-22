@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms_EFCore.Helpers;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using Xamarin.Forms_EFCore.Views;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
@@ -105,14 +106,17 @@ namespace Xamarin.Forms_EFCore.ViewModels
             SettingsController.LongTimeNoMovement = LongTimeNoMovement;
             SettingsController.SignalLost = SignalLost;
             SettingsController.FallDetected = FallDetected;
-            
+
+
+            Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+
             //Console.WriteLine("seruuuusssssssssssss {0} {1} {2} {3} {4} {5}", Settings.AlertPulseSlabe, Settings.AlertPulseStredne, Settings.AlertPulseVysoke, Settings.LongTimeNoMovement, Settings.SignalLost, Settings.FallDetected);
-            
+
             //TODO: screen kde prida ostatne potrebne nastavenia, cas pre pohyb, email 
 
             //SendEmailMessage();
             //GeneratePushAlert();
         }
-        
+
     }
 }

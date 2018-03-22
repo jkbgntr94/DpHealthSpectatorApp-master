@@ -76,7 +76,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             await Application.Current.MainPage.Navigation.PushAsync(new AlertSelectionPage());
         }
 
-        public void createLimits()
+        public void createLimits()//nepouziva sa 
         {
             PulseValues loader = new PulseValues();
             IEnumerable<IGrouping<int, int>> occurrDict = loader.CreatePulseFile();

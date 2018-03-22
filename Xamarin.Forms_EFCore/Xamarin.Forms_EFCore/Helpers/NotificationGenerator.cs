@@ -38,15 +38,55 @@ namespace Xamarin.Forms_EFCore.Helpers
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
-            player.Load("notification-icq.mp3");
+            player.Volume = 1;
+            player.Load("tap_tap_tap.mp3");
             player.Play();
 
         }
 
+        public void alarmNotification(String velicina, float hodnota, string timestamp, int upozornenie, int ID)
+        {
+                string cas = "NA";
+                try
+                {
+                    DateTime convertedDate = DateTime.Parse(timestamp);
+                    cas = convertedDate.ToShortTimeString();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+                }
+                string upozornenieNazov = new LimitCheck().getStringValuePulseAndTempLimit(upozornenie);
+                string title = "";
+                if (velicina == "Teplota")
+                {
+                    title = "ALARM " + velicina + ": " + upozornenieNazov + " upozornenie. " + hodnota.ToString("n2") + " °C";
+                }
+                else if (velicina == "Tep")
+                {
+                    title ="ALARM " + velicina + ": " + upozornenieNazov + " upozornenie. " + (int)Math.Round(hodnota) + " BPM";
+
+
+                }
+                string body = "V čase " + cas + " bolo vytvorené " + upozornenieNazov + " upozornenie.";
+                CrossLocalNotifications.Current.Show(title, body, ID);
+
+                var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+                player.Volume = 1;
+                player.Load("alarm.mp3");
+                player.Play();
+
+        }
+
+
+
+        
+
         public void SendEmailMessage()
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Joey Tribbiani", "ahojakosamas94@gmail.com"));
+            message.From.Add(new MailboxAddress("HEALTH SPECTATOR", "ahojakosamas94@gmail.com"));
             message.To.Add(new MailboxAddress("Mrs. Chanandler Bong", "ginter.jakub@gmail.com"));
             message.Subject = "How you doin'?";
 

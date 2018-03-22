@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using Plugin.Toasts;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -161,8 +163,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
         {
             //System.Diagnostics.Debug.WriteLine("MAX KOORD" + MaxX + " " + MaxY);
 
-            SettingsController.MaxX = MaxX;
-            SettingsController.MaxY = MaxY;
+            SettingsController.MaxX = MaxX*10;
+            SettingsController.MaxY = MaxY*10;
 
             await Application.Current.MainPage.Navigation.PushAsync(new DrawHomePage());
 
@@ -209,6 +211,21 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
 
             Rooms.Add(NameRoom);
+           
+           
+        }
+
+        async void showToast(string Name)
+        {
+            var notificator = DependencyService.Get<IToastNotificator>();
+
+            var options = new NotificationOptions()
+            {
+                Title = "Izba pridaná",
+                Description = "Name"
+            };
+
+            var result = await notificator.Notify(options);
 
         }
     }

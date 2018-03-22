@@ -61,5 +61,11 @@ namespace Xamarin.Forms_EFCore.Helpers
             get => AppSettings.GetValueOrDefault(nameof(MaxY), 0);
             set => AppSettings.AddOrUpdateValue(nameof(MaxY), value);
         }
+
+        public static int MeasurementRunning
+        {
+            get => AppSettings.GetValueOrDefault(nameof(MeasurementRunning), 0);
+            set => AppSettings.AddOrUpdateValue(nameof(MeasurementRunning), value);
+        }
     }
 }

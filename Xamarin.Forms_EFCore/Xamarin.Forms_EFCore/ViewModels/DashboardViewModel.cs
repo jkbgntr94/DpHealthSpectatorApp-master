@@ -132,6 +132,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
+
+            controlledMeasurementStart();
             /* PulseValue = 10.ToString();
              TempValue = 15.ToString();
              MotionValue = "Spalna";
@@ -562,7 +564,27 @@ namespace Xamarin.Forms_EFCore.ViewModels
             //TODO: ZOBRAZENIE POHYBU
         }
 
-      
+        private void controlledMeasurementStart()
+        {
+            if (_context.Profiles.Any() && SettingsController.MeasurementRunning == 0)
+            {
+
+                SettingsController.MeasurementRunning = 1;
+                AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
+
+
+                /* LoadRooms loadRooms = new LoadRooms();
+                 loadRooms.LoadRoomsData();*/
+
+                TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
+                testDataDbFiller.loadMandatoryData();
+                asyncDataLoader.LoadData();
+
+            }
+
+
+        }
+
 
     }
 }

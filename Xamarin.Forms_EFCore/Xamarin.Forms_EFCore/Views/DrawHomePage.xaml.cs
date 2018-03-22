@@ -88,7 +88,7 @@ namespace Xamarin.Forms_EFCore.Views
             try
             {
 
-                Navigation.InsertPageBefore(new DashboardPage(), this);
+                Navigation.InsertPageBefore(new InstructionPage(), this);
                 await Navigation.PopAsync().ConfigureAwait(false);
                 // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
 

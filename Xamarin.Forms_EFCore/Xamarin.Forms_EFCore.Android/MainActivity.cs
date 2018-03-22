@@ -9,6 +9,7 @@ using Android.OS;
 using System.IO;
 using Plugin.SecureStorage;
 using Acr.UserDialogs;
+using Plugin.Toasts;
 using Xamarin.Forms;
 
 namespace Xamarin.Forms_EFCore.Droid {
@@ -20,8 +21,12 @@ namespace Xamarin.Forms_EFCore.Droid {
             base.OnCreate(bundle);
 
             UserDialogs.Init(this);
+            
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            DependencyService.Register<ToastNotification>(); // Register your dependency
+            ToastNotification.Init(this);
             LoadApplication(new App());
         }
     }

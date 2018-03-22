@@ -72,17 +72,20 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         throw e;
                     }
 
-                    if (tmps.Upozornenie != 0)
-                    {
-                        new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
-
-                    }
+                    
 
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
                     if (limitCheck.CheckTemperatureLimits(context, a.Hodnota) == tmps.Upozornenie)
                     {
                         var allInSekv = context.Temperature.Where(p => p.TeplSekvFk == tmps.TeplSekvId).ToList();
                         float median = 0;
+
+                        if (tmps.Upozornenie != 0)
+                        {
+                            new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
+
+                        }
+
                         /*Aktualizuj hodnotu sekvencie*/
 
                         foreach (var allIN in allInSekv)
@@ -185,6 +188,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     };
 
+                    if (tepS.Upozornenie != 0)
+                    {
+                        new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
+
+                    }
+
                     Tep t = context.Pulse.Where(c => c.TepId == a.TepId).First();
                     t.TepSekvId = 1;
 
@@ -224,6 +233,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     {
                         var allInSekv = context.Pulse.Where(p => p.TepSekvId == tepS.TepSekvId).ToList();
                         int median = 0;
+
+                        if (tepS.Upozornenie != 0)
+                        {
+                            new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
+
+                        }
+
                         /*Aktualizuj hodnotu sekvencie*/
 
                         foreach (var allIN in allInSekv)
@@ -274,7 +290,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         };
 
                         context.PulseSekv.Add(tepS1);
-                        
+
+                        if (tepS1.Upozornenie != 0)
+                        {
+                            new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS1.Upozornenie, a.TepId);
+
+                        }
+
 
                         a.TepSekvId = ts.TepSekvId + 1;  //naviaz pulz na sekvenciu
                         //a.Tep_Sekvencia = tepS1;
