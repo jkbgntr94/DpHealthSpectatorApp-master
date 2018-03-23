@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms_EFCore.ViewModels.Drawing;
+using Xamarin.Forms_EFCore.ViewModels;
 
 namespace Xamarin.Forms_EFCore.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AddRoomsPage : ContentPage
+	public partial class EmailAlertSettingsPage : ContentPage
 	{
-		public AddRoomsPage ()
+		public EmailAlertSettingsPage ()
 		{
 			InitializeComponent ();
 		}
@@ -21,19 +21,9 @@ namespace Xamarin.Forms_EFCore.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+         
 
-            BindingContext = new AddRoomsViewModel();
-
-            var vm = (AddRoomsViewModel)this.BindingContext;
-            vm.hideButton += () => { hide(); };
-
-
-
-        }
-
-        private void hide()
-        {
-            storemaxBtn.IsVisible = false;
+            BindingContext = new EmailAlertSettingsViewModel();
 
 
         }

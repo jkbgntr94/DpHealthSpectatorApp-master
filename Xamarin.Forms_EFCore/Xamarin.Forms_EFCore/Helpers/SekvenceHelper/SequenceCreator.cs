@@ -37,7 +37,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     if(tmps.Upozornenie != 0)
                     {
-                        new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie,a.TeplotaId);
+                        new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie,a.TeplotaId);
 
                     }
 
@@ -82,7 +82,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         if (tmps.Upozornenie != 0)
                         {
-                            new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
+                            new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
 
                         }
 
@@ -138,7 +138,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         if (tmps1.Upozornenie != 0)
                         {
-                            new NotificationGenerator().GeneratePushAlert("Teplota", a.Hodnota, a.TimeStamp, tmps1.Upozornenie, a.TeplotaId);
+                            new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps1.Upozornenie, a.TeplotaId);
 
                         }
                         context.TemperatureSekv.Add(tmps1);
@@ -190,7 +190,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     if (tepS.Upozornenie != 0)
                     {
-                        new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
+                        new NotificationGenerator().GenerateNotification("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
 
                     }
 
@@ -236,7 +236,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         if (tepS.Upozornenie != 0)
                         {
-                            new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
+                            new NotificationGenerator().GenerateNotification("Tep", a.Hodnota, a.TimeStamp, tepS.Upozornenie, a.TepId);
 
                         }
 
@@ -293,7 +293,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         if (tepS1.Upozornenie != 0)
                         {
-                            new NotificationGenerator().GeneratePushAlert("Tep", a.Hodnota, a.TimeStamp, tepS1.Upozornenie, a.TepId);
+                            new NotificationGenerator().GenerateNotification("Tep", a.Hodnota, a.TimeStamp, tepS1.Upozornenie, a.TepId);
 
                         }
 
@@ -370,7 +370,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     }
 
-                    
+                    //TODO: ak upoz hran je 1 treba alert ze je vonku 
 
                     Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                     p.PohSekvFK = 1;
@@ -428,7 +428,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         pohS.Cas_Zotrvania = durationTime;
 
-
+                        //TODO: ak je stale vonku upozornenie + ak je cas tak upozornenie
                         //casove upozornenie
 
                         pohS.Upozornenie_Cas = limitCheck.checkTimeLimitMovement(context, pohS);
@@ -489,7 +489,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
 
                         
-
+                        //TODO: to iste ako prve
                         Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                         p.PohSekvFK = last.PohSekvId + 1;
 

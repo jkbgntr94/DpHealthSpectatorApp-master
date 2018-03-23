@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms_EFCore.DataAccess;
+using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
 
 namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
@@ -111,6 +112,21 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 context.Akcelerometers.Add(pad);
 
             System.Diagnostics.Debug.WriteLine("pad " + pad.Xhodnota + " " + pad.TimeStamp + " " + pad.Yhodnota);
+
+            Izby izba = new RoomsDetection().findRoomByCoord(pad.Xhodnota, pad.Yhodnota);
+            string izbameno = "Vonku";
+            try
+            {
+                izbameno = izba.Nazov;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+            new NotificationGenerator().GeneratePustAlertFall(izbameno,pad.TimeStamp, pad.AkcelerometerID);
+
 
             try
             {

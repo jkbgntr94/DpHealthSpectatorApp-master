@@ -17,6 +17,7 @@ namespace Xamarin.Forms_EFCore.Views
     {
         GameScene gameScene;
         Button addRoom;
+        Button nextPage;
         public DrawHomePage()
         {
             //InitializeComponent ();
@@ -33,10 +34,18 @@ namespace Xamarin.Forms_EFCore.Views
 
             addRoom.Clicked += (sender, e) => {
 
-                goToDash();
+                goToDraw();
 
                // Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
             };
+
+            nextPage.Clicked += (sender, e) => {
+
+                goToDash();
+
+                // Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+            };
+
 
         }
 
@@ -64,6 +73,12 @@ namespace Xamarin.Forms_EFCore.Views
                 Text = "Pridať"
             };
             stackLayout.Children.Add(addRoom);
+
+            nextPage = new Button
+            {
+                Text = "Ďalej"
+            };
+            stackLayout.Children.Add(nextPage);
             // The stack layout will be in the bottom half (row 1):
 
             grid.Children.Add(stackLayout, 0, 1);
@@ -101,7 +116,25 @@ namespace Xamarin.Forms_EFCore.Views
 
         }
 
-     }
+        async void goToDraw()
+        {
+            try
+            {
+                Navigation.InsertPageBefore(new AddRoomsPage(), this);
+
+                await Navigation.PopAsync().ConfigureAwait(false);
+                // await Application.Current.MainPage.Navigation.PushAsync(new MovementVisualPage());
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION " + e.ToString());
+
+            }
+
+        }
+
+    }
 
         
     }

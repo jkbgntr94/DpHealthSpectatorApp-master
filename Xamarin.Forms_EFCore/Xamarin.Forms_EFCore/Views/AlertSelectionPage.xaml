@@ -40,7 +40,7 @@
                     <Picker x:Name="PulseSlabePicker" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding AlertPulseSlabe}">
                                         <Picker.Items>
                                             <x:String>Push notifikácia</x:String>
-                                            <x:String>Notifikácia správou</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
                                             <x:String>Zvukový alarm</x:String>
                                         </Picker.Items>
                                     </Picker>
@@ -50,8 +50,8 @@
                     <Picker x:Name="PulseStrednePicker" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" SelectedIndex="{Binding AlertPulseStredne}">
                         <Picker.Items>
                             <x:String>Push notifikácia</x:String>
-                            <x:String>Notifikácia správou</x:String>
-                            <x:String>Zvukový alarm</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
+                        <x:String>Zvukový alarm</x:String>
                         </Picker.Items>
                     </Picker>
 
@@ -59,8 +59,8 @@
                     <Picker x:Name="PulseVysokePicker" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="1" SelectedIndex="{Binding AlertPulseVysoke}">
                         <Picker.Items>
                             <x:String>Push notifikácia</x:String>
-                            <x:String>Notifikácia správou</x:String>
-                            <x:String>Zvukový alarm</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
+                        <x:String>Zvukový alarm</x:String>
                         </Picker.Items>
                     </Picker>
                     </Grid>
@@ -82,17 +82,17 @@
                     <Picker x:Name="LongTimeNoMovementPicker" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding LongTimeNoMovement}">
                         <Picker.Items>
                             <x:String>Push notifikácia</x:String>
-                            <x:String>Notifikácia správou</x:String>
-                            <x:String>Zvukový alarm</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
+                        <x:String>Zvukový alarm</x:String>
                         </Picker.Items>
                     </Picker>
 
-                    <Label x:Name="SignalLost" Text="Strata signálu" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="SignalLost" Text="Prekročené hranice" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0"/>
                     <Picker x:Name="SignalLostPicker" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding SignalLost}">
                         <Picker.Items>
                             <x:String>Push notifikácia</x:String>
-                            <x:String>Notifikácia správou</x:String>
-                            <x:String>Zvukový alarm</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
+                        <x:String>Zvukový alarm</x:String>
                         </Picker.Items>
                     </Picker>
                     </Grid>
@@ -114,8 +114,8 @@
                         <Picker x:Name="FallDetectedPicker" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding FallDetected}">
                             <Picker.Items>
                                 <x:String>Push notifikácia</x:String>
-                                <x:String>Notifikácia správou</x:String>
-                                <x:String>Zvukový alarm</x:String>
+                        <!--<x:String>Notifikácia správou</x:String>-->
+                        <x:String>Zvukový alarm</x:String>
                             </Picker.Items>
                         </Picker>
                        

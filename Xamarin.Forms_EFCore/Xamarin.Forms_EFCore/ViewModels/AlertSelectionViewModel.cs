@@ -19,7 +19,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         /*
         0- Push notifikácia
-        1- Notifikácia správou
+        1- Notifikácia správou -- uz nie je, posunie sa to na 0,1
         2- Zvukový alarm
         */
         private int alertPulseSlabe;
@@ -108,7 +108,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             SettingsController.FallDetected = FallDetected;
 
 
-            Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+            Application.Current.MainPage.Navigation.PushAsync(new AdditionalSettingsPage());
 
             //Console.WriteLine("seruuuusssssssssssss {0} {1} {2} {3} {4} {5}", Settings.AlertPulseSlabe, Settings.AlertPulseStredne, Settings.AlertPulseVysoke, Settings.LongTimeNoMovement, Settings.SignalLost, Settings.FallDetected);
 

@@ -51,6 +51,12 @@ namespace Xamarin.Forms_EFCore.Helpers
             get => AppSettings.GetValueOrDefault(nameof(Email), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(Email), value);
         }
+
+        public static string NameEmail
+        {
+            get => AppSettings.GetValueOrDefault(nameof(NameEmail), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(NameEmail), value);
+        }
         public static int MaxX
         {
             get => AppSettings.GetValueOrDefault(nameof(MaxX), 0);
@@ -66,6 +72,42 @@ namespace Xamarin.Forms_EFCore.Helpers
         {
             get => AppSettings.GetValueOrDefault(nameof(MeasurementRunning), 0);
             set => AppSettings.AddOrUpdateValue(nameof(MeasurementRunning), value);
+        }
+
+        //email
+        public static bool AlertLow
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertLow), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertLow), value);
+        }
+
+        public static bool AlertMiddle
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertMiddle), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertMiddle), value);
+        }
+
+        public static bool AlertHigh
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertHigh), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertHigh), value);
+        }
+
+        public static bool AlertMovement
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertMovement), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertMovement), value);
+        }
+        public static bool AlertMovementTime
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertMovementTime), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertMovementTime), value);
+        }
+
+        public static bool AlertFall
+        {
+            get => AppSettings.GetValueOrDefault(nameof(AlertFall), false);
+            set => AppSettings.AddOrUpdateValue(nameof(AlertFall), value);
         }
     }
 }

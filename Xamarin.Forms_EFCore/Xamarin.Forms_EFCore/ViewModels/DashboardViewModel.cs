@@ -134,6 +134,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             FallVisualCommand = new Command(fallVisualCommand);
 
             controlledMeasurementStart();
+
             /* PulseValue = 10.ToString();
              TempValue = 15.ToString();
              MotionValue = "Spalna";
@@ -161,9 +162,6 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 throw e;
             }
             */
-
-            SettingsController.MaxX = 150;
-            SettingsController.MaxY = 150;
 
             setValues();
 
@@ -566,7 +564,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void controlledMeasurementStart()
         {
-            if (_context.Profiles.Any() && SettingsController.MeasurementRunning == 0)
+            int running = SettingsController.MeasurementRunning;
+            if (/*_context.Profiles.Any() && */ running == 0)
             {
 
                 SettingsController.MeasurementRunning = 1;

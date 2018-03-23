@@ -35,8 +35,8 @@
                    HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"
                            Placeholder="Y"/>
-                        <Button VerticalOptions="Center"
-                   HorizontalOptions="End" Text="Ulož" Command="{Binding SaveRoom}"/>
+                        <Button x:Name="storemaxBtn" VerticalOptions="Center"
+                   HorizontalOptions="End" Text="Ulož" Command="{Binding StoreMax}"/>
 
                     </StackLayout>
                     <BoxView BackgroundColor="#DCDCDC" Grid.Row="2" HeightRequest="2"></BoxView>
@@ -85,8 +85,10 @@
                     <StackLayout Orientation="Vertical" HorizontalOptions="Center" Grid.Row="9" Grid.Column="0">
 
                         <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Pridaj" Command="{Binding Add}"/>
+                    <Button VerticalOptions="Center"
                    HorizontalOptions="Center" Text="Hotovo" Command="{Binding Finish}"/>
-                    </StackLayout>
+                </StackLayout>
 
 
                     <ListView x:Name="RoomsList" Grid.Row="10" ItemsSource="{Binding Rooms}" Margin="0,0,0,80">

@@ -131,8 +131,12 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
         }
 
+        public delegate void HideButton();
+        public event HideButton hideButton;
 
-        public ICommand SaveRoom { get; private set; }
+
+        public ICommand StoreMax { get; private set; }
+        public ICommand Add { get; private set; }
         public ICommand Finish { get; private set; }
 
         DatabaseContext _context;
@@ -140,9 +144,22 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
         public AddRoomsViewModel()
         {
             _context = new DatabaseContext();
-            SaveRoom = new Command(saveRoom);
+            StoreMax = new Command(storeMax);
             Finish = new Command(finish);
+            Add = new Command(add);
 
+            MaxX = SettingsController.MaxX;
+            MaxY = SettingsController.MaxY;
+
+            var rooms = _context.Rooms.ToList();
+
+            foreach (var r in rooms)
+            {
+                Rooms.Add(r.Nazov);
+
+            }
+
+            checkMax();
             //TestDataDbFiller filler = new TestDataDbFiller();
 
             //System.Diagnostics.Debug.WriteLine("****************************** finished ");
@@ -155,7 +172,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 System.Diagnostics.Debug.WriteLine("DETEGOVANA IZBA " + izba.Nazov + " poh x: " + p.Xhodnota + " poh y: " + p.Yhodnota + " lava izba: " + izba.LavaXhodnota + "/" + izba.LavaYhodnota + " prava izba: " + izba.PravaXhodnota + "/" + izba.PravaYhodnota);
 
             }*/
-            
+
 
         }
 
@@ -163,16 +180,24 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
         {
             //System.Diagnostics.Debug.WriteLine("MAX KOORD" + MaxX + " " + MaxY);
 
-            SettingsController.MaxX = MaxX*10;
-            SettingsController.MaxY = MaxY*10;
+
 
             await Application.Current.MainPage.Navigation.PushAsync(new DrawHomePage());
 
-           
+
 
         }
 
-        public void saveRoom()
+        private void storeMax()
+        {
+            SettingsController.MaxX = MaxX * 10;
+            SettingsController.MaxY = MaxY * 10;
+
+            hideButton?.Invoke();
+
+        }
+
+        public void add()
         {
             int index = 0;
             if (!_context.Rooms.Any())
@@ -196,7 +221,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 LavaYhodnota = float.Parse(LeftDownY, CultureInfo.InvariantCulture.NumberFormat),
                 PravaXhodnota = float.Parse(RightUpX, CultureInfo.InvariantCulture.NumberFormat),
                 PravaYhodnota = float.Parse(RightUpY, CultureInfo.InvariantCulture.NumberFormat)
-         
+
             };
 
             _context.Rooms.Add(izbaNova);
@@ -211,8 +236,22 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
 
             Rooms.Add(NameRoom);
-           
-           
+
+
+        }
+
+        private void checkMax() {
+
+            if((SettingsController.MaxX > 0) && (SettingsController.MaxY > 0))
+            {
+                hideButton?.Invoke();
+
+            }
+
+
+              
+            
+
         }
 
         async void showToast(string Name)
