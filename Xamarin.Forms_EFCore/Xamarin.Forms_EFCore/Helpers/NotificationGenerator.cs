@@ -63,6 +63,74 @@ namespace Xamarin.Forms_EFCore.Helpers
 
         }
 
+        public void GeneratePustAlertMovOut(string timestamp, int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "Pacient opustil domov";
+
+            string body = "V čase " + cas + " boli prekročené okrajové hranice";
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("tap_tap_tap.mp3");
+            player.Play();
+
+            if (SettingsController.AlertMovement)
+            {
+                SendEmailMessageMovOut(timestamp, ID);
+
+
+            }
+
+        }
+
+        public void GeneratePustAlertMovTime(string roomName, string timestamp,string durationTime, int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "Prekročený časový limit v " + roomName;
+
+            string body = "V čase " + cas + " bol pacient bez pohybu už " + durationTime +" min";
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("tap_tap_tap.mp3");
+            player.Play();
+
+            if (SettingsController.AlertMovementTime)
+            {
+                SendEmailMessageMovTime(roomName, timestamp, durationTime, ID);
+
+
+            }
+
+        }
+
+
+
         public void GeneratePustAlertFall(string izbaName, string timestamp, int ID)
         {
             string cas = "NA";
@@ -258,7 +326,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             message.Body = new TextPart("plain")
             {
                 Text = @"Aplikácia Health Spectator práve zaznamenala pád!
-            V čase " + cas + " nastal v miestnosti " + izba + "pád".
+            V čase " + cas + " nastal v miestnosti " + izba + "pád"
             };
 
             using (var client = new SmtpClient())
@@ -282,6 +350,106 @@ namespace Xamarin.Forms_EFCore.Helpers
 
         }
 
+
+        public void SendEmailMessageMovOut( string timestamp, int ID)
+        {
+            SettingsController.NameEmail = "Jakub Ginter";
+            SettingsController.Email = "ginter.jakub@gmail.com";
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("HEALTH SPECTATOR", "ahojakosamas94@gmail.com"));
+            message.To.Add(new MailboxAddress(SettingsController.NameEmail, SettingsController.Email));
+
+            message.Subject = "Upozornenie: Boli prekročené okrajové hranice domu";
+
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+
+            message.Body = new TextPart("plain")
+            {
+                Text = @"Aplikácia Health Spectator práve zaznamenala prekročenie hraníc!
+            V čase " + cas + " pacient opustil domov"
+            };
+
+            using (var client = new SmtpClient())
+            {
+                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                client.Connect("smtp.gmail.com", 587, false);
+
+                // Note: since we don't have an OAuth2 token, disable
+                // the XOAUTH2 authentication mechanism.
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate("ahojakosamas94@gmail.com", "Jakub1994");
+
+                client.Send(message);
+                client.Disconnect(true);
+            }
+
+
+        }
+
+        public void SendEmailMessageMovTime(string roomName, string timestamp, string durationTime, int ID)
+        {
+            SettingsController.NameEmail = "Jakub Ginter";
+            SettingsController.Email = "ginter.jakub@gmail.com";
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("HEALTH SPECTATOR", "ahojakosamas94@gmail.com"));
+            message.To.Add(new MailboxAddress(SettingsController.NameEmail, SettingsController.Email));
+
+            message.Subject = "Upozornenie: V miestnosti " + roomName + " bol prekročený časový limit";
+
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+
+            message.Body = new TextPart("plain")
+            {
+                Text = @"Aplikácia Health Spectator práve zaznamenala prekročenie časovéhu limitu bez výrazného pohybu!
+            V čase " + cas + " sa pacient výrazne nehýbal už " + durationTime + " minút."
+            };
+
+            using (var client = new SmtpClient())
+            {
+                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                client.Connect("smtp.gmail.com", 587, false);
+
+                // Note: since we don't have an OAuth2 token, disable
+                // the XOAUTH2 authentication mechanism.
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate("ahojakosamas94@gmail.com", "Jakub1994");
+
+                client.Send(message);
+                client.Disconnect(true);
+            }
+
+
+        }
 
     }
 }

@@ -370,6 +370,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     }
 
+
+                    if(pohS.Upozornenie_Hranica == 1)
+                    {
+                        new NotificationGenerator().GeneratePustAlertMovOut(pohS.TimeStamp, pohS.PohSekvId);
+
+                    }
+
                     //TODO: ak upoz hran je 1 treba alert ze je vonku 
 
                     Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
@@ -409,7 +416,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     if (limitCheck.checkMovementValue(context, mov, pohS))
                     {
                         System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie");
-                        mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
+                        //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
                         mov.PohSekvFK = pohS.PohSekvId;
 
                         //cas zotrvania
@@ -427,11 +434,26 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
 
                         pohS.Cas_Zotrvania = durationTime;
+                        pohS.Upozornenie_Cas = limitCheck.checkTimeLimitMovement(context, pohS);
+
+                        if (pohS.Upozornenie_Hranica == 1)
+                        {
+                            new NotificationGenerator().GeneratePustAlertMovOut(pohS.TimeStamp, pohS.PohSekvId);
+
+                        }
+
+                        if (pohS.Upozornenie_Cas == 1)
+                        {
+                            RoomsDetection roomsDetection = new RoomsDetection();
+                            new NotificationGenerator().GeneratePustAlertMovTime(roomsDetection.findRoom(mov).Nazov,pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+                            
+                        }
+
 
                         //TODO: ak je stale vonku upozornenie + ak je cas tak upozornenie
                         //casove upozornenie
 
-                        pohS.Upozornenie_Cas = limitCheck.checkTimeLimitMovement(context, pohS);
+                       
 
                        
                         context.MovementSekv.Update(pohS);
@@ -488,7 +510,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         }
 
-                        
+                        if (pohnew.Upozornenie_Hranica == 1)
+                        {
+                            new NotificationGenerator().GeneratePustAlertMovOut(pohnew.TimeStamp, pohnew.PohSekvId);
+
+                        }
+
+
                         //TODO: to iste ako prve
                         Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                         p.PohSekvFK = last.PohSekvId + 1;
