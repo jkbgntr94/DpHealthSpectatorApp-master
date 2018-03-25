@@ -22,6 +22,9 @@ namespace Xamarin.Forms_EFCore.Views
         {
             base.OnAppearing();
 
+            myLocalImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.done.png");
+
+
             BindingContext = new Final_InitializationViewModel();
         }
     }

@@ -33,7 +33,7 @@
 
                 <Label x:Name="TimeAddSett" Text="Čas v minútach" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
                 <Entry VerticalOptions="Center"
-                   WidthRequest="250" Text="{Binding Time}"
+                   WidthRequest="250" Text="{Binding TimeLimit}"
                    HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"
                    Grid.Row="0" Grid.Column="1"/>

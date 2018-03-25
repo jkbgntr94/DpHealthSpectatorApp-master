@@ -56,7 +56,7 @@ namespace Xamarin.Forms_EFCore.Helpers
 
                 if(drugName != "")
                 {
-                    GeneratePushAlertDrug(drugName,timestamp,ID);
+                    GeneratePushAlertDrug(drugName,timestamp,ID+100);
 
                 }
 
@@ -166,8 +166,8 @@ namespace Xamarin.Forms_EFCore.Helpers
             }
 
             string title = "Možný vplyv lieku";
-
-            string body = "Upozornenie["+ID+"] mohlo byť ovplyvnené: " + drugName;
+            int myId = ID - 100;
+            string body = "Upozornenie["+myId+"] mohlo byť ovplyvnené: " + drugName;
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;

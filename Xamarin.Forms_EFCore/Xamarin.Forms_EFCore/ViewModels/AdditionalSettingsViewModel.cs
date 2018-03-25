@@ -14,14 +14,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
     public class AdditionalSettingsViewModel : BaseViewModel
     {
       
-        private string time;
-        public string Time
+        private int timeLimit;
+        public int TimeLimit
         {
-            get { return time; }
+            get { return timeLimit; }
             set
             {
-                time = value;
-                OnPropertyChanged();
+                timeLimit = value;
             }
         }
 
@@ -32,7 +31,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             set
             {
                 okruh = value;
-                OnPropertyChanged();
+                
             }
         }
 
@@ -48,19 +47,21 @@ namespace Xamarin.Forms_EFCore.ViewModels
             emailNo = new Command(toMainPage);
             emailYes = new Command(toEmailSelection);
 
-            storeValuesToDb();
+            
 
 
         }
 
         async void toMainPage()
         {
+            storeValuesToDb();
             await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
 
         }
 
         async void toEmailSelection()
         {
+            storeValuesToDb();
             await Application.Current.MainPage.Navigation.PushAsync(new EmailAlertSettingsPage());
 
         }
@@ -72,7 +73,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 Hranice_Pohyb hp = new Hranice_Pohyb()
                 {
                     HranicePohybId = 1,
-                    LimitCas = Time,
+                    LimitCas = TimeLimit.ToString(),
                     OkruhHranica = Okruh,
                     Xhranica = SettingsController.MaxX,
                     Yhranica = SettingsController.MaxY,
@@ -94,7 +95,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 Hranice_Pohyb hp = new Hranice_Pohyb()
                 {
                     HranicePohybId = index,
-                    LimitCas = Time,
+                    LimitCas = TimeLimit.ToString(),
                     OkruhHranica = Okruh,
                     Xhranica = SettingsController.MaxX,
                     Yhranica = SettingsController.MaxY,

@@ -12,6 +12,7 @@ using Xamarin.Forms_EFCore.Helpers.SekvenceHelper;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
 using Xamarin.Forms_EFCore.Views;
+using Xamarin.Forms_EFCore.Views.Settings;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
@@ -115,6 +116,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         }
 
         DatabaseContext _context;
+        public ICommand SettingsClick { get; private set; }
         public ICommand TempVisualCommand { get; private set; }
         public ICommand PulseVisualCommand { get; private set; }
         public ICommand DashboardCommand { get; private set; }
@@ -132,6 +134,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
+            SettingsClick = new Command(settingsCommand);
 
             controlledMeasurementStart();
 
@@ -209,6 +212,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
 
             await Application.Current.MainPage.Navigation.PushAsync(new FallVisualPage());
+
+        }
+
+        async void settingsCommand()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new SettingsPage());
 
         }
 

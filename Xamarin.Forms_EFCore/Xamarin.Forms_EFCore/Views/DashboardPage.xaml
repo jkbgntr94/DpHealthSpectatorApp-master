@@ -19,7 +19,13 @@
 
 
             <Label x:Name="DeshDesc" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Posledné hodnoty"/>
-                <Grid Grid.Row="1" Grid.Column="0">
+            <Image HeightRequest="30" Grid.Row="0" Grid.Column="0" x:Name="settingsImage" HorizontalOptions="End" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SettingsClick}"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Grid Grid.Row="1" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>

@@ -11,9 +11,9 @@ using Xamarin.Forms_EFCore.ViewModels.Settings;
 namespace Xamarin.Forms_EFCore.Views.Settings
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SettingsPage : ContentPage
+	public partial class EditProfilePage : ContentPage
 	{
-		public SettingsPage ()
+		public EditProfilePage ()
 		{
 			InitializeComponent ();
 		}
@@ -22,13 +22,8 @@ namespace Xamarin.Forms_EFCore.Views.Settings
         {
             base.OnAppearing();
 
-            arrowimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
-            arrowimage1.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
 
-
-            BindingContext = new SettingsPageViewModel();
-
-
+            BindingContext = new EditProfileViewModel();
 
         }
     }

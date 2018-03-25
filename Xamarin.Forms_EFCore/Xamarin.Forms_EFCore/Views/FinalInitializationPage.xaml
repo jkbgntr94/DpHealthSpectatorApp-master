@@ -1,19 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.Views.FinalInitializationPage">
+             x:Class="Xamarin.Forms_EFCore.Views.FinalInitializationPage"
+             Title="Inicializácia ukončená">
     <ContentPage.Content>
-        <StackLayout>
-            <Image VerticalOptions="Center"
+        <StackLayout Spacing="20">
+            <Image Margin="0,15,0,0" VerticalOptions="Center"
                    HorizontalOptions="Center"
+                   HeightRequest="150"
                    x:Name="myLocalImage" />
 
             <Label  VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    Text="Inicializácia úspešne ukončená"
+                    Text="Gratulujeme"
                     FontAttributes="Bold" 
                     FontSize="Large"/>
-            
+
+            <Label  VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Profil pacienta bol úspešne nastavený, aplikácia teraz sama nastaví akceptované hodnoty pre pacienta"/>
+
             <Button Text="Ďalej" Command="{Binding ToAlertSelection}"/>
         </StackLayout>
     </ContentPage.Content>

@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="arrow.png" />
     <None Remove="date-time.png" />
+    <None Remove="done.png" />
     <None Remove="duration.png" />
     <None Remove="fall.png" />
     <None Remove="geodata.xml" />
@@ -26,6 +28,7 @@
     <None Remove="Resources\login.png" />
     <None Remove="Resources\user_plus.png" />
     <None Remove="Risk.png" />
+    <None Remove="settings.png" />
     <None Remove="temperature.png" />
     <None Remove="temperature100.txt" />
     <None Remove="temperatureCold.png" />
@@ -39,7 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="arrow.png" />
     <EmbeddedResource Include="date-time.png" />
+    <EmbeddedResource Include="done.png" />
     <EmbeddedResource Include="duration.png" />
     <EmbeddedResource Include="fall.png" />
     <EmbeddedResource Include="heat-map.png" />
@@ -66,6 +71,7 @@
     <EmbeddedResource Include="Resources\login.png" />
     <EmbeddedResource Include="Resources\user_plus.png" />
     <EmbeddedResource Include="Risk.png" />
+    <EmbeddedResource Include="settings.png" />
     <EmbeddedResource Include="temperature.png" />
     <EmbeddedResource Include="temperature100.txt" />
     <EmbeddedResource Include="temperatureCold.png" />
@@ -145,6 +151,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PulseVisualPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\EditProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\SettingsPage.xaml">

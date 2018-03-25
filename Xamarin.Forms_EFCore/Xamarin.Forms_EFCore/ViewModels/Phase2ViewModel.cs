@@ -156,8 +156,17 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void toPhase2()
         {
-            storeActivityToDb();
-            await Application.Current.MainPage.Navigation.PushAsync(new ChooseSecPhasePage());
+            if (aktivity.Count > 0)
+            {
+                storeActivityToDb();
+                Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
+            }
+            else
+            {
+                storeActivityToDb();
+
+                Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
+            }
 
         }
 

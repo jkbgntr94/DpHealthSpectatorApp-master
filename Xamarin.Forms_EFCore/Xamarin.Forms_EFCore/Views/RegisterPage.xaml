@@ -4,7 +4,7 @@
              x:Class="Xamarin.Forms_EFCore.Views.RegisterPage"
              NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="15" BackgroundColor="#3563ad">
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="15">
 
             <Label Margin="0,40,0,0" VerticalOptions="Center"
                    HorizontalOptions="Center"
