@@ -372,12 +372,10 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
 
                     if(pohS.Upozornenie_Hranica == 1)
-                    {
-                        new NotificationGenerator().GeneratePustAlertMovOut(pohS.TimeStamp, pohS.PohSekvId);
+                    { 
+                        new NotificationGenerator().GenerateNotificationMovement(pohS.TimeStamp, pohS.PohSekvId);
 
                     }
-
-                    //TODO: ak upoz hran je 1 treba alert ze je vonku 
 
                     Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                     p.PohSekvFK = 1;
@@ -436,26 +434,21 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         pohS.Cas_Zotrvania = durationTime;
                         pohS.Upozornenie_Cas = limitCheck.checkTimeLimitMovement(context, pohS);
 
+
                         if (pohS.Upozornenie_Hranica == 1)
                         {
-                            new NotificationGenerator().GeneratePustAlertMovOut(pohS.TimeStamp, pohS.PohSekvId);
+                            new NotificationGenerator().GenerateNotificationMovement(pohS.TimeStamp, pohS.PohSekvId);
 
                         }
+
 
                         if (pohS.Upozornenie_Cas == 1)
                         {
                             RoomsDetection roomsDetection = new RoomsDetection();
-                            new NotificationGenerator().GeneratePustAlertMovTime(roomsDetection.findRoom(mov).Nazov,pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+                            new NotificationGenerator().GenerateNotificationMovementTime(roomsDetection.findRoom(mov).Nazov,pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
                             
                         }
-
-
-                        //TODO: ak je stale vonku upozornenie + ak je cas tak upozornenie
-                        //casove upozornenie
-
-                       
-
-                       
+                        
                         context.MovementSekv.Update(pohS);
                         //context.Movement.Remove(mov);
                         context.Movement.Update(mov);
@@ -510,14 +503,15 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         }
 
-                        if (pohnew.Upozornenie_Hranica == 1)
+
+                        if (pohS.Upozornenie_Hranica == 1)
                         {
-                            new NotificationGenerator().GeneratePustAlertMovOut(pohnew.TimeStamp, pohnew.PohSekvId);
+                            new NotificationGenerator().GenerateNotificationMovement(pohS.TimeStamp, pohS.PohSekvId);
 
                         }
 
 
-                        //TODO: to iste ako prve
+
                         Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                         p.PohSekvFK = last.PohSekvId + 1;
 

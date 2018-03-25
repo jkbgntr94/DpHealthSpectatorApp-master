@@ -125,7 +125,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             }
 
-            new NotificationGenerator().GeneratePustAlertFall(izbameno,pad.TimeStamp, pad.AkcelerometerID);
+            new NotificationGenerator().GenerateNotificationFall(izbameno,pad.TimeStamp, pad.AkcelerometerID);
 
 
             try

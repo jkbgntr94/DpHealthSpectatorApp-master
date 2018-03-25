@@ -58,6 +58,14 @@ namespace Xamarin.Forms_EFCore.DataAccess {
             if(a == 999) 
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
+
+            SettingsController.AlertFall = false;
+            SettingsController.AlertMovement = false;
+            SettingsController.AlertMovementTime = false;
+            SettingsController.AlertLow = false;
+            SettingsController.AlertMiddle = false;
+            SettingsController.AlertHigh = false;
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {

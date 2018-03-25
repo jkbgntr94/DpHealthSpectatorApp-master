@@ -50,6 +50,16 @@ namespace Xamarin.Forms_EFCore.Helpers
                         break;
                 }
 
+                //generate alert drug
+                DrugsHelper drugsHelper = new DrugsHelper();
+                string drugName = drugsHelper.FindActiveDrug(timestamp);
+
+                if(drugName != "")
+                {
+                    GeneratePushAlertDrug(drugName,timestamp,ID);
+
+                }
+
                 if (alertKind == 0) {
                     GeneratePushAlert(velicina,  hodnota,  timestamp,  upozornenie,  ID);
 
@@ -62,6 +72,113 @@ namespace Xamarin.Forms_EFCore.Helpers
             }
 
         }
+
+        public void GenerateNotificationMovement( string timestamp, int ID)
+        {
+            int alertKind = SettingsController.SignalLost;
+
+            switch (alertKind)
+            {
+                case 0:
+                    GeneratePustAlertMovOut(timestamp, ID);
+                    if (SettingsController.AlertMovement)
+                    {
+                        SendEmailMessageMovOut(timestamp, ID);
+                    }
+                    break;
+                case 1:
+                    alarmNotificationMovOut(timestamp, ID);
+                    if (SettingsController.AlertMovement)
+                    {
+                        SendEmailMessageMovOut(timestamp, ID);
+                    }
+                    break;
+
+            }
+
+
+        }
+
+        public void GenerateNotificationFall(string izbaName, string timestamp, int ID)
+        {
+            int alertKind = SettingsController.FallDetected;
+
+            switch (alertKind)
+            {
+                case 0:
+                    GeneratePustAlertFall(izbaName,timestamp, ID);
+                    if (SettingsController.AlertFall)
+                    {
+                        SendEmailMessageFall(izbaName, timestamp, ID);
+                    }
+                    break;
+                case 1:
+                    alarmNotificationFall(izbaName, timestamp, ID);
+                    if (SettingsController.AlertFall)
+                    {
+                        SendEmailMessageFall(izbaName, timestamp, ID);
+                    }
+                    break;
+
+            }
+
+
+        }
+
+        public void GenerateNotificationMovementTime(string roomName, string timestamp, string durationTime, int ID)
+        {
+            int alertKind = SettingsController.LongTimeNoMovement;
+
+            switch (alertKind)
+            {
+                case 0:
+                    GeneratePustAlertMovTime(roomName, timestamp, durationTime, ID);
+                    if (SettingsController.AlertMovementTime)
+                    {
+                        SendEmailMessageMovTime(roomName, timestamp, durationTime, ID);
+                    }
+                    break;
+                case 1:
+                    alarmNotificationMovTime(roomName, timestamp, durationTime, ID);
+                    if (SettingsController.AlertMovementTime)
+                    {
+                        SendEmailMessageMovTime(roomName,timestamp,durationTime, ID);
+                    }
+                    break;
+
+            }
+
+
+        }
+
+        public void GeneratePushAlertDrug(string drugName,string timestamp, int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "Možný vplyv lieku";
+
+            string body = "Upozornenie["+ID+"] mohlo byť ovplyvnené: " + drugName;
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("tap_tap_tap.mp3");
+            player.Play();
+
+
+
+        }
+
 
         public void GeneratePustAlertMovOut(string timestamp, int ID)
         {
@@ -79,7 +196,7 @@ namespace Xamarin.Forms_EFCore.Helpers
 
             string title = "Pacient opustil domov";
 
-            string body = "V čase " + cas + " boli prekročené okrajové hranice";
+            string body = "[" + ID + "]V čase " + cas + " boli prekročené okrajové hranice";
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
@@ -87,12 +204,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             player.Load("tap_tap_tap.mp3");
             player.Play();
 
-            if (SettingsController.AlertMovement)
-            {
-                SendEmailMessageMovOut(timestamp, ID);
-
-
-            }
+           
 
         }
 
@@ -112,20 +224,14 @@ namespace Xamarin.Forms_EFCore.Helpers
 
             string title = "Prekročený časový limit v " + roomName;
 
-            string body = "V čase " + cas + " bol pacient bez pohybu už " + durationTime +" min";
+            string body = "[" + ID + "]V čase " + cas + " bol pacient bez pohybu už " + durationTime +" min";
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
             player.Volume = 1;
             player.Load("tap_tap_tap.mp3");
             player.Play();
-
-            if (SettingsController.AlertMovementTime)
-            {
-                SendEmailMessageMovTime(roomName, timestamp, durationTime, ID);
-
-
-            }
+            
 
         }
 
@@ -145,9 +251,9 @@ namespace Xamarin.Forms_EFCore.Helpers
 
             }
 
-            string title = "V miestnosti " + izbaName + "nastal pád";
+            string title = "V miestnosti " + izbaName + " nastal pád";
 
-            string body = "V čase " + cas + " nastal pád";
+            string body = "[" + ID + "]V čase " + cas + " nastal pád";
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
@@ -189,7 +295,7 @@ namespace Xamarin.Forms_EFCore.Helpers
 
 
             }
-            string body = "V čase " + cas + " bolo vytvorené " + upozornenieNazov + " upozornenie.";
+            string body = "[" + ID + "]V čase " + cas + " bolo vytvorené " + upozornenieNazov + " upozornenie.";
             CrossLocalNotifications.Current.Show(title, body, ID);
 
             var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
@@ -198,6 +304,86 @@ namespace Xamarin.Forms_EFCore.Helpers
             player.Play();
 
         }
+
+        public void alarmNotificationFall(string roomName, string timestamp, int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "V miestnosti " + roomName + " nastal pád";
+
+            string body = "[" + ID + "]V čase " + cas + " nastal pád";
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("alarm.mp3");
+            player.Play();
+
+        }
+
+
+
+        public void alarmNotificationMovTime(string roomName, string timestamp, string durationTime, int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "Pacient bez pohybu už " + durationTime + " min";
+
+            string body = "[" + ID + "]V čase " + cas + " bola prekročená časová hranica - " + roomName;
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("alarm.mp3");
+            player.Play();
+
+        }
+        public void alarmNotificationMovOut(string timestamp,int ID)
+        {
+            string cas = "NA";
+            try
+            {
+                DateTime convertedDate = DateTime.Parse(timestamp);
+                cas = convertedDate.ToShortTimeString();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Parsovanie datumu " + e.ToString());
+
+            }
+
+            string title = "Pacient opustil domov";
+
+            string body = "[" + ID + "]V čase " + cas + " boli prekročené okrajové hranice";
+            CrossLocalNotifications.Current.Show(title, body, ID);
+
+            var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
+            player.Volume = 1;
+            player.Load("alarm.mp3");
+            player.Play();
+
+        }
+
 
         public void alarmNotification(String velicina, float hodnota, string timestamp, int upozornenie, int ID)
         {
@@ -224,7 +410,7 @@ namespace Xamarin.Forms_EFCore.Helpers
 
 
                 }
-                string body = "V čase " + cas + " bolo vytvorené " + upozornenieNazov + " upozornenie.";
+                string body = "[" + ID + "]V čase " + cas + " bolo vytvorené " + upozornenieNazov + " upozornenie.";
                 CrossLocalNotifications.Current.Show(title, body, ID);
 
                 var player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current;
@@ -326,7 +512,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             message.Body = new TextPart("plain")
             {
                 Text = @"Aplikácia Health Spectator práve zaznamenala pád!
-            V čase " + cas + " nastal v miestnosti " + izba + "pád"
+            V čase " + cas + " nastal v miestnosti " + izba + " pád"
             };
 
             using (var client = new SmtpClient())

@@ -15,7 +15,7 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.AdditionalSettingsPage());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.DashboardPage());
         }
 
         protected override void OnStart() {
@@ -30,8 +30,8 @@ namespace Xamarin.Forms_EFCore {
                 AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
 
 
-                /* LoadRooms loadRooms = new LoadRooms();
-                 loadRooms.LoadRoomsData();*/
+                 LoadRooms loadRooms = new LoadRooms();
+                 loadRooms.LoadRoomsData();
 
                 TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
                 testDataDbFiller.loadMandatoryData();
