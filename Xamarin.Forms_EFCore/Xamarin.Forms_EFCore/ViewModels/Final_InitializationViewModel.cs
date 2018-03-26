@@ -26,7 +26,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
 
             //kontrolne vypisovanie dat z databazy
-            var value = context.Pulse.ToList();
+        /*    var value = context.Pulse.ToList();
 
             foreach (var p in value)
             {
@@ -67,13 +67,13 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 System.Diagnostics.Debug.WriteLine("profile " + p.Name);
             }
 
-            
+            */
 
         }
 
         async void toAlertSelection()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new AlertSelectionPage());
+            await Application.Current.MainPage.Navigation.PushModalAsync(new AlertSelectionPage());
         }
 
         public void createLimits()//nepouziva sa 

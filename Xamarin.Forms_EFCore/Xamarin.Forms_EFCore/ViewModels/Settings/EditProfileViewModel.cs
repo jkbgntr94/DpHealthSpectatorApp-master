@@ -130,9 +130,11 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
 
         }
 
+        private Profile prof;
+
         private void fillValues()
         {
-            Profile prof = _context.Profiles.FirstOrDefault(x => x.ProfileId == _context.Profiles.Max(p => p.ProfileId));
+            prof = _context.Profiles.FirstOrDefault(x => x.ProfileId == _context.Profiles.Max(p => p.ProfileId));
 
             if (prof == null) return;
             try
@@ -169,28 +171,37 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
                 if (SexPicker == 1) { sex = "Z"; }
 
 
-
-                Profile profile = new Profile()
-                {
-                    ProfileId = 1,
-                    Meno = Username,
-                    Priezvisko = Surrname,
-                    Adresa = Address,
-                    DatumNarodenia = BirthDate.ToString(),
-                    Vaha = Weight,
-                    Vyska = Height,
-                    Pohlavie = sex,
-                    Ochorenia = Illnesses,
-                    Poistovna = Poist
-
-                };
-
+                    prof.Meno = Username;
+                    prof.Priezvisko = Surrname;
+                    prof.Adresa = Address;
+                    prof.DatumNarodenia = BirthDate.ToString();
+                    prof.Vaha = Weight;
+                    prof.Vyska = Height;
+                    prof.Pohlavie = sex;
+                    prof.Ochorenia = Illnesses;
+                    prof.Poistovna = Poist;
+            
                 if (_context.Profiles.Any())
                 {
-                    _context.Profiles.Update(profile);
+                    _context.Profiles.Update(prof);
                 }
                 else
                 {
+
+                    Profile profile = new Profile()
+                    {
+                        ProfileId = 1,
+                        Meno = Username,
+                        Priezvisko = Surrname,
+                        Adresa = Address,
+                        DatumNarodenia = BirthDate.ToString(),
+                        Vaha = Weight,
+                        Vyska = Height,
+                        Pohlavie = sex,
+                        Ochorenia = Illnesses,
+                        Poistovna = Poist
+
+                    };
                     _context.Profiles.Add(profile);
 
                 }

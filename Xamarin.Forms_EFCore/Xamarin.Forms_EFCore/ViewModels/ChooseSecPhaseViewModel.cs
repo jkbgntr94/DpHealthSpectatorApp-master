@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Views;
@@ -80,7 +81,6 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                 }
             }
-
             await Application.Current.MainPage.Navigation.PushAsync(new Phase2StressPage(aktivityCorr));
 
         }
@@ -88,13 +88,16 @@ namespace Xamarin.Forms_EFCore.ViewModels
         public void FillActivities()
         {
             string[] listact = new string[5] { "Sledovanie TV", "Čítanie novín", "Ležanie na posteli", "Varenie", "Oddych na balkóne" };
-            int i = 0;
+            int i = 1;
             foreach (var a in listact)
             {
 
                 Activities act = new Activities()
                 {
+                    
                     Name = a
+                    
+                    
                 };
 
                 ListOfActivity.Enqueue(act);

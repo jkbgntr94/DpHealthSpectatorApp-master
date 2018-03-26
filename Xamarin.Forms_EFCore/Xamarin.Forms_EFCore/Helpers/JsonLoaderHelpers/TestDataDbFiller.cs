@@ -53,7 +53,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             loaderL.LoadPulseLimits(_context);
             loaderL.LoadTemperatureLimits(_context);
             loaderL.LoadMovementLimits(_context);
-            loadDrug();
+            //loadDrug();
 
 
         }
@@ -85,7 +85,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
             catch (Exception e)
             {
-                throw e;
+                //throw e;
             }
 
         }

@@ -15,13 +15,13 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.Phase1());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.DashboardPage());
         }
 
         protected override void OnStart() {
             //TODO: START HERE IF EXIST PROFILE/ ELSE START ON INIT FINISH
             
-            new DatabaseContext(999);
+            //new DatabaseContext(999);
             DatabaseContext context = new DatabaseContext();
             SettingsController.MeasurementRunning = 0;
             if (context.Profiles.Any())
@@ -30,11 +30,12 @@ namespace Xamarin.Forms_EFCore {
                 AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
 
 
-                 LoadRooms loadRooms = new LoadRooms();
-                 loadRooms.LoadRoomsData();
+                /* LoadRooms loadRooms = new LoadRooms();
+                 loadRooms.LoadRoomsData();*/
 
-                TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
-                testDataDbFiller.loadMandatoryData();
+                /*TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
+                testDataDbFiller.loadMandatoryData();*/
+
                 asyncDataLoader.LoadData();
 
             }

@@ -107,7 +107,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             SettingsController.SignalLost = SignalLost;
             SettingsController.FallDetected = FallDetected;
 
-            //Application.Current.MainPage.Navigation.PopModalAsync();
+            Application.Current.MainPage.Navigation.PopModalAsync();
             Application.Current.MainPage.Navigation.PushAsync(new AdditionalSettingsPage());
 
             //Console.WriteLine("seruuuusssssssssssss {0} {1} {2} {3} {4} {5}", Settings.AlertPulseSlabe, Settings.AlertPulseStredne, Settings.AlertPulseVysoke, Settings.LongTimeNoMovement, Settings.SignalLost, Settings.FallDetected);

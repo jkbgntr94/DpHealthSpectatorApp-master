@@ -14,24 +14,26 @@ namespace Xamarin.Forms_EFCore.ViewModels
     public class AdditionalSettingsViewModel : BaseViewModel
     {
       
-        private int timeLimit;
-        public int TimeLimit
+        private string timeLimit;
+        public string TimeLimit
         {
             get { return timeLimit; }
             set
             {
                 timeLimit = value;
+                OnPropertyChanged("TimeLimit");
             }
         }
 
-        private int okruh;
-        public int Okruh
+        private string okruh;
+        public string Okruh
         {
             get { return okruh; }
             set
             {
                 okruh = value;
-                
+                OnPropertyChanged("Okruh");
+
             }
         }
 
@@ -74,7 +76,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 {
                     HranicePohybId = 1,
                     LimitCas = TimeLimit.ToString(),
-                    OkruhHranica = Okruh,
+                    OkruhHranica = Int32.Parse(Okruh),
                     Xhranica = SettingsController.MaxX,
                     Yhranica = SettingsController.MaxY,
                     TimeStamp = DateTime.Now.ToString("h:mm:ss tt")
@@ -96,7 +98,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 {
                     HranicePohybId = index,
                     LimitCas = TimeLimit.ToString(),
-                    OkruhHranica = Okruh,
+                    OkruhHranica = Int32.Parse(Okruh),
                     Xhranica = SettingsController.MaxX,
                     Yhranica = SettingsController.MaxY,
                     TimeStamp = DateTime.Now.ToString("h:mm:ss tt")

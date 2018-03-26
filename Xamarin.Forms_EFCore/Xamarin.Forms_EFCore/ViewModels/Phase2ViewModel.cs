@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -122,6 +123,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             valuesForList = m.getValuesForList();
 
             measuredValuesForDb = string.Empty;
+            
         }
 
         public void MeasureValues()
@@ -156,25 +158,39 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void toPhase2()
         {
-            if (aktivity.Count > 0)
-            {
-                storeActivityToDb();
-                Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
-            }
-            else
-            {
-                storeActivityToDb();
+            /* if (aktivity.Count > 0)
+             {
+                 storeActivityToDb();
+                 await Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
+             }
+             else
+             {
+                 storeActivityToDb();
 
-                Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
-            }
+                 await Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
+             }*/
+            StopTimerCommand();
 
         }
 
         private void storeActivityToDb()
         {
+           /* int index = 1;
+            try
+            {
+                var maxAct = _context.Activities.FirstOrDefault(r => r.ActivityId == _context.Activities.Max(o => o.ActivityId));
+                index = maxAct.ActivityId;
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION GETTING MAX ID OF ACTIVITY " + e.ToString());
+
+            }*/
+
             Activities act = currentAct;
             act.Value = measuredValuesForDb;
-
+            //act.ActivityId = index;
             _context.Activities.Add(act);
 
             try
@@ -185,7 +201,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
             }
-            System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++ activity " + act.Name + " " + act.ActSwitchIsChecked + " " + act.Value + " " + act.StressIsChecked);
+            System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++ activity " + act.Name + " " +act.ActivityId + " " + act.ActSwitchIsChecked + " " + act.Value + " " + act.StressIsChecked);
             
 
         }
@@ -261,7 +277,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         /// </summary>
 
-        private void StopTimerCommand()
+        private async void StopTimerCommand()
 
         {
 
@@ -272,12 +288,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
             if (aktivity.Count > 0)
             {
                 storeActivityToDb();
-                Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
+                await Application.Current.MainPage.Navigation.PushAsync(new Phase2Page(aktivity));
             } else
             {
                 storeActivityToDb();
 
-                Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new FinalInitializationPage());
             }
 
         }
