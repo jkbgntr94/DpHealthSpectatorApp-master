@@ -114,7 +114,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             System.Diagnostics.Debug.WriteLine("pad " + pad.Xhodnota + " " + pad.TimeStamp + " " + pad.Yhodnota);
 
             Izby izba = new RoomsDetection().findRoomByCoord(pad.Xhodnota, pad.Yhodnota);
-            string izbameno = "Vonku";
+            string izbameno = "NA";
             try
             {
                 izbameno = izba.Nazov;

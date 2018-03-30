@@ -30,6 +30,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
 
         async void editAlertsCommand()
         {
+            await Application.Current.MainPage.Navigation.PushModalAsync(new EditAlertsPage());
 
         }
     }
