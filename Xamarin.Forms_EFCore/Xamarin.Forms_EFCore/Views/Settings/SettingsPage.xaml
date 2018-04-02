@@ -35,7 +35,23 @@
                 </StackLayout.GestureRecognizers>
             </StackLayout>
 
-            
+            <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                <Label x:Name="editEmailAlerts" XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Upraviť upozornenia e-mailom"/>
+                <Image x:Name="arrowimage2" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="15"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding EditEmailAlertsCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                <Label x:Name="roomStats" XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Štatistika pohybu"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding RoomStatsCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

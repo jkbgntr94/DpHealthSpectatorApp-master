@@ -24,6 +24,8 @@ namespace Xamarin.Forms_EFCore.Views.Settings
 
             arrowimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
             arrowimage1.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
+            arrowimage2.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
+            //arrowimage3.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.arrow.png");
 
 
             BindingContext = new SettingsPageViewModel();

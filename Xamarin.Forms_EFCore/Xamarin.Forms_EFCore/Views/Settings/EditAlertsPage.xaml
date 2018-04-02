@@ -19,7 +19,7 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="CenterAndExpand">
-                <Label x:Name="Info" XAlign="Center" Text="V aplikácií sa využíva ......."/>
+                <Label x:Name="Info" XAlign="Center" Text="V aplikácií sa využíva niekoľko základných druhov upozornení. Teraz je potrebné priradiť k ním spôsob upozornenia, ktorý si prajete využívať."/>
                 <Label x:Name="PulseAndTemp" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Text="Upozornenia pre tep a teplotu"/>
             </StackLayout>
 

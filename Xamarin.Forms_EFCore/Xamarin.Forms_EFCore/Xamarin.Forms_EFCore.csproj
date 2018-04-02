@@ -17,7 +17,6 @@
     <None Remove="initializationValues.txt" />
     <None Remove="login2.png" />
     <None Remove="movement.png" />
-    <None Remove="movementSample.txt" />
     <None Remove="pulse.png" />
     <None Remove="pulse100.txt" />
     <None Remove="pulseHigh.png" />
@@ -59,7 +58,6 @@
     <EmbeddedResource Include="initializationValues.txt" />
     <EmbeddedResource Include="login2.png" />
     <EmbeddedResource Include="movement.png" />
-    <EmbeddedResource Include="movementSample.txt" />
     <EmbeddedResource Include="pulse.png" />
     <EmbeddedResource Include="pulse100.txt" />
     <EmbeddedResource Include="pulseHigh.png" />
@@ -154,6 +152,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\EditAlertsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\EditEmailAlertPAge.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\EditProfilePage.xaml">

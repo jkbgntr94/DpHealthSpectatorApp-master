@@ -146,7 +146,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             Tep tep = new Tep
             {
                 TepId = index++,
-                TimeStamp = obj.header.creation_date_time.ToString(),
+                //TimeStamp = obj.header.creation_date_time.ToString(),
+                TimeStamp = DateTime.Now.ToString(),
                 Hodnota = obj.body.heart_rate.value
 
 

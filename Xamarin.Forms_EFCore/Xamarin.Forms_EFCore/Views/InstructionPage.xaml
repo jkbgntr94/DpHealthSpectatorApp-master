@@ -12,7 +12,7 @@
                 </Grid.RowDefinitions>
 
                 <ScrollView>
-                    <Label Text="{Binding InitInstructions}"/>
+                    <Label XAlign="Center" FontSize="Medium" Text="{Binding InitInstructions}"/>
                 </ScrollView>
 
                 <StackLayout Grid.Row="1">

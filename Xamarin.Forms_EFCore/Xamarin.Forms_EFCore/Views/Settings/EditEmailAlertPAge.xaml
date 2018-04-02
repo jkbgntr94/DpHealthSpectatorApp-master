@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.Settings.EditEmailAlertPAge"
+             Title="Nastavenia E-mail upozornení">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Label x:Name="pageAddDesc" XAlign="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Vyplnte nasledovné polia pre správne nastavenie upozornení prostredníctvom e-mailu"/>
+
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="nameSett" Text="Meno príjemcu" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Name}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="1"/>
+
+
+                <Label x:Name="adressSett" Text="E-mail príjemcu" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0" />
+                <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Adress}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="1"/>
+
+
+            </Grid>
+
+            <ScrollView Grid.Row="2" Grid.Column="0">
+                <ListView x:Name="UpozorneniaList" ItemsSource="{Binding ListOfAlerts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Vertical">
+                                        <Label Text="{Binding Name}" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                    <Switch IsToggled="{Binding AlertSwitchIsChecked}" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+
+            <Button HorizontalOptions="Center" VerticalOptions="Center" Text="Uložiť" Grid.Row="3" Grid.Column="0" Command="{Binding toDash}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

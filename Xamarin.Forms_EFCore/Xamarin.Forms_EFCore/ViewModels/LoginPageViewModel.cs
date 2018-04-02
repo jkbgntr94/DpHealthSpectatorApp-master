@@ -75,7 +75,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
                     if (_context.Profiles.Any())
                     {
-                        await Application.Current.MainPage.Navigation.PushAsync(new HomeScreenPage());
+                        await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
 
                     }
                     else

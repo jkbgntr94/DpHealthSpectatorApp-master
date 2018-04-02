@@ -268,7 +268,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
             {
                 var listTemp = _context.PulseSekv.ToList();
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
-                DateTime actualForSummary = DateTime.Parse("2017-01-01T12:04:19Z");
+                DateTime actualForSummary = DateTime.Now;
+                //DateTime actualForSummary = DateTime.Parse("2017-01-01T12:04:19Z");
                 foreach (var t in listTemp)
                 {
                     DateTime convertedDate = DateTime.Parse(t.TimeStart);

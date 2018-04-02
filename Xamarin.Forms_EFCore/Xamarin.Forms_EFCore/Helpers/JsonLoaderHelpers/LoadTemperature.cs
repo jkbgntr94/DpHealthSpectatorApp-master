@@ -155,7 +155,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             Teplota teplota = new Teplota
             {
                 TeplotaId = index++,
-                TimeStamp = obj.header.creation_date_time.ToString(),
+                //TimeStamp = obj.header.creation_date_time.ToString(),
+                TimeStamp = DateTime.Now.ToString(),
                 Hodnota = obj.body.body_temperature.value
 
 

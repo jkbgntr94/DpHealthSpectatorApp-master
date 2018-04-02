@@ -46,7 +46,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                         PohybId = index++,
                         Xhodnota = obj.x,
                         Yhodnota = obj.y,
-                        TimeStamp = DateTime.Now.AddMinutes(i++).ToShortTimeString()
+                        TimeStamp = DateTime.Now.ToShortTimeString()
+                        //TimeStamp = DateTime.Now.AddMinutes(i++).ToShortTimeString()
 
                     };
                     context.Movement.Add(pohyb);

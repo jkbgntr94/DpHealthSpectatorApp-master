@@ -32,7 +32,9 @@ namespace Xamarin.Forms_EFCore.ViewModels
             _context = new DatabaseContext();
             InitStart = new Command(initStart);
 
-            initInstructions = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            initInstructions = "Teraz nasleduje inicializácia aplikácie. Proces je rozdelený do dvoch fáz. Prvá fáza trvá 15 minút. Počas tejto fázy je potrebné, aby pacient ostal v kľude a nepodliehal stresu. Senzory budú postupne zaznamenávať hodnoty tepu, z ktorých budú neskôr určené hranice pre upozornenia.\n\n" +
+                                "Druhá fáza aplikácie obsahuje konkrétne činnosti. Zo zoznamu vyberte aké činnosti chcete zaznamenať a pri ktorých z nich môže pacient pocítiť stres. Každá z činností sa zaznamenáva 10 minút.\n\n" +
+                                "Pre pokračovanie stlačte tlačidlo na spodu obrazovky.Po jeho stlačení sa automaticky spustí prvá fáza.";
         }
 
 
