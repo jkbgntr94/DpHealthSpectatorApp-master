@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.Views.AddRoomsPage">
+             x:Class="Xamarin.Forms_EFCore.Views.AddRoomsPage"
+             Title="Údaje o byte">
     <ContentPage.Content>
             <StackLayout>
 
@@ -23,7 +24,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Max koordináty"/>
+                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Max koordináty v metroch"/>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Grid.Column="0">
                         <Entry VerticalOptions="Center"
                    WidthRequest="50" Text="{Binding MaxX}"

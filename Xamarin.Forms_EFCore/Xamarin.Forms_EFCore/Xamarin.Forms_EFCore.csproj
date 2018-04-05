@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <None Remove="arrow.png" />
+    <None Remove="date-time-close.png" />
+    <None Remove="date-time-start.png" />
     <None Remove="date-time.png" />
     <None Remove="done.png" />
     <None Remove="duration.png" />
@@ -42,6 +44,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="arrow.png" />
+    <EmbeddedResource Include="date-time-close.png" />
+    <EmbeddedResource Include="date-time-start.png" />
     <EmbeddedResource Include="date-time.png" />
     <EmbeddedResource Include="done.png" />
     <EmbeddedResource Include="duration.png" />

@@ -30,11 +30,11 @@ namespace Xamarin.Forms_EFCore {
                 AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
 
 
-                /* LoadRooms loadRooms = new LoadRooms();
-                 loadRooms.LoadRoomsData();*/
+                 LoadRooms loadRooms = new LoadRooms();
+                 loadRooms.LoadRoomsData();
 
-                /*TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
-                testDataDbFiller.loadMandatoryData();*/
+                TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
+                testDataDbFiller.loadMandatoryData();
 
                 asyncDataLoader.LoadData();
 

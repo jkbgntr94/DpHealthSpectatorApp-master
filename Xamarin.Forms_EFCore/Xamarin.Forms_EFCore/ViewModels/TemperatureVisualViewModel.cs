@@ -85,6 +85,20 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 this.OnPropertyChanged("TempTime");
             }
         }
+        private string tempTimeEnd;
+        public string TempTimeEnd
+        {
+            get
+            {
+                return tempTimeEnd;
+            }
+            set
+            {
+                tempTimeEnd = value;
+                this.OnPropertyChanged("TempTimeEnd");
+            }
+        }
+
 
         private string tempValue;
         public string TempValue
@@ -302,17 +316,22 @@ namespace Xamarin.Forms_EFCore.ViewModels
             { 
                 var listTemp = _context.TemperatureSekv.ToList();
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
-                DateTime actualForSummary = DateTime.Parse("2017-01-01T12:04:19Z");
+                //DateTime actualForSummary = DateTime.Parse("2017-01-01T12:04:19Z");
+                DateTime actualForSummary = DateTime.Now;
+
                 foreach (var t in listTemp)
                 {
                     DateTime convertedDate = DateTime.Parse(t.TimeStart);
                     String durationTime = null;
+                    String endTimeString = "NA";String endDateString = ""; 
                     try
                     {
                         DateTime endtime = DateTime.Parse(t.TimeClose);
                         double time = (endtime - convertedDate).TotalMinutes;
                         var x = time - Math.Truncate(time);
-                        durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec"; 
+                        durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
+                        endDateString = endtime.ToShortDateString();
+                        endTimeString = endtime.ToLongTimeString();
                     }
                     catch(Exception e)
                     {
@@ -366,9 +385,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     TemperatureObj tem = new TemperatureObj()
                     {
                         TempId = t.TeplSekvId,
-                        Value = t.Sekvencia.ToString("n2") + " °C",
+                        Value = "~" + t.Sekvencia.ToString("n2") + " °C",
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
+                        DateEnd = endDateString,
+                        TimeEnd = endTimeString,
                         Duration = durationTime,
                         Upozornenie = t.Upozornenie,
                         Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
@@ -407,12 +428,15 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             DateTime convertedDate = DateTime.Parse(t.TimeStart);
             String durationTime = null;
+            String endTimeString = "NA"; String endDateString = "";
             try
             {
                 DateTime endtime = DateTime.Parse(t.TimeClose);
                 double time = (endtime - convertedDate).TotalMinutes;
                 var x = time - Math.Truncate(time);
                 durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
+                endDateString = endtime.ToShortDateString();
+                endTimeString = endtime.ToLongTimeString();
             }
             catch (Exception e)
             {
@@ -423,9 +447,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
             TemperatureObj tem = new TemperatureObj()
             {
                 TempId = t.TeplSekvId,
-                Value = t.Sekvencia.ToString("n2") + " °C",
+                Value = "~" + t.Sekvencia.ToString("n2") + " °C",
                 Date = convertedDate.ToShortDateString(),
                 Time = convertedDate.ToLongTimeString(),
+                DateEnd = endDateString,
+                TimeEnd = endTimeString,
                 Duration = durationTime,
                 Upozornenie = t.Upozornenie,
                 Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
@@ -441,6 +467,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             TempAlert = to.Alert;
             TempTime = to.Date + " " + to.Time;
+            TempTimeEnd = to.DateEnd + " " + to.TimeEnd;
             TempValue = to.Value;
             TempDuration = to.Duration;
 

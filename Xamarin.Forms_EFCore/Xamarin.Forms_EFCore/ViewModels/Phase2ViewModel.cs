@@ -93,7 +93,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             if (aktivity.Count > 0)
             {
                 currentAct = aktivity.Dequeue();
-                ActualActivity = "Zostáva činností: " + aktivity.Count + " - " + currentAct.Name;
+                ActualActivity = "Aktuálna činnosť: " + currentAct.Name + " Zostáva: " + aktivity.Count;
             }
             else
             {

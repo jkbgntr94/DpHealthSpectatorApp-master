@@ -83,6 +83,20 @@ namespace Xamarin.Forms_EFCore.ViewModels
             }
         }
 
+        private string pulseTimeEnd;
+        public string PulseTimeEnd
+        {
+            get
+            {
+                return pulseTimeEnd;
+            }
+            set
+            {
+                pulseTimeEnd = value;
+                this.OnPropertyChanged("PulseTimeEnd");
+            }
+        }
+
         private string pulseValue;
         public string PulseValue
         {
@@ -274,10 +288,17 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 {
                     DateTime convertedDate = DateTime.Parse(t.TimeStart);
                     String durationTime = null;
+                    String endTimeString = "NA"; String endDateString = "";
                     try
                     {
                         DateTime endtime = DateTime.Parse(t.TimeClose);
-                        durationTime = (endtime - convertedDate).TotalMinutes.ToString();
+                        //durationTime = (endtime - convertedDate).TotalMinutes.ToString();
+                        double time = (endtime - convertedDate).TotalMinutes;
+                        var x = time - Math.Truncate(time);
+                        durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
+                        endDateString = endtime.ToShortDateString();
+                        endTimeString = endtime.ToLongTimeString();
+
                     }
                     catch (Exception e)
                     {
@@ -330,9 +351,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     PulseObj tem = new PulseObj()
                     {
                         PulseId = t.TepSekvId,
-                        Value = t.Sekvencia + " BPM",
+                        Value = "~" + t.Sekvencia + " BPM",
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
+                        DateEnd = endDateString,
+                        TimeEnd = endTimeString,
                         Duration = durationTime,
                         Upozornenie = t.Upozornenie,
                         Alert = loader.getStringValuePulseAndTempLimit(t.Upozornenie)
@@ -368,6 +391,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
             PulseAlert = to.Alert;
             PulseTime = to.Date + " " + to.Time;
+            PulseTimeEnd = to.DateEnd + " " + to.TimeEnd;
             PulseValue = to.Value;
             PulseDuration = to.Duration;
 

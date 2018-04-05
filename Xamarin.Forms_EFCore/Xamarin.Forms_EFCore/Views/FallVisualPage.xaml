@@ -18,7 +18,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="Fall" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Pád"/>
 
             <StackLayout x:Name="homeVisualFall"  VerticalOptions="Center"
                    HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">

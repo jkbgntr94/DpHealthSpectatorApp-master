@@ -12,6 +12,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1"/>
@@ -76,19 +77,24 @@
             </StackLayout>
 
             <StackLayout Grid.Row="4" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="timeIconEnd" HeightRequest="30"></Image>
+                <Label x:Name="PulseTimeEnd" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseTimeEnd}"/>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="5" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                 <Image x:Name="valueIcon" HeightRequest="30"></Image>
                 <Label x:Name="PulseValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseValue}"/>
             </StackLayout>
 
-            <StackLayout Grid.Row="5" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+            <StackLayout Grid.Row="6" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                 <Image x:Name="durationIcon" HeightRequest="30"></Image>
                 <Label x:Name="PulseDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding PulseDuration}"/>
             </StackLayout>
 
-            <BoxView BackgroundColor="#DCDCDC" Grid.Row="6"></BoxView>
-            <Label x:Name="ListHeader" XAlign="Center" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" Text="Sekvencie"/>
-            <BoxView BackgroundColor="#DCDCDC" Grid.Row="8"></BoxView>
-            <StackLayout Grid.Row="9" Grid.Column="0">
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="7"></BoxView>
+            <Label x:Name="ListHeader" XAlign="Center" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontAttributes="Bold" Grid.Row="8" Grid.Column="0" Text="Sekvencie"/>
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="9"></BoxView>
+            <StackLayout Grid.Row="10" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
 
                     <ListView.ItemTemplate>
@@ -109,8 +115,8 @@
                 </ListView>
             </StackLayout>
 
-            <BoxView BackgroundColor="#DCDCDC" Grid.Row="10"></BoxView>
-            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="11">
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="11"></BoxView>
+            <Grid ColumnSpacing="0" RowSpacing="0" Grid.Row="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

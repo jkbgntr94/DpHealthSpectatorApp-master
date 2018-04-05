@@ -25,7 +25,8 @@ namespace Xamarin.Forms_EFCore.Views
 
 
             alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
-            timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time.png");
+            timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-start.png");
+            timeIconEnd.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-close.png");
             valueIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.value.png");
             durationIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.duration.png");
 
