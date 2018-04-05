@@ -20,6 +20,11 @@
 
 
             <Label x:Name="DeshDesc" XAlign="Center" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" Text="Posledné hodnoty"/>
+            <Image HeightRequest="30" Grid.Row="0" Grid.Column="0" x:Name="statisticsImage" HorizontalOptions="Start" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding StatisticsClick}"/>
+                </Image.GestureRecognizers>
+            </Image>
             <Image HeightRequest="30" Grid.Row="0" Grid.Column="0" x:Name="settingsImage" HorizontalOptions="End" VerticalOptions="Center">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SettingsClick}"/>

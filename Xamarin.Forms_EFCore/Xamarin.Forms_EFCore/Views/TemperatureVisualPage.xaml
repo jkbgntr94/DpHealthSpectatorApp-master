@@ -97,7 +97,7 @@
             <BoxView BackgroundColor="#DCDCDC" Grid.Row="9"></BoxView>
             <StackLayout Grid.Row="10" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
-                   
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

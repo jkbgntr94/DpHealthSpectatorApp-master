@@ -27,7 +27,7 @@ namespace Xamarin.Forms_EFCore.Views
             movementImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.movement.png");
             fallImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.fall.png");
             settingsImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.settings.png");
-
+            statisticsImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.stats.png");
 
             BindingContext = new DashboardViewModel();
 

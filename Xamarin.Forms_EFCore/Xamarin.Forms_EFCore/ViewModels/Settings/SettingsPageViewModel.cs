@@ -19,8 +19,9 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
 
         public ICommand EditAlertsCommand { get; private set; }
         public ICommand EditEmailAlertsCommand { get; private set; }
+        public ICommand editBordersCommand { get; private set; }
 
-        
+
 
         public SettingsPageViewModel()
         {
@@ -28,7 +29,13 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
             EditAlertsCommand = new Command(editAlertsCommand);
             RoomStatsCommand = new Command(roomStatsCommand);
             EditEmailAlertsCommand = new Command(editEmailAlertsCommand);
+            editBordersCommand = new Command(EmailAlertsCommand);
 
+        }
+
+        async void EmailAlertsCommand()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new EditBordersPage());
 
         }
 

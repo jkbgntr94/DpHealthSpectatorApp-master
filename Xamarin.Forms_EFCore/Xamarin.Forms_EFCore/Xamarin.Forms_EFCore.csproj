@@ -30,6 +30,7 @@
     <None Remove="Resources\user_plus.png" />
     <None Remove="Risk.png" />
     <None Remove="settings.png" />
+    <None Remove="stats.png" />
     <None Remove="temperature.png" />
     <None Remove="temperature100.txt" />
     <None Remove="temperatureCold.png" />
@@ -74,6 +75,7 @@
     <EmbeddedResource Include="Resources\user_plus.png" />
     <EmbeddedResource Include="Risk.png" />
     <EmbeddedResource Include="settings.png" />
+    <EmbeddedResource Include="stats.png" />
     <EmbeddedResource Include="temperature.png" />
     <EmbeddedResource Include="temperature100.txt" />
     <EmbeddedResource Include="temperatureCold.png" />
@@ -156,6 +158,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\EditAlertsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Settings\EditBordersPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Settings\EditEmailAlertPAge.xaml">

@@ -116,6 +116,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         }
 
         DatabaseContext _context;
+        public ICommand StatisticsClick { get; private set; }
         public ICommand SettingsClick { get; private set; }
         public ICommand TempVisualCommand { get; private set; }
         public ICommand PulseVisualCommand { get; private set; }
@@ -135,6 +136,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             MovementVisualCommand = new Command(movementVisualCommand);
             FallVisualCommand = new Command(fallVisualCommand);
             SettingsClick = new Command(settingsCommand);
+            StatisticsClick = new Command(statsCommand);
 
             controlledMeasurementStart();
 
@@ -216,6 +218,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
         }
 
         async void settingsCommand()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new SettingsPage());
+
+        }
+
+        async void statsCommand()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new SettingsPage());
 

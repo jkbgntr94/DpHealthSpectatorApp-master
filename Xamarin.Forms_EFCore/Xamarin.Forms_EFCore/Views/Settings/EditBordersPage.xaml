@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.Settings.EditBordersPage"
+             Title="Upravenie hraníc">
+    <ContentPage.Content>
+        <ScrollView>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label XAlign="Center" FontSize="Large" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" Text="Tep"/>
+
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Slabé spodné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding LowDown}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Text="Slabé horné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding LowUp}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Text="Stredné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="2" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Middle}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="2" Grid.Column="1"/>
+
+                    <Label Text="Vysoké" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="3" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding High}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="3" Grid.Column="1"/>
+
+                </Grid>
+
+                <Label XAlign="Center" FontSize="Large" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0" Text="Teplota"/>
+
+
+                <Grid Grid.Row="3" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Slabé spodné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding LowDownTemp}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Text="Slabé horné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding LowUpTemp}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Text="Stredné" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="2" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding MiddleTemp}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="2" Grid.Column="1"/>
+
+                    <Label Text="Vysoké" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="3" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding HighTemp}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="3" Grid.Column="1"/>
+
+                </Grid>
+
+                <Label XAlign="Center" FontSize="Large" HorizontalOptions="Center" Grid.Row="4" Grid.Column="0" Text="Pohyb"/>
+
+
+                <Grid Grid.Row="5" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="TimeAddSett" Text="Čas v minútach" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding TimeLimit}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="1"/>
+
+                    <Label x:Name="motionValue" Text="Hranica (cm)" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="1" Grid.Column="0" />
+                    <Entry VerticalOptions="Center"
+                   WidthRequest="250" Text="{Binding Okruh}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="1"/>
+                    
+                </Grid>
+
+
+
+
+                <StackLayout Grid.Row="6">
+                    <Button Text="Uložiť" Command="{Binding Save}"/>
+                </StackLayout>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
