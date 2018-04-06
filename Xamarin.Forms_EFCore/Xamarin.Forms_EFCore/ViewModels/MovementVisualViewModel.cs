@@ -159,7 +159,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 foreach(var movSekv in movSekvList)
                 {
                     DateTime convertedDate = DateTime.Parse(movSekv.TimeStamp);
-
+                   
                     Izby izba = null;
                     String izbaName = "";
                     try { 
@@ -189,6 +189,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         PohId = movSekv.PohSekvId,
                         RoomName = izbaName,
                         Alert = alert,
+                        LongDate = convertedDate.ToLongDateString(),
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         Duration = movSekv.Cas_Zotrvania,
@@ -199,13 +200,15 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     SequenceList.Add(movObj);
 
                 }
-                fillPageWithSequence(SequenceList.First());
+                fillPageWithSequence(SequenceList.Last());
 
             }
             else {
 
                 MovAlert = "Neexistuje žiadna sekvencia";
             }
+
+            SequenceList = new ObservableCollection<MovementObj>(SequenceList.Reverse());
 
 
         }
@@ -215,7 +218,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             
             MovAlert = mo.Alert;
             RoomValue = mo.RoomName;
-            MovTime = mo.Date + " " + mo.Time;
+            MovTime = mo.LongDate + " " + mo.Time;
             MovDuration = mo.Duration;
 
             MyEvent?.Invoke(mo.xValue, mo.yValue);

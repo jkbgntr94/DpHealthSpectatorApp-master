@@ -8,6 +8,7 @@ namespace Xamarin.Forms_EFCore.Models.ObjectsForList
     {
         public int TempId { get; set; }
         public string Value { get; set; }
+        public string LongDate { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
         public string DateEnd { get; set; }

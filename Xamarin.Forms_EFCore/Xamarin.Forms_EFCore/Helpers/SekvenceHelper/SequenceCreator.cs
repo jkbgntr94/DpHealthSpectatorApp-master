@@ -119,7 +119,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         var allInSekv1 = context.Temperature.Where(p => p.TeplSekvFk == ts.TeplSekvId).ToList();// najdi list pre poslednu
                         var last = allInSekv1[allInSekv1.Count - 1]; //zober posledny 
-                        ts.TimeClose = last.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii
+                        ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
                         context.TemperatureSekv.Update(ts);
                         context.Temperature.RemoveRange(allInSekv1);
 
@@ -272,7 +272,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         var allInSekv1 = context.Pulse.Where(p => p.TepSekvId == ts.TepSekvId).ToList();// najdi list pre poslednu
                         var last = allInSekv1[allInSekv1.Count - 1]; //zober posledny pulz
-                        ts.TimeClose = last.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii
+                        ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
                         context.PulseSekv.Update(ts);
                         context.Pulse.RemoveRange(allInSekv1);
 
@@ -413,7 +413,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
                     if (limitCheck.checkMovementValue(context, mov, pohS))
                     {
-                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie");
+                        System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.PohybId);
                         //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
                         mov.PohSekvFK = pohS.PohSekvId;
 
@@ -510,20 +510,22 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         }
 
+                        last.TimeStop = mov.TimeStamp;
 
+                        //Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                        //p.PohSekvFK = last.PohSekvId + 1;
 
-                        Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
-                        p.PohSekvFK = last.PohSekvId + 1;
-
-                        var toDelete = context.Movement.Where(c => c.PohSekvFK == last.PohSekvId).ToList();
+                        //var toDelete = context.Movement.Where(c => c.PohSekvFK == last.PohSekvId).ToList();
                         //p.Pohyb_Sekvencia = pohnew;
 
-                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie");
-                        
+                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie" + mov.PohybId);
+
+                        context.MovementSekv.Update(last);
+
                         context.MovementSekv.Add(pohnew);
                         //context.Movement.Remove(mov);
-                        context.RemoveRange(toDelete);
-                        context.Movement.Update(p);
+                        //context.RemoveRange(toDelete);
+                        //context.Movement.Update(p);
 
                         try
                         {
@@ -531,15 +533,23 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
                         catch (Exception e)
                         {
-                            throw e;
+                            System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                         }
 
                     }
 
 
                 }
-
-
+                var toDelete = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
+                context.Movement.Remove(toDelete);
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception on value removing: " + nameof(SequenceCreator) + " " + e.ToString());
+                }
 
             }
 

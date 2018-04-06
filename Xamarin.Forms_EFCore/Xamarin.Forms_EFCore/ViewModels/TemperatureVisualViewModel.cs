@@ -330,7 +330,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         double time = (endtime - convertedDate).TotalMinutes;
                         var x = time - Math.Truncate(time);
                         durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
-                        endDateString = endtime.ToShortDateString();
+                        endDateString = endtime.ToLongDateString();
                         endTimeString = endtime.ToLongTimeString();
                     }
                     catch(Exception e)
@@ -386,6 +386,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     {
                         TempId = t.TeplSekvId,
                         Value = "~" + t.Sekvencia.ToString("n2") + " °C",
+                        LongDate = convertedDate.ToLongDateString(),
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         DateEnd = endDateString,
@@ -398,7 +399,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         SequenceList.Add(tem);
 
                 }
-                fillPageWithSequence(SequenceList.First());
+                fillPageWithSequence(SequenceList.Last());
                 
             }
             else
@@ -417,7 +418,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             LowDay = "Slabé: " + lowDay.ToString() + "x";
             OkDay = "OK: " + okDay.ToString() + "x";
 
-            //SequenceList.Reverse();
+            SequenceList = new ObservableCollection<TemperatureObj>(SequenceList.Reverse());
 
         }
 
@@ -435,7 +436,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 double time = (endtime - convertedDate).TotalMinutes;
                 var x = time - Math.Truncate(time);
                 durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
-                endDateString = endtime.ToShortDateString();
+                endDateString = endtime.ToLongDateString();
                 endTimeString = endtime.ToLongTimeString();
             }
             catch (Exception e)
@@ -448,6 +449,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
             {
                 TempId = t.TeplSekvId,
                 Value = "~" + t.Sekvencia.ToString("n2") + " °C",
+                LongDate = convertedDate.ToLongDateString(),
                 Date = convertedDate.ToShortDateString(),
                 Time = convertedDate.ToLongTimeString(),
                 DateEnd = endDateString,
@@ -466,7 +468,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
 
             TempAlert = to.Alert;
-            TempTime = to.Date + " " + to.Time;
+            TempTime = to.LongDate + " " + to.Time;
             TempTimeEnd = to.DateEnd + " " + to.TimeEnd;
             TempValue = to.Value;
             TempDuration = to.Duration;

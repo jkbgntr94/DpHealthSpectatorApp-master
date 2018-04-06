@@ -13,6 +13,7 @@ using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
 using Xamarin.Forms_EFCore.Views;
 using Xamarin.Forms_EFCore.Views.Settings;
+using Xamarin.Forms_EFCore.Views.Statistics;
 
 namespace Xamarin.Forms_EFCore.ViewModels
 {
@@ -225,7 +226,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void statsCommand()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new SettingsPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
 
         }
 

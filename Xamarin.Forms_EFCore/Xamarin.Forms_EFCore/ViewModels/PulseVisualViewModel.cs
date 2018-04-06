@@ -296,7 +296,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         double time = (endtime - convertedDate).TotalMinutes;
                         var x = time - Math.Truncate(time);
                         durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
-                        endDateString = endtime.ToShortDateString();
+                        endDateString = endtime.ToLongDateString();
                         endTimeString = endtime.ToLongTimeString();
 
                     }
@@ -352,6 +352,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     {
                         PulseId = t.TepSekvId,
                         Value = "~" + t.Sekvencia + " BPM",
+                        LongDate = convertedDate.ToLongDateString(),
                         Date = convertedDate.ToShortDateString(),
                         Time = convertedDate.ToLongTimeString(),
                         DateEnd = endDateString,
@@ -364,7 +365,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                     SequenceList.Add(tem);
 
                 }
-                fillPageWithSequence(SequenceList.First());
+                fillPageWithSequence(SequenceList.Last());
 
             }
             else
@@ -383,14 +384,14 @@ namespace Xamarin.Forms_EFCore.ViewModels
             LowDay = "Slabé: " + lowDay.ToString() + "x";
             OkDay = "OK: " + okDay.ToString() + "x";
 
-            //SequenceList.Reverse();
+            SequenceList = new ObservableCollection<PulseObj>(SequenceList.Reverse());
 
         }
 
         private void fillPageWithSequence(PulseObj to)
         {
             PulseAlert = to.Alert;
-            PulseTime = to.Date + " " + to.Time;
+            PulseTime = to.LongDate + " " + to.Time;
             PulseTimeEnd = to.DateEnd + " " + to.TimeEnd;
             PulseValue = to.Value;
             PulseDuration = to.Duration;

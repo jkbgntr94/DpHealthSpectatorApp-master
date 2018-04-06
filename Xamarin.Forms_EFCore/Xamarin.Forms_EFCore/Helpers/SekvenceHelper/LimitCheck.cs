@@ -91,7 +91,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
         public bool checkMovementValue(DatabaseContext context, Pohyb p, Pohyb_Sekvencia pohS)
         {
             Hranice_Pohyb hpoh = context.MovementLimit.FirstOrDefault(t => t.HranicePohybId == context.MovementLimit.Max(x => x.HranicePohybId));
-            float hranica = hpoh.OkruhHranica;
+            float hranica = hpoh.OkruhHranica / 100;
 
             if(((pohS.Xhodnota - hranica) <= p.Xhodnota) && ((pohS.Xhodnota + hranica) >= p.Xhodnota) && ((pohS.Yhodnota - hranica) <= p.Yhodnota) && ((pohS.Yhodnota + hranica) >= p.Yhodnota))
             {//neprekracuje limit vo vzdialenosti

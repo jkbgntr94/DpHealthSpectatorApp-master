@@ -11,6 +11,8 @@ namespace Xamarin.Forms_EFCore.Models
         [Key]
         public int PohSekvId { get; set; }
         public string TimeStamp { get; set; }
+        public string TimeStop { get; set; }
+
         public float Xhodnota { get; set; }
         public float Yhodnota { get; set; }
         public string Cas_Zotrvania { get; set; }
