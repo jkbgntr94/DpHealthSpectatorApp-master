@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.Statistics.StatisticVisualPage"
+             Title="Štatistika rozsahu">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label VerticalOptions="Center"
+                   Text="Názov izby"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"/>
+                <Label VerticalOptions="Center"
+                   Text="{Binding RoomName}"
+                   HorizontalOptions="Start"
+                   Margin="30,0,0,0"
+                   FontSize="Medium"
+                   FontAttributes="Bold"/>
+                
+                
+
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

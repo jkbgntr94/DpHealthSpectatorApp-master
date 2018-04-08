@@ -4,15 +4,19 @@
              x:Class="Xamarin.Forms_EFCore.Views.Statistics.StatisticsMainPage">
     <ContentPage.Content>
         <StackLayout >
-            <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >
+            <ListView x:Name="Sequences" ItemsSource="{Binding RoomsList}" SelectedItem="{Binding SelectedSequence}" >
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
-                                    <Label Text="{Binding PohId}" TextColor="Black" />
-                                    <Label Text="{Binding RoomName}" TextColor="Black"/>
+                                    <Label Text="{Binding RoomName}" TextColor="Black" />
+                                    <Label Text="{Binding StartDate}" TextColor="Black"/>
+                                    <Label Text="{Binding StartTime}" TextColor="Black"/>
+                                    <Label Text=" -" TextColor="Black"/>
+                                    <Label Text="{Binding EndDate}" TextColor="Black"/>
+                                    <Label Text="{Binding EndTime}" TextColor="Black"/>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>

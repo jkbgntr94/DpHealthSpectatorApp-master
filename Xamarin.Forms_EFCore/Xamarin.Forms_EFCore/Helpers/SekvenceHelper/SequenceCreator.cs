@@ -413,7 +413,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
                     if (limitCheck.checkMovementValue(context, mov, pohS))
                     {
-                        System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.PohybId);
+                        System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.PohybId + " " + pohS.PohSekvId);
                         //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
                         mov.PohSekvFK = pohS.PohSekvId;
 
@@ -518,7 +518,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         //var toDelete = context.Movement.Where(c => c.PohSekvFK == last.PohSekvId).ToList();
                         //p.Pohyb_Sekvencia = pohnew;
 
-                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie" + mov.PohybId);
+                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie" + mov.PohybId + " " + pohS.PohSekvId);
 
                         context.MovementSekv.Update(last);
 

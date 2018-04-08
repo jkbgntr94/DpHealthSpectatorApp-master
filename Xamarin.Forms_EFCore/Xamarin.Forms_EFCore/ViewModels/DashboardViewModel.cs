@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -131,11 +132,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
             //new DatabaseContext(999);
 
             _context = new DatabaseContext();
-            TempVisualCommand = new Command(tempVisualCommand);
+           /* TempVisualCommand = new Command(tempVisualCommand);
             PulseVisualCommand = new Command(pulseVisualCommand);
             DashboardCommand = new Command(dashboardCommand);
             MovementVisualCommand = new Command(movementVisualCommand);
-            FallVisualCommand = new Command(fallVisualCommand);
+            FallVisualCommand = new Command(fallVisualCommand);*/
             SettingsClick = new Command(settingsCommand);
             StatisticsClick = new Command(statsCommand);
 
@@ -226,7 +227,11 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         async void statsCommand()
         {
+            //UserDialogs.Instance.ShowLoading("Loading ...");
+
             await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
+            
+
 
         }
 
