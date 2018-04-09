@@ -21,25 +21,50 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
                 </Grid.RowDefinitions>
 
                 <Label VerticalOptions="Center"
-                   Text="Názov izby"
-                   HorizontalOptions="Start"
-                   Margin="30,0,0,0"
-                   FontSize="Medium"
-                   FontAttributes="Bold"/>
+                       Text="Názov izby"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="0"/>
                 <Label VerticalOptions="Center"
-                   Text="{Binding RoomName}"
-                   HorizontalOptions="Start"
-                   Margin="30,0,0,0"
-                   FontSize="Medium"
-                   FontAttributes="Bold"/>
+                       Text="{Binding RoomNameLabel}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       Grid.Row="0"
+                       Grid.Column="1"/>
                 
                 
+                <Label VerticalOptions="Center"
+                       Text="Nastal pád"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       Grid.Row="1"
+                       Grid.Column="0"/>
+                <Label VerticalOptions="Center"
+                       Text="{Binding IsFall}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       Grid.Row="1"
+                       Grid.Column="1"/>
+
 
             </Grid>
 
+            <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Back" Command="{Binding ToBack}"
+                    Grid.Row="1" Grid.Column="0"/>
+            
         </Grid>
 
     </ContentPage.Content>

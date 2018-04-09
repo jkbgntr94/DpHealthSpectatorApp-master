@@ -106,7 +106,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 text = sr.ReadToEnd();
             
             }
-            tempFile.WriteAllTextAsync(text);
+            await tempFile.WriteAllTextAsync(text);
 
             }catch(Exception e)
             {
@@ -138,21 +138,21 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(line);
 
-            int index = 1;
-            if (!context.Temperature.Any())
-            {
-                index = 1;
-            }
-            else
-            {
+                int index = 1;
+                if (!context.Temperature.Any())
+                {
+                    index = 1;
+                }
+                else
+                {
                 Teplota tmp = context.Temperature.FirstOrDefault(t => t.TeplotaId == context.Temperature.Max(x => x.TeplotaId));
                 index = tmp.TeplotaId;
-                index++;
+               
 
                 }
+                index++;
 
-            
-            Teplota teplota = new Teplota
+                Teplota teplota = new Teplota
             {
                 TeplotaId = index++,
                 //TimeStamp = obj.header.creation_date_time.ToString(),
@@ -163,17 +163,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             };
             context.Temperature.Add(teplota);
 
-            try
-            {
-                context.SaveChanges();
-                teplota = null;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-                /*SequenceCreator sequenceCreator = new SequenceCreator();
-                sequenceCreator.TemperatureSequencer(context);*/
+            context.SaveChanges();
+
             }
             catch (Exception e)
             {

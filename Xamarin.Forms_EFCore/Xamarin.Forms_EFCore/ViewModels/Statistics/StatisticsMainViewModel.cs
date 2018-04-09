@@ -74,7 +74,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
             _context = new DatabaseContext();
             //UserDialogs.Instance.ShowLoading("Loading ...");
 
-            LoadData();
+            FindRoomsStatisticsList();
             
         }
 
@@ -103,10 +103,9 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                 int counter = 0;
                 foreach (var movSekv in movSekvList)
                 {
-                    //if (RoomsList.Count > 20) break;
-                    if (++counter > 20) break;
+                   // if (++counter > 20) break;
                     DateTime convertedDate = DateTime.Parse(movSekv.TimeStamp);
-
+                 
                     Izby izba = null;
                     String izbaName = "";
                     try
@@ -145,7 +144,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                             valueList = rObj.Sekvencie;
                             valueList.Add(movSekv);
                             rObj.Sekvencie = valueList;
-                            System.Diagnostics.Debug.WriteLine("ROOMS STATS Adding " + movSekv.PohSekvId + " " + izbaName + " " + valueList.Count);
+                            //System.Diagnostics.Debug.WriteLine("ROOMS STATS Adding " + movSekv.PohSekvId + " " + izbaName + " " + valueList.Count);
 
                         }
                         else
@@ -161,9 +160,18 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                                 rObj.EndDate = convertedDate.ToShortDateString();
                             }
 
-                           // rObj.EndDate = convertedDate.ToShortDateString();
+                            // rObj.EndDate = convertedDate.ToShortDateString();
 
-                            rObj.EndTime = convertedDate.ToLongTimeString();
+                            //rObj.EndTime = convertedDate.ToLongTimeString();
+                            try
+                            { 
+                                rObj.EndTime = DateTime.Parse(movSekv.TimeStamp).ToLongTimeString();
+                            }
+                            catch (Exception e)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Exception: " + nameof(StatisticsMainViewModel) + " " + e.ToString());
+                                rObj.EndTime = convertedDate.ToLongTimeString();
+                            }
 
                             valueList.Add(movSekv);
                             RoomStatisticsObj roomStatisticsObj = new RoomStatisticsObj
@@ -176,13 +184,15 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                             };
                             RoomsList.Add(roomStatisticsObj);
 
-                            System.Diagnostics.Debug.WriteLine("ROOMS STATS New " + movSekv.PohSekvId + " " + izbaName + " " + valueList.Count);
+                            //System.Diagnostics.Debug.WriteLine("ROOMS STATS New " + movSekv.PohSekvId + " " + izbaName + " " + valueList.Count);
 
                         }
 
                     }
 
                 }
+
+                RoomsList = new ObservableCollection<RoomStatisticsObj>(RoomsList.Reverse());
             }
             
         }

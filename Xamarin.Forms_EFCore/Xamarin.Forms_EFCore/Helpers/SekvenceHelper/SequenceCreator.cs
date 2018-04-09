@@ -35,9 +35,9 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         Hranice_TeplotaFk = htep.Hranice_TeplotaId
                     };
 
-                    if(tmps.Upozornenie != 0)
+                    if (tmps.Upozornenie != 0)
                     {
-                        new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie,a.TeplotaId);
+                        new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps.Upozornenie, a.TeplotaId);
 
                     }
 
@@ -54,7 +54,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                     }
                 }
                 else /*Ak existuju sekvencie*/
@@ -69,13 +69,29 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                     }
 
-                    
+                    int minutes = 0;
+                    int seconds = 0;
 
+                    try
+                    {
+                        DateTime startTime = DateTime.Parse(tmps.TimeStart);
+                        DateTime endTime = DateTime.Parse(a.TimeStamp);
+                        TimeSpan finalTime = endTime - startTime;
+                        minutes = finalTime.Minutes;
+                        seconds = finalTime.Seconds;
+
+                        System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF Temperature" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+
+                    }
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
-                    if (limitCheck.CheckTemperatureLimits(context, a.Hodnota) == tmps.Upozornenie)
+                    if (limitCheck.CheckTemperatureLimits(context, a.Hodnota) == tmps.Upozornenie && minutes <= 1)
                     {
                         var allInSekv = context.Temperature.Where(p => p.TeplSekvFk == tmps.TeplSekvId).ToList();
                         float median = 0;
@@ -107,7 +123,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
                         catch (Exception e)
                         {
-                            throw e;
+                            System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                         }
                     }
                     else /*Spracovavana hodnota nepatri do aktualne otvorenej sekvencie*/
@@ -119,7 +135,18 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         var allInSekv1 = context.Temperature.Where(p => p.TeplSekvFk == ts.TeplSekvId).ToList();// najdi list pre poslednu
                         var last = allInSekv1[allInSekv1.Count - 1]; //zober posledny 
-                        ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
+                        //ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
+
+                        if (minutes <= 1)
+                        {
+                            ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
+
+                        }
+                        else
+                        {
+                            ts.TimeClose = last.TimeStamp;
+                        }
+
                         context.TemperatureSekv.Update(ts);
                         context.Temperature.RemoveRange(allInSekv1);
 
@@ -152,7 +179,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
                         catch (Exception e)
                         {
-                            throw e;
+                            System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                         }
                     }
 
@@ -184,7 +211,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         Upozornenie = limitCheck.CheckPulseLimits(context, (int)Math.Round(a.Hodnota)),
                         //Hranice_Tep = ht,
                         Hranica_TepFK = ht.Hranica_TepId,
-                        
+
 
                     };
 
@@ -228,8 +255,23 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         System.Diagnostics.Debug.WriteLine("Nemozem najst otvorenu sekvenciu");
                     }
 
+                    int minutes = 0;
+                    try
+                    {
+                        DateTime startTime = DateTime.Parse(tepS.TimeStart);
+                        DateTime endTime = DateTime.Parse(a.TimeStamp);
+                        TimeSpan finalTime = endTime - startTime;
+                        minutes = finalTime.Minutes;
+                        System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF pulse" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+
+                    }
+
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
-                    if (limitCheck.CheckPulseLimits(context, (int)Math.Round(a.Hodnota)) == tepS.Upozornenie)
+                    if (limitCheck.CheckPulseLimits(context, (int)Math.Round(a.Hodnota)) == tepS.Upozornenie && minutes <= 1)
                     {
                         var allInSekv = context.Pulse.Where(p => p.TepSekvId == tepS.TepSekvId).ToList();
                         int median = 0;
@@ -272,7 +314,15 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         var allInSekv1 = context.Pulse.Where(p => p.TepSekvId == ts.TepSekvId).ToList();// najdi list pre poslednu
                         var last = allInSekv1[allInSekv1.Count - 1]; //zober posledny pulz
-                        ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
+                        if (minutes <= 1)
+                        {
+                            ts.TimeClose = a.TimeStamp; // nastav konecny TS podla TS posledneho v sekvencii / edit-podla novej hodnoty aby som pokril celu casovu os
+
+                        }
+                        else
+                        {
+                            ts.TimeClose = last.TimeStamp;
+                        }
                         context.PulseSekv.Update(ts);
                         context.Pulse.RemoveRange(allInSekv1);
 
@@ -328,8 +378,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             foreach (var mov in allMovements)
             {
                 Izby izba = new RoomsDetection().findRoom(mov);
-                
-               
+
+
                 /*Inicializacia ak ziadna sekvencia neexistuje*/
                 if (!context.MovementSekv.Any())
                 {
@@ -343,11 +393,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             Yhodnota = mov.Yhodnota,
                             TimeStamp = mov.TimeStamp,
                             Cas_Zotrvania = "",
+                            TimeStop = mov.TimeStamp,
                             Upozornenie_Cas = 0,
                             Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
                             //Hranice_Pohyb = hpoh,
                             HranicePohybFK = hpoh.HranicePohybId,
-                            
+
                         };
 
                     }
@@ -360,6 +411,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             Yhodnota = mov.Yhodnota,
                             TimeStamp = mov.TimeStamp,
                             Cas_Zotrvania = "",
+                            TimeStop = mov.TimeStamp,
                             Upozornenie_Cas = 0,
                             Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
                             //Hranice_Pohyb = hpoh,
@@ -371,8 +423,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
 
 
-                    if(pohS.Upozornenie_Hranica == 1)
-                    { 
+                    if (pohS.Upozornenie_Hranica == 1)
+                    {
                         new NotificationGenerator().GenerateNotificationMovement(pohS.TimeStamp, pohS.PohSekvId);
 
                     }
@@ -392,7 +444,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                     }
                 }
                 /*Ak existuju sekvencie*/
@@ -409,9 +461,24 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     {
                         System.Diagnostics.Debug.WriteLine("POHYB EXC Nemozem najst otvorenu sekvenciu");
                     }
+                    int minutes = 0;
+                    try
+                    {
+                        DateTime startTime = DateTime.Parse(pohS.TimeStamp);
+                        DateTime endTime = DateTime.Parse(mov.TimeStamp);
+                        TimeSpan finalTime = endTime - startTime;
+                        minutes = finalTime.Minutes;
+                        System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF movement " + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+
+                    }
+
 
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
-                    if (limitCheck.checkMovementValue(context, mov, pohS))
+                    if (limitCheck.checkMovementValue(context, mov, pohS) && minutes <= 1)
                     {
                         System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.PohybId + " " + pohS.PohSekvId);
                         //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
@@ -445,10 +512,10 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         if (pohS.Upozornenie_Cas == 1)
                         {
                             RoomsDetection roomsDetection = new RoomsDetection();
-                            new NotificationGenerator().GenerateNotificationMovementTime(roomsDetection.findRoom(mov).Nazov,pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
-                            
+                            new NotificationGenerator().GenerateNotificationMovementTime(roomsDetection.findRoom(mov).Nazov, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+
                         }
-                        
+                        pohS.TimeStop = mov.TimeStamp;
                         context.MovementSekv.Update(pohS);
                         //context.Movement.Remove(mov);
                         context.Movement.Update(mov);
@@ -458,13 +525,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
                         catch (Exception e)
                         {
-                            throw e;
+                            System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                         }
 
                     }
                     else /*Spracovavana hodnota nepatri do aktualne otvorenej sekvencie*/
                     {
-                        
+
                         Pohyb_Sekvencia last = context.MovementSekv.FirstOrDefault(t => t.PohSekvId == context.MovementSekv.Max(x => x.PohSekvId));
                         Pohyb_Sekvencia pohnew = null;
                         if (izba == null)
@@ -476,11 +543,12 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                                 Yhodnota = mov.Yhodnota,
                                 TimeStamp = mov.TimeStamp,
                                 Cas_Zotrvania = "",
+                                TimeStop = mov.TimeStamp,
                                 Upozornenie_Cas = 0,
                                 Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
                                 //Hranice_Pohyb = hpoh,
                                 HranicePohybFK = hpoh.HranicePohybId,
-                               
+
                             };
 
                         }
@@ -493,6 +561,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                                 Yhodnota = mov.Yhodnota,
                                 TimeStamp = mov.TimeStamp,
                                 Cas_Zotrvania = "",
+                                TimeStop = mov.TimeStamp,
                                 Upozornenie_Cas = 0,
                                 Upozornenie_Hranica = limitCheck.checkIfOutside(context, mov),
                                 //Hranice_Pohyb = hpoh,
@@ -509,8 +578,10 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             new NotificationGenerator().GenerateNotificationMovement(pohS.TimeStamp, pohS.PohSekvId);
 
                         }
-
-                        last.TimeStop = mov.TimeStamp;
+                        if (minutes <= 1)
+                        {
+                            last.TimeStop = mov.TimeStamp;
+                        }
 
                         //Pohyb p = context.Movement.Where(c => c.PohybId == mov.PohybId).First();
                         //p.PohSekvFK = last.PohSekvId + 1;

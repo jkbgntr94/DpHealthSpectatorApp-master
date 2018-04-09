@@ -149,7 +149,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 FallTime = "Neexistuje žiadna sekvencia";
             }
 
-
+            FallList = new ObservableCollection<FallObj>(FallList.Reverse());
         }
 
         private void fillPageWithFall(FallObj fo)

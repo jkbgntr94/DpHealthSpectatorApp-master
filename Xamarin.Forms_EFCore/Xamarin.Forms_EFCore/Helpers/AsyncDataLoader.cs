@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using Xamarin.Forms_EFCore.DataAccess;
@@ -40,20 +41,26 @@ namespace Xamarin.Forms_EFCore.Helpers
             tempTimer.Elapsed += new ElapsedEventHandler(OnTempTimeEvent);
             tempTimer.Interval = 20000;
             tempTimer.Enabled = true;
-            
+
+            Thread.Sleep(5000);
+
             System.Timers.Timer pulseTimer = new System.Timers.Timer();
             pulseTimer.Elapsed += new ElapsedEventHandler(OnPulseTimeEvent);
-            pulseTimer.Interval = 10000;
+            pulseTimer.Interval = 60000;
             pulseTimer.Enabled = true;
+
+            Thread.Sleep(5000);
 
             System.Timers.Timer movementTimer = new System.Timers.Timer();
             movementTimer.Elapsed += new ElapsedEventHandler(OnMovementTimeEvent);
-            movementTimer.Interval = 15000;
+            movementTimer.Interval = 60000;
             movementTimer.Enabled = true;
+
+            Thread.Sleep(5000);
 
             System.Timers.Timer fallTimer = new System.Timers.Timer();
             fallTimer.Elapsed += new ElapsedEventHandler(OnFallTimeEvent);
-            fallTimer.Interval = 20000;
+            fallTimer.Interval = 60000;
             fallTimer.Enabled = true;
 
 

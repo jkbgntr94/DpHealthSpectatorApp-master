@@ -23,7 +23,7 @@ namespace Xamarin.Forms_EFCore {
             
            // new DatabaseContext(999);
             DatabaseContext context = new DatabaseContext();
-            
+
 
             SettingsController.MeasurementRunning = 1;
             AsyncDataLoader asyncDataLoader = new AsyncDataLoader();

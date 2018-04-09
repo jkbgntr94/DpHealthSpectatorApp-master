@@ -25,12 +25,6 @@ namespace Xamarin.Forms_EFCore.Views.Statistics
             BindingContext = new StatisticsVisualViewModel(roomStats);
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            BindingContext = new StatisticsVisualViewModel();
-            
-        }
+        
     }
 }
