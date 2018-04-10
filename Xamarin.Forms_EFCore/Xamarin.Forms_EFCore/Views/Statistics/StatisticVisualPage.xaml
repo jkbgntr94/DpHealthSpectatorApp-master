@@ -10,6 +10,8 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="1" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -22,7 +24,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label VerticalOptions="Center"
@@ -57,13 +60,79 @@
                        TextColor="Black"
                        Grid.Row="1"
                        Grid.Column="1"/>
+                
+                <Label VerticalOptions="Center"
+                       Text="Začiatočný čas"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       Grid.Row="2"
+                       Grid.Column="0"/>
+                <Label VerticalOptions="Center"
+                       Text="{Binding StartTime}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       Grid.Row="2"
+                       Grid.Column="1"/>
 
+                <Label VerticalOptions="Center"
+                       Text="Konečný čas"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       Grid.Row="3"
+                       Grid.Column="0"/>
+                <Label VerticalOptions="Center"
+                       Text="{Binding StopTime}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       Grid.Row="3"
+                       Grid.Column="1"/>
 
+                
             </Grid>
+            <BoxView BackgroundColor="#DCDCDC" Grid.Row="1"></BoxView>
+            <Label VerticalOptions="Center"
+                       Text="Čas | Pulz | Teplota | Pád"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       FontAttributes="Bold"
+                       Grid.Row="2"
+                       Grid.Column="0"/>
+
+            <StackLayout Grid.Row="3" Grid.Column="0">
+                <ListView x:Name="Sequences" ItemsSource="{Binding StatsList}" SelectedItem="{Binding SelectedSequence}" >
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                                        <Label Text="{Binding Time}" TextColor="Black"/>
+                                        <Label Text="|" TextColor="DimGray"/>
+                                        <Label Text="{Binding PulseValue}" TextColor="Black"/>
+                                        <Label Text="{Binding PulseAlert}" TextColor="Black"/>
+                                        <Label Text="|" TextColor="DimGray"/>
+                                        <Label Text="{Binding TemperatureValue}" TextColor="Black"/>
+                                        <Label Text="{Binding TemperatureAlert}" TextColor="Black" />
+                                        <Label Text="|" TextColor="DimGray"/>
+                                        <Label Text="{Binding isFall}" TextColor="Black" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
 
             <Button VerticalOptions="Center"
                    HorizontalOptions="Center" Text="Back" Command="{Binding ToBack}"
-                    Grid.Row="1" Grid.Column="0"/>
+                    Grid.Row="4" Grid.Column="0"/>
             
         </Grid>
 
