@@ -26,6 +26,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label VerticalOptions="Center"
@@ -92,6 +93,23 @@
                        TextColor="Black"
                        Grid.Row="3"
                        Grid.Column="1"/>
+                
+                <Label VerticalOptions="Center"
+                       Text="Predpokladaná aktivita"
+                       HorizontalOptions="Center"
+                       XAlign="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       Grid.Row="4"
+                       Grid.Column="0"/>
+                <Label VerticalOptions="Center"
+                       Text="{Binding ActivityName}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       Grid.Row="4"
+                       Grid.Column="1"/>
 
                 
             </Grid>
@@ -103,8 +121,10 @@
                        FontAttributes="Bold"
                        Grid.Row="2"
                        Grid.Column="0"/>
-
-            <StackLayout Grid.Row="3" Grid.Column="0">
+            <Button VerticalOptions="Center"
+                   HorizontalOptions="Center" Text="Späť" Command="{Binding ToBack}"
+                    Grid.Row="3" Grid.Column="0" Margin="0,0,0,30"/>
+            <StackLayout Grid.Row="4" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding StatsList}" SelectedItem="{Binding SelectedSequence}" >
 
                     <ListView.ItemTemplate>
@@ -130,9 +150,7 @@
             </StackLayout>
 
 
-            <Button VerticalOptions="Center"
-                   HorizontalOptions="Center" Text="Back" Command="{Binding ToBack}"
-                    Grid.Row="4" Grid.Column="0"/>
+            
             
         </Grid>
 

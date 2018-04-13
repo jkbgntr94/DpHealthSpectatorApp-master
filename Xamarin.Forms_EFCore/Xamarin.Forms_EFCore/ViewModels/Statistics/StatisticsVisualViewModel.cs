@@ -10,6 +10,7 @@ using Xamarin.Forms_EFCore.Helpers;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
 using Xamarin.Forms_EFCore.Views;
+using Xamarin.Forms_EFCore.Views.Statistics;
 
 namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 {
@@ -55,6 +56,15 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
             }
         }
 
+        private string activityName;
+        public string ActivityName
+        {
+            get { return activityName; }
+            set
+            {
+                activityName = value;
+            }
+        }
 
         private ObservableCollection<StatisticsObj> statsList = new ObservableCollection<StatisticsObj>();
         public ObservableCollection<StatisticsObj> StatsList
@@ -93,7 +103,21 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
             FillValues();
             CreateList();
+            FindActivity();
         }
+
+        private void FindActivity()
+        {
+            SleepDetection sleepDetection = new SleepDetection();
+            Boolean sleep = sleepDetection.DetectSleep(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime);
+            if (sleep)
+            {
+                ActivityName = "Spánok";
+            }
+           
+            System.Diagnostics.Debug.WriteLine("************ ACTIVITY: " + sleep.ToString());
+        }
+
 
         private void FillValues()
         {
@@ -233,7 +257,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private async void toBack()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
 
         }
     }
