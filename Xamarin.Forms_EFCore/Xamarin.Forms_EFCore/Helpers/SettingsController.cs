@@ -74,6 +74,13 @@ namespace Xamarin.Forms_EFCore.Helpers
             set => AppSettings.AddOrUpdateValue(nameof(MeasurementRunning), value);
         }
 
+        public static string SleepTime
+        {
+            get => AppSettings.GetValueOrDefault(nameof(SleepTime), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(SleepTime), value);
+        }
+
+
         //email
         public static bool AlertLow
         {

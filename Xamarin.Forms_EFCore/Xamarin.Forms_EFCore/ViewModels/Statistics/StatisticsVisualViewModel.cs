@@ -97,7 +97,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private void FillValues()
         {
-            System.Diagnostics.Debug.WriteLine("************ TIME BORDERS: " + StartdateTime + " " + StopdateTime);
+            //System.Diagnostics.Debug.WriteLine("************ TIME BORDERS: " + StartdateTime + " " + StopdateTime);
 
             RoomNameLabel = _roomStatistics.RoomName;
             FindFall();
@@ -122,10 +122,10 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                 System.Diagnostics.Debug.WriteLine("Cant find list pulse for selected time" + e.ToString());
 
             }
-            foreach (var t in tepList) {
+           /* foreach (var t in tepList) {
                 System.Diagnostics.Debug.WriteLine("************ Pulse: " + t.TimeStart + " " + t.TimeClose + " " + t.Sekvencia);
 
-            }
+            }*/
             List<Teplota_Sekvencia> tempList = null;
             try
             {
@@ -136,11 +136,11 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                 System.Diagnostics.Debug.WriteLine("Cant find list temperature for selected time" + e.ToString());
 
             }
-            foreach (var t in tempList)
+          /*  foreach (var t in tempList)
             {
                 System.Diagnostics.Debug.WriteLine("************ Temperature: " + t.TimeStart + " " + t.TimeClose + " " + t.Sekvencia);
 
-            }
+            }*/
 
             DateTime myTime = StartdateTime;
             Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
@@ -207,7 +207,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
                 StatsList.Add(statisticsObj);
 
-                System.Diagnostics.Debug.WriteLine("--- LIST ---" + myTime + " " + pulseVal + " " + pulseAlert + " " + tempVal + " " + tempAlert + " " + fallValue);
+              //  System.Diagnostics.Debug.WriteLine("--- LIST ---" + myTime + " " + pulseVal + " " + pulseAlert + " " + tempVal + " " + tempAlert + " " + fallValue);
 
                 myTime = myTime.AddMinutes(1);
             }
@@ -221,12 +221,12 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
             fallList = _context.Akcelerometers.Where(t => DateTime.Parse(t.TimeStamp) >= StartdateTime && DateTime.Parse(t.TimeStamp) <= StopdateTime).ToList();
 
-            foreach (var f in fallList)
+         /*   foreach (var f in fallList)
             {
                 System.Diagnostics.Debug.WriteLine("************ FALL: " + f.TimeStamp);
 
 
-            }
+            }*/
 
 
         }

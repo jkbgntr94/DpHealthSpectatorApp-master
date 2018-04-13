@@ -92,7 +92,7 @@ namespace Xamarin.Forms_EFCore.Views
 
             label = new Label
             {
-                Text = "Slider value is 0",
+                Text = "Žiadna sekvencia nebola zvolená",
                 Font = Font.SystemFontOfSize(NamedSize.Large),
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.CenterAndExpand
@@ -164,7 +164,7 @@ namespace Xamarin.Forms_EFCore.Views
             slider.Value = val;
             
 
-            label.Text = String.Format("Slider value is {0}", newStep);
+            label.Text = String.Format("Sekvencie(10x) od ID {0}", newStep);
             
         }
 

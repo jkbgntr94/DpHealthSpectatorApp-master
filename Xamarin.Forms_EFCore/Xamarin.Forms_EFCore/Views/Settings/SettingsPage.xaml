@@ -45,14 +45,6 @@
             </StackLayout>
 
             <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                <Label x:Name="roomStats" XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Štatistika pohybu"/>
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding RoomStatsCommand}"/>
-                </StackLayout.GestureRecognizers>
-            </StackLayout>
-            
-            <StackLayout Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
                 <Label x:Name="editBorders" XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Upravenie hraníc"/>
                 <Image x:Name="arrowimage3" HeightRequest="15"/>
                 <StackLayout.GestureRecognizers>

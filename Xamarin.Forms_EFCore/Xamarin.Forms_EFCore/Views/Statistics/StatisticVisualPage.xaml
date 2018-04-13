@@ -120,7 +120,7 @@
                                         <Label Text="{Binding TemperatureValue}" TextColor="Black"/>
                                         <Label Text="{Binding TemperatureAlert}" TextColor="Black" />
                                         <Label Text="|" TextColor="DimGray"/>
-                                        <Label Text="{Binding isFall}" TextColor="Black" />
+                                        <Label Text="{Binding isFall}" TextColor="Red" />
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

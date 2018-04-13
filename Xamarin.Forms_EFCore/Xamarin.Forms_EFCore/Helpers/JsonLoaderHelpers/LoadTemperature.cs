@@ -147,10 +147,10 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 {
                 Teplota tmp = context.Temperature.FirstOrDefault(t => t.TeplotaId == context.Temperature.Max(x => x.TeplotaId));
                 index = tmp.TeplotaId;
-               
+                index++;
 
                 }
-                index++;
+                
 
                 Teplota teplota = new Teplota
             {

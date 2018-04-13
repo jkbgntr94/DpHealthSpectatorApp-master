@@ -36,6 +36,18 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             }
         }
+        private TimeSpan sleepTime;
+        public TimeSpan SleepTime
+        {
+            get { return sleepTime; }
+            set
+            {
+                sleepTime = value;
+                OnPropertyChanged();
+
+            }
+        }
+
 
         public ICommand emailYes { get; private set; }
         public ICommand emailNo { get; private set; }
@@ -117,6 +129,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("Exception: " + nameof(AdditionalSettingsViewModel) + " " + e.ToString());
             }
+
+            SettingsController.SleepTime = SleepTime.ToString();
 
         }
     }

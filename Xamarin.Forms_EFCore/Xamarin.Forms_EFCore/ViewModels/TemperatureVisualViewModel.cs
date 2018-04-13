@@ -311,7 +311,10 @@ namespace Xamarin.Forms_EFCore.ViewModels
         private void fillList()
         {
             int low = 0; int height = 0; int middle = 0; int ok = 0;
+            double lowMin = 0; double heightMin = 0; double middleMin = 0; double okMin = 0;
+            double lowMinDay = 0; double heightMinDay = 0; double middleMinDay = 0; double okMinDay = 0;
             int lowDay = 0; int heightDay = 0; int middleDay = 0; int okDay = 0;
+
             if (_context.TemperatureSekv.Any())
             { 
                 var listTemp = _context.TemperatureSekv.ToList();
@@ -323,11 +326,12 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 {
                     DateTime convertedDate = DateTime.Parse(t.TimeStart);
                     String durationTime = null;
-                    String endTimeString = "NA";String endDateString = ""; 
+                    String endTimeString = "NA";String endDateString = "";
+                    double time = 0;
                     try
                     {
                         DateTime endtime = DateTime.Parse(t.TimeClose);
-                        double time = (endtime - convertedDate).TotalMinutes;
+                        time = (endtime - convertedDate).TotalMinutes;
                         var x = time - Math.Truncate(time);
                         durationTime = Math.Truncate(time).ToString() + " min " + Math.Round(x * 60).ToString() + " sec";
                         endDateString = endtime.ToLongDateString();
@@ -344,14 +348,23 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         switch (t.Upozornenie)
                         {
                             case 0: ok++;
+                                okMin += time;
                                 break;
                             case 1: low++;
+                                lowMin += time;
+
                                 break;
                             case -1: low++;
+                                lowMin += time;
+
                                 break;
                             case 2: middle++;
+                                middleMin += time;
+
                                 break;
                             case 3: height++;
+                                heightMin += time;
+
                                 break;
 
                         }
@@ -364,18 +377,28 @@ namespace Xamarin.Forms_EFCore.ViewModels
                         {
                             case 0:
                                 okDay++;
+                                okMinDay += time;
+
                                 break;
                             case 1:
                                 lowDay++;
+                                lowMinDay += time;
+
                                 break;
                             case -1:
                                 lowDay++;
+                                lowMinDay += time;
+
                                 break;
                             case 2:
                                 middleDay++;
+                                middleMinDay += time;
+
                                 break;
                             case 3:
                                 heightDay++;
+                                heightMinDay += time;
+
                                 break;
 
                         }
@@ -408,15 +431,18 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
             }
 
-            HeightTwelve ="Vysoké: " + height.ToString() + "x";
-            MiddleTwelve ="Stredné: " +  middle.ToString() + "x";
-            LowTwelve ="Slabé: " +  low.ToString() + "x";
-            OkTwelve ="OK: " + ok.ToString() + "x";
+            HeightTwelve ="Vysoké: ~" + Math.Truncate(heightMin).ToString() + " min";
+            MiddleTwelve ="Stredné: ~" + Math.Truncate(middleMin).ToString() + " min";
+            LowTwelve ="Slabé: ~" + Math.Truncate(lowMin).ToString() + " min";
+            OkTwelve ="OK: ~" + Math.Truncate(okMin).ToString() + " min";
 
-            HeightDay = "Vysoké: " + heightDay.ToString() + "x";
-            MiddleDay = "Stredné: " + middleDay.ToString() + "x";
-            LowDay = "Slabé: " + lowDay.ToString() + "x";
-            OkDay = "OK: " + okDay.ToString() + "x";
+            HeightDay = HeightTwelve = "Vysoké: ~" + Math.Truncate(heightMinDay).ToString() + " min";
+            MiddleDay = "Stredné: ~" + Math.Truncate(middleMinDay).ToString() + " min";
+            LowDay = "Slabé: ~" + Math.Truncate(lowMinDay).ToString() + " min";
+            OkDay = "OK: ~" + Math.Truncate(okMinDay).ToString() + " min";
+
+           // System.Diagnostics.Debug.WriteLine("/////CAS: " + okMin + " " + lowMin + " " + middleMin + " " + heightMin  + " " + Math.Truncate(okMin).ToString());
+
 
             SequenceList = new ObservableCollection<TemperatureObj>(SequenceList.Reverse());
 

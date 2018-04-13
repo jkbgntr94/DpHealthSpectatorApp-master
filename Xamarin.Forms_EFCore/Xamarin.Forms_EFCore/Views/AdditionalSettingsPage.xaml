@@ -61,10 +61,31 @@
                 
             </Grid>
 
-            <Label x:Name="emailDesc" XAlign="Center" HorizontalOptions="Center" Grid.Row="4" Grid.Column="0" Text="Prajete si využívať e-mailové notifikácie?"/>
+            <Label XAlign="Center" HorizontalOptions="Center" Grid.Row="3" Grid.Column="0" Text="Pridajte približný čas zaspavánia pacienta"/>
 
 
-            <Grid Grid.Row="5" Grid.Column="0">
+            <Grid Grid.Row="4" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Text="Čas zaspávania" VerticalOptions="Center" XAlign="Center" FontSize="18" Grid.Row="0" Grid.Column="0" />
+                <TimePicker VerticalOptions="Center"
+                   HorizontalOptions="Center" Time="{Binding SleepTime}" Margin = "0,1"  Grid.Row="0" Grid.Column="1"/>
+
+
+            </Grid>
+
+
+            <Label x:Name="emailDesc" XAlign="Center" HorizontalOptions="Center" Grid.Row="5" Grid.Column="0" Text="Prajete si využívať e-mailové notifikácie?"/>
+
+
+            <Grid Grid.Row="6" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Models;
 
@@ -9,7 +10,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 {
     public class SequenceCreator
     {
-
+        private int LENGTH_BORDER = 4;
         public void TemperatureSequencer(DatabaseContext context)
         {
 
@@ -72,7 +73,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
                     }
 
-                    int minutes = 0;
+                    double minutes = 0;
                     int seconds = 0;
 
                     try
@@ -80,7 +81,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         DateTime startTime = DateTime.Parse(tmps.TimeStart);
                         DateTime endTime = DateTime.Parse(a.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
-                        minutes = finalTime.Minutes;
+                        minutes = finalTime.TotalMinutes;
                         seconds = finalTime.Seconds;
 
                         System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF Temperature" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
@@ -91,7 +92,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     }
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
-                    if (limitCheck.CheckTemperatureLimits(context, a.Hodnota) == tmps.Upozornenie && minutes <= 1)
+                    if (limitCheck.CheckTemperatureLimits(context, a.Hodnota) == tmps.Upozornenie && minutes <= 1 )
                     {
                         var allInSekv = context.Temperature.Where(p => p.TeplSekvFk == tmps.TeplSekvId).ToList();
                         float median = 0;
@@ -146,15 +147,107 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         {
                             ts.TimeClose = last.TimeStamp;
                         }
+                        int index = ts.TeplSekvId + 1;
+                      /*  Boolean isLong = true;
+                        try
+                        {
+                            DateTime startTime = DateTime.Parse(ts.TimeStart);
+                            DateTime endTime = DateTime.Parse(ts.TimeClose);
+                            TimeSpan finalTime = endTime - startTime;
+                            if (finalTime.TotalMinutes <= LENGTH_BORDER)
+                            {
+                                isLong = false;
+                                System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++IS LONG TS FALSE: " + finalTime.Minutes + " " + finalTime + " " + finalTime.TotalMinutes);
 
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+
+                        }
+                        if(isLong == false)
+                        {
+                            int tsPrevID = ts.TeplSekvId - 1;
+                            Teplota_Sekvencia prevTemp = context.TemperatureSekv.Where(p => p.TeplSekvId == tsPrevID).First();
+                            
+                            Boolean isLongPrev = true;
+                            try
+                            {
+                                DateTime startTime = DateTime.Parse(prevTemp.TimeStart);
+                                DateTime endTime = DateTime.Parse(prevTemp.TimeClose);
+                                TimeSpan finalTime = endTime - startTime;
+                                if (finalTime.TotalMinutes <= LENGTH_BORDER)
+                                {
+                                    isLongPrev = false;
+                                    System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++IS LONG prevTemp FALSE: " + finalTime.Minutes + " " + finalTime + " " + finalTime.TotalMinutes);
+
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+
+                            }
+
+                            if(isLongPrev == false)
+                            {
+                                float hodnota = (ts.Sekvencia + prevTemp.Sekvencia) / 2;
+                                System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++BOTH ARE SHORT - VALUE: " + prevTemp.Sekvencia + " " + ts.Sekvencia + " " + hodnota);
+                                 
+                                Teplota_Sekvencia newTemp = new Teplota_Sekvencia
+                                {
+                                    TeplSekvId = prevTemp.TeplSekvId,
+                                    Sekvencia = hodnota,
+                                    TimeStart = prevTemp.TimeStart,
+                                    TimeClose = ts.TimeClose,
+                                    Hranice_TeplotaFk = ts.Hranice_TeplotaFk,
+                                    Upozornenie = findMax(ts.Upozornenie, prevTemp.Upozornenie)
+
+                                };
+
+                                index = ts.TeplSekvId;
+                                prevTemp.Sekvencia = hodnota;
+                                prevTemp.TimeClose = ts.TimeClose;
+                                prevTemp.Hranice_TeplotaFk = ts.Hranice_TeplotaFk;
+                                prevTemp.Upozornenie = findMax(ts.Upozornenie, prevTemp.Upozornenie);
+
+                                context.TemperatureSekv.Remove(ts);
+                                context.TemperatureSekv.Update(prevTemp);
+                                context.Temperature.RemoveRange(allInSekv1);
+                                System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++CONCAT SEQ: " + prevTemp.TeplSekvId + " " + ts.TeplSekvId + " " + a.Hodnota + " " + a.TeplotaId);
+
+                                System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++BOTH ARE SHORT - NEW TIME: " + prevTemp.TimeStart + " " + prevTemp.TimeClose);
+
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++SECOND IS LONG ");
+
+                                context.TemperatureSekv.Update(ts);
+                                context.Temperature.RemoveRange(allInSekv1);
+
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++FIRST IS LONG ");
+
+                            context.TemperatureSekv.Update(ts);
+                            context.Temperature.RemoveRange(allInSekv1);
+                        }*/
                         context.TemperatureSekv.Update(ts);
                         context.Temperature.RemoveRange(allInSekv1);
-
 
                         /*Vytvor novu sekvenciu*/
                         Teplota_Sekvencia tmps1 = new Teplota_Sekvencia
                         {
-                            TeplSekvId = ts.TeplSekvId + 1,
+                            TeplSekvId = index,
                             Sekvencia = a.Hodnota,
                             TimeStart = a.TimeStamp,
                             TimeClose = "",
@@ -170,7 +263,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         }
                         context.TemperatureSekv.Add(tmps1);
 
-                        a.TeplSekvFk = ts.TeplSekvId + 1;  //naviaz pulz na sekvenciu
+                        a.TeplSekvFk = index;  //naviaz pulz na sekvenciu
                         context.Temperature.Update(a);
 
                         try
@@ -188,10 +281,9 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             }
         }
 
-
         public void PulseSequencer(DatabaseContext context)
         {
-            var all1 = context.Pulse.ToList();
+            var all1 = context.Pulse.Where(t => t.TepSekvId == null).ToList();
             LimitCheck limitCheck = new LimitCheck();
 
             Hranice_Tep ht = context.PulseLimit.FirstOrDefault(h => h.Hranica_TepId == context.PulseLimit.Max(x => x.Hranica_TepId));
@@ -311,6 +403,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     {
                         /* Zatvor poslednu sekvenciu*/
                         Tep_Sekvencia ts = context.PulseSekv.FirstOrDefault(t => t.TepSekvId == context.PulseSekv.Max(x => x.TepSekvId)); //najdi poslednu
+                        
+
 
                         var allInSekv1 = context.Pulse.Where(p => p.TepSekvId == ts.TepSekvId).ToList();// najdi list pre poslednu
                         var last = allInSekv1[allInSekv1.Count - 1]; //zober posledny pulz
@@ -361,6 +455,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         {
                             System.Diagnostics.Debug.WriteLine("Nemozem najst otvorenu sekvenciu");
                         }
+                        
                     }
 
                 }
@@ -512,7 +607,9 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         if (pohS.Upozornenie_Cas == 1)
                         {
                             RoomsDetection roomsDetection = new RoomsDetection();
-                            new NotificationGenerator().GenerateNotificationMovementTime(roomsDetection.findRoom(mov).Nazov, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+                            string roomName = roomsDetection.findRoom(mov).Nazov;
+                            //call sleep detection
+                            new NotificationGenerator().GenerateNotificationMovementTime(roomName, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
 
                         }
                         pohS.TimeStop = mov.TimeStamp;
@@ -624,6 +721,11 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
             }
 
+        }
+        private int findMax(int a, int b)
+        {
+            if (a > b) return a;
+            else return b;
         }
     }
 }

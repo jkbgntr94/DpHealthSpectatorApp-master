@@ -27,7 +27,6 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
         {
             EditProfileCommand = new Command(editProfileCommand);
             EditAlertsCommand = new Command(editAlertsCommand);
-            RoomStatsCommand = new Command(roomStatsCommand);
             EditEmailAlertsCommand = new Command(editEmailAlertsCommand);
             editBordersCommand = new Command(EmailAlertsCommand);
 
@@ -54,43 +53,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Settings
 
 
         }
-        private void roomStatsCommand()
-        {
-
-            DatabaseContext context = new DatabaseContext();
-
-            var SekvList = context.MovementSekv.ToList();
-
-            var results = SekvList.GroupBy(
-                p => p.IzbyFK);
-
-            String alertText = "";
-
-            foreach (var r in results)
-            {
-
-                try { 
-                    Izby izba = context.Rooms.Where(p => p.IzbaID == r.Key).First();
-                    System.Diagnostics.Debug.WriteLine("ROOMS: " + izba.Nazov + " -- " + r.Count());
-                    alertText += izba.Nazov + ": " + r.Count() + " sekvencie\n";
-                }
-                catch(Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine("ROOMS STATISTIC: " + e.ToString());
-                    System.Diagnostics.Debug.WriteLine("ROOMS: " + " NA " + " -- " + r.Count());
-                    alertText += "NA" + ": " + r.Count() + " sekvencie\n";
-                }
-
-                
-
-            }
-
-            UserDialogs.Instance.Alert(alertText, "Štatistika pohybu", "OK");
-
-            //await Application.Current.MainPage.Navigation.PushAsync(new EditProfilePage());
-
-
-        }
+       
 
         async void editAlertsCommand()
         {

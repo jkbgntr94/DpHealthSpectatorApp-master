@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Forms_EFCore.Views.Statistics.StatisticsSelectionPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <Label XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Priebehová štatistika"/>
+                <Image x:Name="arrowimage" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="15"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding MainStatisticsCommand}"/>
+                </StackLayout.GestureRecognizers>
+
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                <Label XAlign="Center" HorizontalOptions="Start" FontSize="22" FontAttributes="Bold" Text="Štatistika izieb"/>
+                <Image x:Name="arrowimage1" VerticalOptions="Center" HorizontalOptions="End" HeightRequest="15"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding RoomStatisticsCommand}"/>
+                </StackLayout.GestureRecognizers>
+
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

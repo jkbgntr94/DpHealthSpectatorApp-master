@@ -28,16 +28,18 @@ namespace Xamarin.Forms_EFCore.Helpers
             loadPulse = new LoadPulse();
             loadMovement = new LoadMovement();
             loadFall = new LoadFall();
+
+            loadTemperature.createFileFromFile();
+            loadPulse.createFileFromFile();
         }
 
         
         public async void LoadData()
         {
-            loadTemperature.createFileFromFile();
-            loadPulse.createFileFromFile();
+           
 
 
-            System.Timers.Timer tempTimer = new System.Timers.Timer();
+          /*  System.Timers.Timer tempTimer = new System.Timers.Timer();
             tempTimer.Elapsed += new ElapsedEventHandler(OnTempTimeEvent);
             tempTimer.Interval = 20000;
             tempTimer.Enabled = true;
@@ -60,13 +62,37 @@ namespace Xamarin.Forms_EFCore.Helpers
 
             System.Timers.Timer fallTimer = new System.Timers.Timer();
             fallTimer.Elapsed += new ElapsedEventHandler(OnFallTimeEvent);
-            fallTimer.Interval = 60000;
+            fallTimer.Interval = 120000;
             fallTimer.Enabled = true;
-
+            */
 
             await Task.Run(async () =>
             {
-                
+                System.Timers.Timer tempTimer = new System.Timers.Timer();
+                tempTimer.Elapsed += new ElapsedEventHandler(OnTempTimeEvent);
+                tempTimer.Interval = 20000;
+                tempTimer.Enabled = true;
+
+                //Thread.Sleep(5000);
+
+                System.Timers.Timer pulseTimer = new System.Timers.Timer();
+                pulseTimer.Elapsed += new ElapsedEventHandler(OnPulseTimeEvent);
+                pulseTimer.Interval = 60000;
+                pulseTimer.Enabled = true;
+
+                //Thread.Sleep(5000);
+
+                System.Timers.Timer movementTimer = new System.Timers.Timer();
+                movementTimer.Elapsed += new ElapsedEventHandler(OnMovementTimeEvent);
+                movementTimer.Interval = 60000;
+                movementTimer.Enabled = true;
+
+               // Thread.Sleep(5000);
+
+                System.Timers.Timer fallTimer = new System.Timers.Timer();
+                fallTimer.Elapsed += new ElapsedEventHandler(OnFallTimeEvent);
+                fallTimer.Interval = 120000;
+                fallTimer.Enabled = true;
 
 
             }).ConfigureAwait(false); 

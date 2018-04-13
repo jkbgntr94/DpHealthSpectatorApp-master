@@ -229,7 +229,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
         {
             //UserDialogs.Instance.ShowLoading("Loading ...");
 
-            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsSelectionPage());
             
 
 
@@ -339,7 +339,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                // Tep_Sekvencia ts = _context.PulseSekv.FirstOrDefault(t => t.TepSekvId == _context.PulseSekv.Max(x => x.TepSekvId));
 
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
-                if(ts != null)
+                if(ts.Upozornenie != 0)
                 {
                     DateTime convertedDate = DateTime.Parse(ts.TimeStart);
 
@@ -400,7 +400,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 }
 
                 Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
-                if (ts != null)
+                if (ts.Upozornenie != 0)
                 {
                     DateTime convertedDate = DateTime.Parse(ts.TimeStart);
 
@@ -455,10 +455,17 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 Pohyb_Sekvencia ps = null;
                 foreach (var a in all)
                 {
-                    ps = a;
-                    if (a.Upozornenie_Cas != 0) break;
-                    if (a.Upozornenie_Hranica != 0) break;
-
+                    
+                    if (a.Upozornenie_Cas != 0)
+                    {
+                        ps = a;
+                        break;
+                    }
+                    if (a.Upozornenie_Hranica != 0)
+                    {
+                        ps = a;
+                        break;
+                    }
                 }
 
                 if (ps != null)
