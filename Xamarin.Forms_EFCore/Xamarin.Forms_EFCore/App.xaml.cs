@@ -15,7 +15,7 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.Statistics.StatisticsMainPage());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.DashboardPage());
         }
 
         protected override void OnStart() {

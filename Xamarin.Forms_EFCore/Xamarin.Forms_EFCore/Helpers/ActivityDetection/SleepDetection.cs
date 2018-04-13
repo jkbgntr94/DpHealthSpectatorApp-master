@@ -10,15 +10,16 @@ namespace Xamarin.Forms_EFCore.Helpers
     public class SleepDetection
     {
 
-        public Boolean DetectSleep(DatabaseContext context, String roomName, DateTime start, DateTime close)
+        public Boolean DetectSleep(DatabaseContext context, String roomName, DateTime start, DateTime close, int sekvCount)
         {
           
             if (!roomName.Equals("Spálňa") && !roomName.Equals("Spalna")) return false;
-            /*  SettingsController.SleepTime = new TimeSpan(0, 20, 0, 0).ToString();
-              string wakeTime = new TimeSpan(0, 7, 0, 0).ToString();*/
-              //TODO: SWAP BACK
-            SettingsController.SleepTime = new TimeSpan(0, 8, 0, 0).ToString();
-            string wakeTime = new TimeSpan(0, 20, 0, 0).ToString();
+            if (sekvCount > 3) return false;
+              SettingsController.SleepTime = new TimeSpan(0, 20, 0, 0).ToString();
+              string wakeTime = new TimeSpan(0, 7, 0, 0).ToString();
+            
+            /*SettingsController.SleepTime = new TimeSpan(0, 8, 0, 0).ToString();
+            string wakeTime = new TimeSpan(0, 20, 0, 0).ToString();*/
             string sleepTime = SettingsController.SleepTime;
             if (sleepTime == string.Empty) return false;
 
@@ -31,6 +32,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             try
             {
                tep = context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) >= start && DateTime.Parse(p.TimeStart) <= close || DateTime.Parse(p.TimeStart) <= start && DateTime.Parse(p.TimeClose) > start || DateTime.Parse(p.TimeStart) < close && DateTime.Parse(p.TimeClose) >= close).ToList();
+                if (tep.Count == 0) return false;
                 foreach (var a in tep)
                 {
                     if(a.Upozornenie > 0)

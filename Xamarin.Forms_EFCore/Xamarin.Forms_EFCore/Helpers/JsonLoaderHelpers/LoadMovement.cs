@@ -249,8 +249,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 Pohyb pohyb = new Pohyb
                 {
                     PohybId = index++,
-                    Xhodnota = rnd.Next(1, 150),
-                    Yhodnota = rnd.Next(1, 150),
+                    Xhodnota = rnd.Next(0, 160),
+                    Yhodnota = rnd.Next(0, 160),
                     TimeStamp = DateTime.Now.ToShortTimeString()
 
                 };

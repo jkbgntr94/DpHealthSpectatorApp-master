@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms_EFCore.DataAccess;
 using Xamarin.Forms_EFCore.Helpers;
+using Xamarin.Forms_EFCore.Helpers.ActivityDetection;
 using Xamarin.Forms_EFCore.Models;
 using Xamarin.Forms_EFCore.Models.ObjectsForList;
 using Xamarin.Forms_EFCore.Views;
@@ -108,14 +109,36 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private void FindActivity()
         {
+            ActivityName = "Neznáma";
+
+            CleaningDetection cleaningDetection = new CleaningDetection();
+            Boolean cleaning = cleaningDetection.DetectCleaning(_context, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            if (cleaning)
+            {
+                ActivityName = "Upratovanie";
+            }
+
             SleepDetection sleepDetection = new SleepDetection();
-            Boolean sleep = sleepDetection.DetectSleep(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime);
+            Boolean sleep = sleepDetection.DetectSleep(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
             if (sleep)
             {
                 ActivityName = "Spánok";
             }
-           
-            System.Diagnostics.Debug.WriteLine("************ ACTIVITY: " + sleep.ToString());
+
+            CookDetection cookDetection = new CookDetection();
+            Boolean cook = cookDetection.DetectCooking(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            if (cook)
+            {
+                ActivityName = "Varenie";
+            }
+
+            OutsideRestDetection outsideRestDetection = new OutsideRestDetection();
+            Boolean outside = outsideRestDetection.DetectOutsideRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            if (outside)
+            {
+                ActivityName = "Oddych vonku";
+            }
+            System.Diagnostics.Debug.WriteLine("************ ACTIVITY sleep: " + sleep.ToString() + " cook: " + cook);
         }
 
 
