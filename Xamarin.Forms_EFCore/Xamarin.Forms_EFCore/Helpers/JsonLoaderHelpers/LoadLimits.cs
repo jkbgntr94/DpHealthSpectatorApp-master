@@ -66,7 +66,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             {
                 Xhranica = 150,
                 Yhranica = 150,
-                OkruhHranica = 30,
+                OkruhHranica = 120,
                 LimitCas = "120",
                 TimeStamp = DateTime.Now.ToShortTimeString()
 

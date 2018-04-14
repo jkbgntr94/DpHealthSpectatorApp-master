@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCLStorage;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -269,11 +270,96 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             {
                 throw e;
             }
+            
+        }
+        //--------------------------
 
-           
+        public async void createDatasetFile()
+        {
+            try
+            {
+                var assembly = typeof(LoadMovement).GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.movementDataset.txt");
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+                IFile movementFile = await rootFolder.CreateFileAsync("movementDataset.txt", CreationCollisionOption.ReplaceExisting);
+
+                String text;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    text = sr.ReadToEnd();
+
+                }
+                movementFile.WriteAllTextAsync(text);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Zapis movement suboru do zariadenia: " + e.ToString());
+
+            }
+        }
+
+        public async void readLineFromDatasetFile()
+        {
+            try
+            {
+                DatabaseContext context = new DatabaseContext();
+
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+
+                IFile movFile = await rootFolder.GetFileAsync("movementDataset.txt");
+
+                string newFileText; string line;
+                string fileText = await movFile.ReadAllTextAsync();
+                using (System.IO.StringReader reader = new System.IO.StringReader(fileText))
+                {
+                    line = reader.ReadLine();
+                    //System.Diagnostics.Debug.WriteLine("READ from file pulse " + line);
+                    newFileText = reader.ReadToEnd();
+                }
+
+                movFile.WriteAllTextAsync(newFileText);
+
+                MovementJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<MovementJson>(line);
+
+                int index = 1;
+                if (!context.Movement.Any())
+                {
+                    index = 1;
+                }
+                else
+                {
+                    Pohyb tmp = context.Movement.FirstOrDefault(t => t.PohybId == context.Movement.Max(x => x.PohybId));
+                    index = tmp.PohybId;
+                    index++;
+                }
+
+                Pohyb POH = new Pohyb
+                {
+                    PohybId = index,
+                    TimeStamp = obj.timestamp.ToString(),
+                    Xhodnota = obj.x*10,
+                    Yhodnota = obj.y*10
+                };
+
+
+             
+                context.Movement.Add(POH);
+                System.Diagnostics.Debug.WriteLine("****** VLOZENIE MOVEMENT DO DB: " + POH.PohybId + " " + POH.Xhodnota + " "+ POH.Yhodnota + " " + POH.TimeStamp);
+
+
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Citanie movement suboru zo zariadenia: " + nameof(LoadPulse) + e.ToString());
+
+            }
 
 
         }
+
 
     }
 }

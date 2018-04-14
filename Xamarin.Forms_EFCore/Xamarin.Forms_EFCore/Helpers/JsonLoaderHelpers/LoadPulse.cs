@@ -165,6 +165,94 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
 
         }
+        //-------------------------
+
+        public async void createDatasetFile()
+        {
+            try
+            {
+                var assembly = typeof(LoadTemperature).GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.pulseDataset.txt");
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+                IFile pulseFile = await rootFolder.CreateFileAsync("pulseDataset.txt", CreationCollisionOption.ReplaceExisting);
+
+                String text;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    text = sr.ReadToEnd();
+
+                }
+                pulseFile.WriteAllTextAsync(text);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Zapis pulz suboru do zariadenia: " + e.ToString());
+
+            }
+        }
+
+
+        public async void readLineFromDatasetFile()
+        {
+            try
+            {
+                DatabaseContext context = new DatabaseContext();
+
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+
+                IFile tempFile = await rootFolder.GetFileAsync("pulseDataset.txt");
+
+                string newFileText; string line;
+                string fileText = await tempFile.ReadAllTextAsync();
+                using (System.IO.StringReader reader = new System.IO.StringReader(fileText))
+                {
+                    line = reader.ReadLine();
+                    //System.Diagnostics.Debug.WriteLine("READ from file pulse " + line);
+                    newFileText = reader.ReadToEnd();
+                }
+
+                tempFile.WriteAllTextAsync(newFileText);
+
+                DatasetJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetJson>(line);
+
+                int index = 1;
+                if (!context.Pulse.Any())
+                {
+                    index = 1;
+                }
+                else
+                {
+                    Tep tmp = context.Pulse.FirstOrDefault(t => t.TepId == context.Pulse.Max(x => x.TepId));
+                    index = tmp.TepId;
+                    index++;
+                }
+                
+
+                Tep tep = new Tep
+                {
+                    TepId = index,
+                    //TimeStamp = obj.header.creation_date_time.ToString(),
+                    TimeStamp = obj.timestamp.ToString(),
+                    Hodnota = obj.value
+
+
+                };
+                context.Pulse.Add(tep);
+                //System.Diagnostics.Debug.WriteLine("****** VLOZENIE TEPU DO DB: " + tep.TepId + " " + tep.Hodnota + " " + tep.TimeStamp);
+
+
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Citanie pulz suboru zo zariadenia: " + nameof(LoadPulse) + e.ToString());
+
+            }
+
+
+        }
 
     }
 }

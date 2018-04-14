@@ -272,7 +272,7 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         public void setMovementValue()
         {
-            if (_context.Movement.Any())
+            if (_context.MovementSekv.Any())
             {
 
                 Pohyb pohyb = _context.Movement.FirstOrDefault(t => t.PohybId == _context.Movement.Max(x => x.PohybId));

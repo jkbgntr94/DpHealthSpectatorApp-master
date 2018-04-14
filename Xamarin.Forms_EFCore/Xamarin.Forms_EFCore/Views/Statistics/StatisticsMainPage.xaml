@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xamarin.Forms_EFCore.Views.Statistics.StatisticsMainPage">
+             x:Class="Xamarin.Forms_EFCore.Views.Statistics.StatisticsMainPage"
+             Title="Vyberte postupnosť">
     <ContentPage.Content>
         <StackLayout >
             <ListView x:Name="Sequences" ItemsSource="{Binding RoomsList}" SelectedItem="{Binding SelectedSequence}" >

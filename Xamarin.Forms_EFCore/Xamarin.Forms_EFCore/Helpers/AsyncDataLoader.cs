@@ -29,14 +29,18 @@ namespace Xamarin.Forms_EFCore.Helpers
             loadMovement = new LoadMovement();
             loadFall = new LoadFall();
 
-            loadTemperature.createFileFromFile();
-            loadPulse.createFileFromFile();
+            //loadTemperature.createFileFromFile();
+            //loadPulse.createFileFromFile();
+            loadPulse.createDatasetFile();
+            loadTemperature.createDatasetFile();
+            loadMovement.createDatasetFile();
+
         }
 
-        
+
         public async void LoadData()
         {
-           
+            
 
 
           /*  System.Timers.Timer tempTimer = new System.Timers.Timer();
@@ -101,8 +105,8 @@ namespace Xamarin.Forms_EFCore.Helpers
 
         private void OnTempTimeEvent(object source, ElapsedEventArgs e)
         {
-            loadTemperature.readFileByLines();
-
+            //loadTemperature.readFileByLines();
+            loadTemperature.readLineFromDatasetFile();
 
             DatabaseContext seqContext = new DatabaseContext();
             
@@ -112,8 +116,8 @@ namespace Xamarin.Forms_EFCore.Helpers
 
         private void OnPulseTimeEvent(object source, ElapsedEventArgs e)
         {
-            loadPulse.readFileByLines();
-
+            //loadPulse.readFileByLines();
+            loadPulse.readLineFromDatasetFile();
 
             DatabaseContext seqContext = new DatabaseContext();
 
@@ -122,7 +126,8 @@ namespace Xamarin.Forms_EFCore.Helpers
         }
         private void OnMovementTimeEvent(object source, ElapsedEventArgs e)
         {
-            loadMovement.GenerateMovementOneSample();
+            //loadMovement.GenerateMovementOneSample();
+            loadMovement.readLineFromDatasetFile();
 
 
             DatabaseContext seqContext = new DatabaseContext();

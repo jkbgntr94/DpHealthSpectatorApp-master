@@ -19,8 +19,10 @@
     <None Remove="initializationValues.txt" />
     <None Remove="login2.png" />
     <None Remove="movement.png" />
+    <None Remove="movementDataset.txt" />
     <None Remove="pulse.png" />
     <None Remove="pulse100.txt" />
+    <None Remove="pulseDataset.txt" />
     <None Remove="pulseHigh.png" />
     <None Remove="pulseLow.png" />
     <None Remove="pulseMiddle.png" />
@@ -34,6 +36,7 @@
     <None Remove="temperature.png" />
     <None Remove="temperature100.txt" />
     <None Remove="temperatureCold.png" />
+    <None Remove="temperatureDataset.txt" />
     <None Remove="temperatureHigh.png" />
     <None Remove="temperatureLow.png" />
     <None Remove="temperatureMiddle.png" />
@@ -63,8 +66,10 @@
     <EmbeddedResource Include="initializationValues.txt" />
     <EmbeddedResource Include="login2.png" />
     <EmbeddedResource Include="movement.png" />
+    <EmbeddedResource Include="movementDataset.txt" />
     <EmbeddedResource Include="pulse.png" />
     <EmbeddedResource Include="pulse100.txt" />
+    <EmbeddedResource Include="pulseDataset.txt" />
     <EmbeddedResource Include="pulseHigh.png" />
     <EmbeddedResource Include="pulseLow.png" />
     <EmbeddedResource Include="pulseMiddle.png" />
@@ -79,6 +84,7 @@
     <EmbeddedResource Include="temperature.png" />
     <EmbeddedResource Include="temperature100.txt" />
     <EmbeddedResource Include="temperatureCold.png" />
+    <EmbeddedResource Include="temperatureDataset.txt" />
     <EmbeddedResource Include="temperatureHigh.png" />
     <EmbeddedResource Include="temperatureLow.png" />
     <EmbeddedResource Include="temperatureMiddle.png" />

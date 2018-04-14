@@ -12,9 +12,15 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
         public Izby findRoom(Pohyb pohyb)
         {
-            float x = pohyb.Xhodnota;
-            float y = pohyb.Yhodnota;
-
+            float x = 0; float y = 0;
+            try {
+                 x = pohyb.Xhodnota;
+                 y = pohyb.Yhodnota;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
             DatabaseContext context = new DatabaseContext();
 
             var izby = context.Rooms.ToList();

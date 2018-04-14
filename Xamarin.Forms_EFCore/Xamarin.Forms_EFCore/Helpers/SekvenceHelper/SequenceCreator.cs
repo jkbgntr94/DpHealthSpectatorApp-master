@@ -14,14 +14,16 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
         public void TemperatureSequencer(DatabaseContext context)
         {
 
-
-            var all1 = context.Temperature.ToList();
+            var all1 = context.Temperature.Where(t => t.TeplSekvFk == null).ToList();
+            //var all1 = context.Temperature.ToList();
             LimitCheck limitCheck = new LimitCheck();
 
             Hranice_Teplota htep = context.TemperatureLimit.FirstOrDefault(t => t.Hranice_TeplotaId == context.TemperatureLimit.Max(x => x.Hranice_TeplotaId));
 
             foreach (var a in all1)
             {/*Inicializacia ak ziadna sekvencia neexistuje*/
+               // System.Diagnostics.Debug.WriteLine("SPRACOVAVAM TEPLOTNU HODNOTU DO SEKVENCIE: " + a.TeplotaId + " " + a.Hodnota + " " + a.TimeStamp);
+
                 if (!context.TemperatureSekv.Any())
                 {
 
@@ -51,6 +53,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     try
                     {
+                        System.Diagnostics.Debug.WriteLine("SPRACOVAVAM Teplota HODNOTU DO SEKVENCIE: INICIALIZACNA");
+
                         context.SaveChanges();
                     }
                     catch (Exception e)
@@ -84,7 +88,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         minutes = finalTime.TotalMinutes;
                         seconds = finalTime.Seconds;
 
-                        System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF Temperature" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
+                        //System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF Temperature" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
                     }
                     catch (Exception e)
                     {
@@ -120,6 +124,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         context.TemperatureSekv.Update(tmps);
                         try
                         {
+                            //System.Diagnostics.Debug.WriteLine("SPRACOVAVAM teplota HODNOTU DO SEKVENCIE: UKLADAM DO AKTUALNEJ " + a.TeplotaId + " " + a.Hodnota + " " + a.TimeStamp + " " + tmps.TeplSekvId + " " + tmps.Sekvencia);
+
                             context.SaveChanges();
                         }
                         catch (Exception e)
@@ -268,6 +274,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         try
                         {
+                           // System.Diagnostics.Debug.WriteLine("SPRACOVAVAM PULZ HODNOTU DO SEKVENCIE: VYTVATAM NOVU SEKVENCIU" + a.TeplotaId + " " + a.Hodnota + " " + a.TimeStamp + " " + tmps1.TeplSekvId + " " + tmps1.Sekvencia);
+
                             context.SaveChanges();
                         }
                         catch (Exception e)
@@ -291,6 +299,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
             foreach (var a in all1)
             {
+                //System.Diagnostics.Debug.WriteLine("SPRACOVAVAM PULZ HODNOTU DO SEKVENCIE: " + a.TepId + " " + a.Hodnota + " " + a.TimeStamp);
+
                 /*Inicializacia ak ziadna sekvencia neexistuje*/
                 if (!context.PulseSekv.Any())
                 {
@@ -324,6 +334,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     try
                     {
+                        //System.Diagnostics.Debug.WriteLine("SPRACOVAVAM PULZ HODNOTU DO SEKVENCIE: INICIALIZACNA");
+
                         context.SaveChanges();
                     }
                     catch (Exception e)
@@ -347,14 +359,14 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         System.Diagnostics.Debug.WriteLine("Nemozem najst otvorenu sekvenciu");
                     }
 
-                    int minutes = 0;
+                    double minutes = 0;
                     try
                     {
                         DateTime startTime = DateTime.Parse(tepS.TimeStart);
                         DateTime endTime = DateTime.Parse(a.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
-                        minutes = finalTime.Minutes;
-                        System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF pulse" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
+                        minutes = finalTime.TotalMinutes;
+                       // System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF pulse" + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
                     }
                     catch (Exception e)
                     {
@@ -392,6 +404,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         context.PulseSekv.Update(tepS);
                         try
                         {
+                            ///System.Diagnostics.Debug.WriteLine("SPRACOVAVAM PULZ HODNOTU DO SEKVENCIE: UKLADAM DO AKTUALNEJ " + a.TepId + " " + a.Hodnota +" " +a.TimeStamp + " " + tepS.TepSekvId + " " + tepS.Sekvencia);
+
                             context.SaveChanges();
                         }
                         catch (Exception e)
@@ -449,6 +463,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                         try
                         {
+                            //System.Diagnostics.Debug.WriteLine("SPRACOVAVAM PULZ HODNOTU DO SEKVENCIE: VYTVATAM NOVU SEKVENCIU" + a.TepId + " " + a.Hodnota + " " + a.TimeStamp + " " + tepS1.TepSekvId + " " + tepS1.Sekvencia);
+
                             context.SaveChanges();
                         }
                         catch (Exception e)
@@ -465,7 +481,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
         public void MovementSequencer(DatabaseContext context)
         {
-            var allMovements = context.Movement.ToList();
+            var allMovements = context.Movement.Where(t => t.PohSekvFK == null).ToList();
             LimitCheck limitCheck = new LimitCheck();
 
             Hranice_Pohyb hpoh = context.MovementLimit.FirstOrDefault(t => t.HranicePohybId == context.MovementLimit.Max(x => x.HranicePohybId));
@@ -556,13 +572,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     {
                         System.Diagnostics.Debug.WriteLine("POHYB EXC Nemozem najst otvorenu sekvenciu");
                     }
-                    int minutes = 0;
+                    double minutes = 0;
                     try
                     {
                         DateTime startTime = DateTime.Parse(pohS.TimeStamp);
                         DateTime endTime = DateTime.Parse(mov.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
-                        minutes = finalTime.Minutes;
+                        minutes = finalTime.TotalMinutes;
                         System.Diagnostics.Debug.WriteLine("/////////////////////// TIME DIFF movement " + finalTime.Hours + ":" + finalTime.Minutes + ":" + finalTime.Seconds + ":" + finalTime.Milliseconds);
                     }
                     catch (Exception e)
@@ -575,16 +591,17 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     /*Spracovavana hodnota patri do aktualne otvorenej sekvencie*/
                     if (limitCheck.checkMovementValue(context, mov, pohS) && minutes <= 1)
                     {
-                        System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.PohybId + " " + pohS.PohSekvId);
+                        System.Diagnostics.Debug.WriteLine("**********POHYB Spracovavana hodnota patri do aktualne otvorenej sekvencie" + mov.Xhodnota + " " + mov.Yhodnota + " " + mov.TimeStamp);
                         //mov.Pohyb_Sekvencia = pohS;//naviaz pohyb
                         mov.PohSekvFK = pohS.PohSekvId;
 
                         //cas zotrvania
                         DateTime convertedDate = DateTime.Parse(pohS.TimeStamp);
                         String durationTime = null;
+                        DateTime endtime = DateTime.Parse(pohS.TimeStamp);
                         try
                         {
-                            DateTime endtime = DateTime.Parse(mov.TimeStamp);
+                            endtime = DateTime.Parse(mov.TimeStamp);
                             durationTime = (endtime - convertedDate).TotalMinutes.ToString();
                         }
                         catch (Exception e)
@@ -609,7 +626,13 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             RoomsDetection roomsDetection = new RoomsDetection();
                             string roomName = roomsDetection.findRoom(mov).Nazov;
                             //call sleep detection
-                            new NotificationGenerator().GenerateNotificationMovementTime(roomName, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+                            SleepDetection sleepDetection = new SleepDetection();
+                            Boolean sleep = sleepDetection.DetectSleep(context,roomName, convertedDate, endtime,0);
+                            if(sleep = false)
+                            {
+                                new NotificationGenerator().GenerateNotificationMovementTime(roomName, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);
+
+                            }
 
                         }
                         pohS.TimeStop = mov.TimeStamp;
@@ -686,7 +709,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         //var toDelete = context.Movement.Where(c => c.PohSekvFK == last.PohSekvId).ToList();
                         //p.Pohyb_Sekvencia = pohnew;
 
-                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie" + mov.PohybId + " " + pohS.PohSekvId);
+                        System.Diagnostics.Debug.WriteLine("POHYB Spracovavana hodnota nepatri do aktualne otvorenej sekvencie" + mov.Xhodnota + " " + mov.Yhodnota + " " + mov.TimeStamp);
 
                         context.MovementSekv.Update(last);
 

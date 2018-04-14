@@ -102,8 +102,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 // The center to use when drawing the circle,
                 // relative to the CCDrawNode:
                 new CCPoint(0, 0),
-                radius: 2,
-                color: CCColor4B.Blue);
+                radius: 4,
+                color: CCColor4B.LightGray);
             circle.PositionX = x;
             circle.PositionY = y;
         }
@@ -118,8 +118,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 // The center to use when drawing the circle,
                 // relative to the CCDrawNode:
                 new CCPoint(0, 0),
-                radius: 2,
-                color: CCColor4B.Blue);
+                radius: 4,
+                color: CCColor4B.LightGray);
             circle.PositionX = x;
             circle.PositionY = y;
 

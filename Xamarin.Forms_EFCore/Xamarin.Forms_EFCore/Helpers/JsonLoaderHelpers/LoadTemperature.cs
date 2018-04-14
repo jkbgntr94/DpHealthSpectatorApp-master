@@ -115,7 +115,7 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
         }
 
-
+         
         public async void readFileByLines()
         {
             try {
@@ -152,15 +152,14 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
                 }
                 
 
-                Teplota teplota = new Teplota
+            Teplota teplota = new Teplota
             {
-                TeplotaId = index++,
-                //TimeStamp = obj.header.creation_date_time.ToString(),
-                TimeStamp = DateTime.Now.ToString(),
-                Hodnota = obj.body.body_temperature.value
-
-
+            TeplotaId = index++,
+            //TimeStamp = obj.header.creation_date_time.ToString(),
+            TimeStamp = DateTime.Now.ToString(),
+            Hodnota = obj.body.body_temperature.value
             };
+
             context.Temperature.Add(teplota);
 
             context.SaveChanges();
@@ -172,5 +171,94 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
             }
         }
+
+        //-------------------------------
+        public async void createDatasetFile()
+        {
+            try
+            {
+                var assembly = typeof(LoadTemperature).GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperatureDataset.txt");
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+                IFile tempFile = await rootFolder.CreateFileAsync("temperatureDataset.txt", CreationCollisionOption.ReplaceExisting);
+
+                String text;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    text = sr.ReadToEnd();
+
+                }
+                tempFile.WriteAllTextAsync(text);
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Zapis teplotneho suboru do zariadenia: " + e.ToString());
+
+            }
+
+
+
+        }
+
+        public async void readLineFromDatasetFile()
+        {
+            try
+            {
+                DatabaseContext context = new DatabaseContext();
+                IFileSystem fileSystem = FileSystem.Current;
+                IFolder rootFolder = fileSystem.LocalStorage;
+
+                IFile tempFile = await rootFolder.GetFileAsync("temperatureDataset.txt");
+
+                string newFileText; string line;
+                string fileText = await tempFile.ReadAllTextAsync();
+                using (System.IO.StringReader reader = new System.IO.StringReader(fileText))
+                {
+                    line = reader.ReadLine();
+                    System.Diagnostics.Debug.WriteLine("READ from file temperature " + line);
+                    newFileText = reader.ReadToEnd();
+                }
+
+                tempFile.WriteAllTextAsync(newFileText);
+
+                DatasetJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetJson>(line);
+
+                int index = 1;
+                if (!context.Temperature.Any())
+                {
+                    index = 1;
+                }
+                else
+                {
+                    Teplota tmp = context.Temperature.FirstOrDefault(t => t.TeplotaId == context.Temperature.Max(x => x.TeplotaId));
+                    index = tmp.TeplotaId;
+                    index++;
+
+                }
+
+
+                Teplota teplota = new Teplota
+                {
+                    TeplotaId = index,
+                    //TimeStamp = obj.header.creation_date_time.ToString(),
+                    TimeStamp = obj.timestamp.ToString(),
+                    Hodnota = obj.value
+                };
+
+                context.Temperature.Add(teplota);
+                //System.Diagnostics.Debug.WriteLine("****** VLOZENIE TEPLOTY DO DB: " + teplota.TeplotaId + " " + teplota.Hodnota + " " + teplota.TimeStamp);
+
+                context.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("citanie teplotneho suboru zo zariadenia: " + e.ToString());
+
+            }
+        }
+
     }
 }
