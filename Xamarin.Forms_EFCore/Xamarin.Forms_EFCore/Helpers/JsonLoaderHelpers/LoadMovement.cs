@@ -360,6 +360,69 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
 
         }
 
+        public void LoadMovementDataset(DatabaseContext context)
+        {
+            var assembly = typeof(LoadMovement).GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.movementDataset.txt");
+
+            List<Xamarin.Forms_EFCore.Models.HelpModels.Json> objects = new List<Xamarin.Forms_EFCore.Models.HelpModels.Json>();
+
+            int index = 1;
+
+            if (!context.Movement.Any())
+            {
+
+                index = 1;
+            }
+            else
+            {
+                Pohyb poh = context.Movement.FirstOrDefault(p => p.PohybId == context.Movement.Max(t => t.PohybId));
+                index = poh.PohybId;
+                index++;
+            }
+            int i = 0;
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                while (sr.Peek() >= 0)
+                {
+                    MovementJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<MovementJson>(sr.ReadLine());
+                    //objects.Add(obj);
+                    //System.Diagnostics.Debug.WriteLine("************** + " + obj.x + " " + obj.y);
+
+                    Pohyb pohyb = new Pohyb
+                    {
+                        PohybId = index++,
+                        Xhodnota = obj.x *10,
+                        Yhodnota = obj.y *10,
+                        TimeStamp = obj.timestamp.ToString()
+                    };
+                    context.Movement.Add(pohyb);
+
+
+                }
+            }
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            /*Vypis tabulky z DB*/
+
+            /*var all = context.Movement.ToList();
+            foreach (var a in all)
+            {
+                System.Diagnostics.Debug.WriteLine(a.Xhodnota + " " + a.TimeStamp + " " + a.Yhodnota);
+
+
+            }*/
+
+
+        }
+
 
     }
 }

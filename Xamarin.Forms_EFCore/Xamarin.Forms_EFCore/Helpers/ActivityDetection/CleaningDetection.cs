@@ -9,14 +9,13 @@ namespace Xamarin.Forms_EFCore.Helpers.ActivityDetection
 {
     public class CleaningDetection
     {
-        public Boolean DetectCleaning(DatabaseContext context, DateTime start, DateTime close, int sekvCount)
+        public Boolean DetectCleaning(DatabaseContext context, DateTime start, DateTime close, int sekvCount, List<Tep_Sekvencia> tep, List<Teplota_Sekvencia> teplota)
         {
             if (sekvCount < 5) return false;
 
-            List<Tep_Sekvencia> tep = new List<Tep_Sekvencia>();
-            try
-            {
-                tep = context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) >= start && DateTime.Parse(p.TimeStart) <= close || DateTime.Parse(p.TimeStart) <= start && DateTime.Parse(p.TimeClose) > start || DateTime.Parse(p.TimeStart) < close && DateTime.Parse(p.TimeClose) >= close).ToList();
+           
+           
+                //tep = context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) >= start && DateTime.Parse(p.TimeStart) <= close || DateTime.Parse(p.TimeStart) <= start && DateTime.Parse(p.TimeClose) > start || DateTime.Parse(p.TimeStart) < close && DateTime.Parse(p.TimeClose) >= close).ToList();
                 double sumPulse = 0;
                 foreach (var a in tep)
                 {
@@ -28,6 +27,9 @@ namespace Xamarin.Forms_EFCore.Helpers.ActivityDetection
 
                 }
                 int id = tep.First().TepSekvId - 1;
+
+            try
+            {
                 Tep_Sekvencia before = context.PulseSekv.Where(a => a.TepSekvId == id).First();
                 sumPulse = sumPulse / tep.Count;
                 if (before.Sekvencia > sumPulse) return false;
@@ -39,10 +41,9 @@ namespace Xamarin.Forms_EFCore.Helpers.ActivityDetection
 
             }
 
-            List<Teplota_Sekvencia> teplota = new List<Teplota_Sekvencia>();
-            try
-            {
-                teplota = context.TemperatureSekv.Where(p => DateTime.Parse(p.TimeStart) >= start && DateTime.Parse(p.TimeStart) <= close || DateTime.Parse(p.TimeStart) <= start && DateTime.Parse(p.TimeClose) > start || DateTime.Parse(p.TimeStart) < close && DateTime.Parse(p.TimeClose) >= close).ToList();
+           
+            
+                //teplota = context.TemperatureSekv.Where(p => DateTime.Parse(p.TimeStart) >= start && DateTime.Parse(p.TimeStart) <= close || DateTime.Parse(p.TimeStart) <= start && DateTime.Parse(p.TimeClose) > start || DateTime.Parse(p.TimeStart) < close && DateTime.Parse(p.TimeClose) >= close).ToList();
                 double sumTemp = 0;
                 foreach (var a in teplota)
                 {
@@ -50,7 +51,10 @@ namespace Xamarin.Forms_EFCore.Helpers.ActivityDetection
 
                 }
 
-                int id = teplota.First().TeplSekvId - 1;
+                id = teplota.Last().TeplSekvId - 1;
+
+            try
+            {
                 Teplota_Sekvencia before = context.TemperatureSekv.Where(a => a.TeplSekvId == id).First();
                 sumTemp = sumTemp / teplota.Count;
                 if (before.Sekvencia > sumTemp) return false;

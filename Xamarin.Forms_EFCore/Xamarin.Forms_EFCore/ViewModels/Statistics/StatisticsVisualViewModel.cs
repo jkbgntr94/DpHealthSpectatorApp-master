@@ -91,12 +91,26 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
         private RoomStatisticsObj _roomStatistics;
         private DatabaseContext _context;
 
+        private List<Tep_Sekvencia> tepListConst;
+        private List<Teplota_Sekvencia> teplotaListConst;
+
+
         public StatisticsVisualViewModel(RoomStatisticsObj roomStats)
         {
+            tepListConst = new List<Tep_Sekvencia>();
+            teplotaListConst = new List<Teplota_Sekvencia>();
+
             _roomStatistics = roomStats;
             _context = new DatabaseContext();
             StartdateTime = DateTime.Parse(_roomStatistics.StartTime);
+
+            try { 
             StopdateTime = DateTime.Parse(_roomStatistics.EndTime);
+            }catch(Exception e)
+            {
+               
+            }
+
             StartTime = _roomStatistics.StartTime;
             StopTime = _roomStatistics.EndTime;
 
@@ -112,31 +126,37 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
             ActivityName = "Neznáma";
 
             CleaningDetection cleaningDetection = new CleaningDetection();
-            Boolean cleaning = cleaningDetection.DetectCleaning(_context, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            Boolean cleaning = cleaningDetection.DetectCleaning(_context, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
             if (cleaning)
             {
-                ActivityName = "Upratovanie";
+                ActivityName = "Pohyb";
             }
 
             SleepDetection sleepDetection = new SleepDetection();
-            Boolean sleep = sleepDetection.DetectSleep(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            Boolean sleep = sleepDetection.DetectSleep(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst);
             if (sleep)
             {
                 ActivityName = "Spánok";
             }
 
             CookDetection cookDetection = new CookDetection();
-            Boolean cook = cookDetection.DetectCooking(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            Boolean cook = cookDetection.DetectCooking(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
             if (cook)
             {
                 ActivityName = "Varenie";
             }
 
             OutsideRestDetection outsideRestDetection = new OutsideRestDetection();
-            Boolean outside = outsideRestDetection.DetectOutsideRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count);
+            Boolean outside = outsideRestDetection.DetectOutsideRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
             if (outside)
             {
                 ActivityName = "Oddych vonku";
+            }
+            RestDetection restDetection = new RestDetection();
+            Boolean rest = restDetection.DetectRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst);
+            if (rest)
+            {
+                ActivityName = "Oddych";
             }
             System.Diagnostics.Debug.WriteLine("************ ACTIVITY sleep: " + sleep.ToString() + " cook: " + cook);
         }
@@ -162,32 +182,74 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
         private void CreateList()
         {
             List<Tep_Sekvencia> tepList = null;
-            try { 
-            tepList = _context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) >= StartdateTime && DateTime.Parse(p.TimeStart) <= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StartdateTime || DateTime.Parse(p.TimeStart) <= StopdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime).ToList();
+            try
+            {
+                tepList = _context.PulseSekv.ToList();
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 System.Diagnostics.Debug.WriteLine("Cant find list pulse for selected time" + e.ToString());
-
             }
-           /* foreach (var t in tepList) {
-                System.Diagnostics.Debug.WriteLine("************ Pulse: " + t.TimeStart + " " + t.TimeClose + " " + t.Sekvencia);
-
-            }*/
             List<Teplota_Sekvencia> tempList = null;
             try
             {
-                tempList = _context.TemperatureSekv.Where(p => DateTime.Parse(p.TimeStart) >= StartdateTime && DateTime.Parse(p.TimeStart) <= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StartdateTime || DateTime.Parse(p.TimeStart) <= StopdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime).ToList();
+                tempList = _context.TemperatureSekv.ToList();
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("Cant find list temperature for selected time" + e.ToString());
 
             }
-          /*  foreach (var t in tempList)
+            /* try { 
+             tepList = _context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) >= StartdateTime && DateTime.Parse(p.TimeStart) <= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StartdateTime || DateTime.Parse(p.TimeStart) <= StopdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime).ToList();
+             }
+             catch(Exception e)
+             {
+                 System.Diagnostics.Debug.WriteLine("Cant find list pulse for selected time" + e.ToString());
+                 try
+                 {
+                     tepList = _context.PulseSekv.Where(p => DateTime.Parse(p.TimeStart) <= StartdateTime).ToList();
+                 }
+                 catch (Exception ee)
+                 {
+                     System.Diagnostics.Debug.WriteLine("Cant find list pulse for selected time" + ee.ToString());  
+                 }
+
+                 System.Diagnostics.Debug.WriteLine("Cant find list pulse for selected time" + e.ToString());
+             }
+
+
+             foreach (var t in tepList) {
+                 System.Diagnostics.Debug.WriteLine("************ Pulse: " + t.TimeStart + " " + t.TimeClose + " " + t.Sekvencia);
+
+             }
+             List<Teplota_Sekvencia> tempList = null;
+             try
+             {
+                 tempList = _context.TemperatureSekv.Where(p => DateTime.Parse(p.TimeStart) >= StartdateTime && DateTime.Parse(p.TimeStart) <= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StartdateTime || DateTime.Parse(p.TimeStart) <= StopdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime || DateTime.Parse(p.TimeStart) <= StartdateTime && DateTime.Parse(p.TimeClose) >= StopdateTime).ToList();
+             }
+             catch (Exception e)
+             {
+                 System.Diagnostics.Debug.WriteLine("Cant find list temperature for selected time" + e.ToString());
+
+                 try
+                 {
+                     tempList = _context.TemperatureSekv.Where(p => DateTime.Parse(p.TimeStart) <= StartdateTime).ToList();
+                 }
+                 catch (Exception ee)
+                 {
+                     System.Diagnostics.Debug.WriteLine("Cant find list temperature for selected time" + ee.ToString());
+
+                 }
+
+             }*/
+
+
+            foreach (var t in tempList)
             {
                 System.Diagnostics.Debug.WriteLine("************ Temperature: " + t.TimeStart + " " + t.TimeClose + " " + t.Sekvencia);
 
-            }*/
+            }
 
             DateTime myTime = StartdateTime;
             Helpers.SekvenceHelper.LimitCheck loader = new Helpers.SekvenceHelper.LimitCheck();
@@ -198,14 +260,61 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
                 string tempAlert = "";
                 try
                 {
-                    var temp = tempList.Where(p => DateTime.Parse(p.TimeStart) <= myTime && DateTime.Parse(p.TimeClose) >= myTime).First();
+                    foreach (var t in tempList)
+                    {
+                        if (DateTime.Parse(t.TimeStart).TimeOfDay <= myTime.TimeOfDay && DateTime.Parse(t.TimeStart).Date == DateTime.Parse(_roomStatistics.StartDate))
+                        {
+                            if (t.TimeClose.Equals(""))
+                            {
+                                tempVal = t.Sekvencia.ToString("n2") + " °C";
+                                tempAlert = loader.getStringValuePulseAndTempLimit(t.Upozornenie);
+                                if (!teplotaListConst.Contains(t))
+                                {
+                                    teplotaListConst.Add(t);
+                                }
+                                break;
+                            }
+                            else if(TimeSpan.Compare(DateTime.Parse(t.TimeClose).TimeOfDay, myTime.TimeOfDay) >= 0)
+                            {
+                               tempVal = t.Sekvencia.ToString("n2") + " °C";
+                               tempAlert = loader.getStringValuePulseAndTempLimit(t.Upozornenie);
+                               if (!teplotaListConst.Contains(t))
+                               {
+                                   teplotaListConst.Add(t);
+                               }
+                               break;
+
+                            }
+                            else
+                            {
+                                tempVal = "NA";
+                                tempAlert = "";
+                            }
+                        }
+                    }
+
+/*
+                    var temp = tempList.Where(p => DateTime.Parse(p.TimeStart).TimeOfDay <= myTime.TimeOfDay && DateTime.Parse(p.TimeClose).TimeOfDay >= myTime.TimeOfDay).First();
 
                     tempVal = temp.Sekvencia.ToString("n2") + " °C";
-                    tempAlert = loader.getStringValuePulseAndTempLimit(temp.Upozornenie);
+                    tempAlert = loader.getStringValuePulseAndTempLimit(temp.Upozornenie);*/
                 }
                 catch (Exception e)
                 {
                     System.Diagnostics.Debug.WriteLine("Cant find value for selected time" + e.ToString());
+
+                   /* try
+                    {
+                        var temp = tempList.Where(p => DateTime.Parse(p.TimeStart) <= myTime && p.TimeClose == "").First();
+
+                        tempVal = temp.Sekvencia.ToString("n2") + " °C";
+                        tempAlert = loader.getStringValuePulseAndTempLimit(temp.Upozornenie);
+                    }
+                    catch (Exception ee)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Cant find value for selected time" + ee.ToString());
+
+                    }*/
 
                 }
 
@@ -214,14 +323,60 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
                 try
                 {
-                    var pulse = tepList.Where(p => DateTime.Parse(p.TimeStart) <= myTime && DateTime.Parse(p.TimeClose) >= myTime).First();
-                    pulseVal = pulse.Sekvencia.ToString() + " BPM";
-                    pulseAlert = loader.getStringValuePulseAndTempLimit(pulse.Upozornenie);
+                    /* var pulse = tepList.Where(p => DateTime.Parse(p.TimeStart) <= myTime && DateTime.Parse(p.TimeClose) >= myTime).First();
+                     pulseVal = pulse.Sekvencia.ToString() + " BPM";
+                     pulseAlert = loader.getStringValuePulseAndTempLimit(pulse.Upozornenie);*/
+                    foreach (var t in tepList)
+                    {
+                        if (DateTime.Parse(t.TimeStart).TimeOfDay <= myTime.TimeOfDay && DateTime.Parse(t.TimeStart).Date == DateTime.Parse(_roomStatistics.StartDate))
+                        {
+                            if (t.TimeClose.Equals(""))
+                            {
+                                pulseVal = t.Sekvencia.ToString() + " BPM";
+                                pulseAlert = loader.getStringValuePulseAndTempLimit(t.Upozornenie);
+                                if (!tepListConst.Contains(t))
+                                {
+                                    tepListConst.Add(t);
+                                }
+                                break;
+                            }
+                            else if (TimeSpan.Compare(DateTime.Parse(t.TimeClose).TimeOfDay, myTime.TimeOfDay) >= 0)
+                            {
+                                pulseVal = t.Sekvencia.ToString() + " BPM";
+                                pulseAlert = loader.getStringValuePulseAndTempLimit(t.Upozornenie);
+                                if (!tepListConst.Contains(t))
+                                {
+                                    tepListConst.Add(t);
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                pulseVal = "NA";
+                                pulseAlert = "";
+                            }
+                        }
+                    }
+
+
+
 
                 } catch(Exception e)
                 {
                     System.Diagnostics.Debug.WriteLine("Cant find value for selected time" + e.ToString());
 
+                   /* try
+                    {
+                        var pulse = tepList.Where(p => DateTime.Parse(p.TimeStart) <= myTime).First();
+                        pulseVal = pulse.Sekvencia.ToString() + " BPM";
+                        pulseAlert = loader.getStringValuePulseAndTempLimit(pulse.Upozornenie);
+
+                    }
+                    catch (Exception ee)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Cant find value for selected time" + ee.ToString());
+
+                    }*/
                 }
 
                 string fallValue = "";
@@ -280,7 +435,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private async void toBack()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
 
         }
     }

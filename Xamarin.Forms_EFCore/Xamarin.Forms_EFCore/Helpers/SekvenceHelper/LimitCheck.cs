@@ -97,16 +97,35 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
             {//neprekracuje limit vo vzdialenosti
 
                 //skontroluj ci patri do rovnakej izby
-                if(pohS.IzbyFK == new RoomsDetection().findRoom(p).IzbaID)
+                Izby izba = new RoomsDetection().findRoom(p);
+                
+                if(izba == null)
                 {
-                    return true;
+                    if (pohS.IzbyFK == null)
+                    {
+                        return true;
 
+                    }
+                    else
+                    {
+
+                        return false;
+                    }
                 }
                 else
                 {
+                    if (pohS.IzbyFK == izba.IzbaID)
+                    {
+                        return true;
 
-                    return false;
+                    }
+                    else
+                    {
+
+                        return false;
+                    }
                 }
+                
 
                 
             }

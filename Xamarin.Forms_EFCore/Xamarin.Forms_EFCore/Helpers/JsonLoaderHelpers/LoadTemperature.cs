@@ -260,5 +260,83 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
             }
         }
 
+        public void LoadTemperatureDataset(DatabaseContext context)
+        {
+            var assembly = typeof(LoadTemperature).GetTypeInfo().Assembly;
+
+            /*Definovanie cesty suboru*/
+            try
+            {
+                //Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperatureWeek.txt");
+                Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.temperatureDataset.txt");
+                List<Json> objects = new List<Json>();
+                /*nahranie dat a sparsovanie*/
+                int i = 0;
+                int index = 1;
+                if (!context.Temperature.Any())
+                {
+                    index = 1;
+                }
+                else
+                {
+                    Teplota tmp = context.Temperature.FirstOrDefault(t => t.TeplotaId == context.Temperature.Max(x => x.TeplotaId));
+                    index = tmp.TeplotaId;
+                }
+
+                index++;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+
+                    while (sr.Peek() >= 0)
+                    {
+                        DatasetJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetJson>(sr.ReadLine());
+                        //objects.Add(obj);
+                        //System.Diagnostics.Debug.WriteLine(i++ + " pppppp+ " + obj.header.creation_date_time.ToString() + " + " + obj.body.body_temperature.value);
+
+
+                        Teplota teplota = new Teplota
+                        {
+                            TeplotaId = index++,
+                            TimeStamp = obj.timestamp.ToString(),
+                            Hodnota = obj.value
+
+
+                        };
+                        context.Temperature.Add(teplota);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+            /*Vypis tabulky z DB*/
+
+            /*   var all = _context.Temperature.ToList();
+               foreach (var a in all)
+               {
+                   System.Diagnostics.Debug.WriteLine("" + a.TeplotaId + " " + a.TimeStamp + " " + a.Hodnota);
+
+
+               }*/
+
+
+        }
+
+
     }
 }

@@ -82,7 +82,9 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                     try
                     {
-                        DateTime startTime = DateTime.Parse(tmps.TimeStart);
+                        //DateTime startTime = DateTime.Parse(tmps.TimeStart);
+                        Teplota posl = context.Temperature.Where(p => p.TeplSekvFk == tmps.TeplSekvId).Last();
+                        DateTime startTime = DateTime.Parse(posl.TimeStamp);
                         DateTime endTime = DateTime.Parse(a.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
                         minutes = finalTime.TotalMinutes;
@@ -176,7 +178,8 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         if(isLong == false)
                         {
                             int tsPrevID = ts.TeplSekvId - 1;
-                            Teplota_Sekvencia prevTemp = context.TemperatureSekv.Where(p => p.TeplSekvId == tsPrevID).First();
+                            if (tsPrevID == 0) tsPrevID = 1;
+                            Teplota_Sekvencia prevTemp = context.TemperatureSekv.FirstOrDefault(p => p.TeplSekvId == tsPrevID);
                             
                             Boolean isLongPrev = true;
                             try
@@ -246,7 +249,10 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
 
                             context.TemperatureSekv.Update(ts);
                             context.Temperature.RemoveRange(allInSekv1);
-                        }*/
+                        }
+                        */
+
+
                         context.TemperatureSekv.Update(ts);
                         context.Temperature.RemoveRange(allInSekv1);
 
@@ -262,11 +268,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             Hranice_TeplotaFk = htep.Hranice_TeplotaId
                         };
 
-                        if (tmps1.Upozornenie != 0)
-                        {
-                            new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps1.Upozornenie, a.TeplotaId);
-
-                        }
+                        
                         context.TemperatureSekv.Add(tmps1);
 
                         a.TeplSekvFk = index;  //naviaz pulz na sekvenciu
@@ -281,6 +283,11 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                         catch (Exception e)
                         {
                             System.Diagnostics.Debug.WriteLine("Exception: " + nameof(SequenceCreator) + " " + e.ToString());
+                        }
+                        if (tmps1.Upozornenie != 0)
+                        {
+                            new NotificationGenerator().GenerateNotification("Teplota", a.Hodnota, a.TimeStamp, tmps1.Upozornenie, a.TeplotaId);
+
                         }
                     }
 
@@ -362,7 +369,9 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     double minutes = 0;
                     try
                     {
-                        DateTime startTime = DateTime.Parse(tepS.TimeStart);
+                        Tep posl = context.Pulse.Where(p => p.TepSekvId == tepS.TepSekvId).Last();
+                        DateTime startTime = DateTime.Parse(posl.TimeStamp);
+                        //DateTime startTime = DateTime.Parse(tepS.TimeStart);
                         DateTime endTime = DateTime.Parse(a.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
                         minutes = finalTime.TotalMinutes;
@@ -575,7 +584,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                     double minutes = 0;
                     try
                     {
-                        DateTime startTime = DateTime.Parse(pohS.TimeStamp);
+                        DateTime startTime = DateTime.Parse(pohS.TimeStop);
                         DateTime endTime = DateTime.Parse(mov.TimeStamp);
                         TimeSpan finalTime = endTime - startTime;
                         minutes = finalTime.TotalMinutes;
@@ -627,7 +636,7 @@ namespace Xamarin.Forms_EFCore.Helpers.SekvenceHelper
                             string roomName = roomsDetection.findRoom(mov).Nazov;
                             //call sleep detection
                             SleepDetection sleepDetection = new SleepDetection();
-                            Boolean sleep = sleepDetection.DetectSleep(context,roomName, convertedDate, endtime,0);
+                            Boolean sleep = sleepDetection.DetectSleepSeq(context,roomName, convertedDate, endtime,0);
                             if(sleep = false)
                             {
                                 new NotificationGenerator().GenerateNotificationMovementTime(roomName, pohS.TimeStamp, pohS.Cas_Zotrvania, pohS.PohSekvId);

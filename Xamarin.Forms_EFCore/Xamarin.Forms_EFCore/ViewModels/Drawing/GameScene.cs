@@ -98,12 +98,10 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
             circle = new CCDrawNode();
             layer.AddChild(circle);
-            circle.DrawCircle(
-                // The center to use when drawing the circle,
-                // relative to the CCDrawNode:
-                new CCPoint(0, 0),
-                radius: 4,
-                color: CCColor4B.LightGray);
+            circle.DrawSolidCircle(
+                  pos: new CCPoint(0, 0),
+                  radius: 4,
+                  color: CCColor4B.Blue);
             circle.PositionX = x;
             circle.PositionY = y;
         }
@@ -114,12 +112,10 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
             CCDrawNode circle = new CCDrawNode();
             layer.AddChild(circle);
-            circle.DrawCircle(
-                // The center to use when drawing the circle,
-                // relative to the CCDrawNode:
-                new CCPoint(0, 0),
-                radius: 4,
-                color: CCColor4B.LightGray);
+            circle.DrawSolidCircle(
+                  pos: new CCPoint(0, 0),
+                  radius: 4,
+                  color: CCColor4B.Blue);
             circle.PositionX = x;
             circle.PositionY = y;
 
