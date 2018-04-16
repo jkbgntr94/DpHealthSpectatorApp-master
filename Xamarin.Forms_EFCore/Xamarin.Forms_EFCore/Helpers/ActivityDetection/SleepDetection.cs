@@ -13,7 +13,7 @@ namespace Xamarin.Forms_EFCore.Helpers
         public Boolean DetectSleep(DatabaseContext context, String roomName, DateTime start, DateTime close, int sekvCount, List<Tep_Sekvencia> tep)
         {
           
-            if (!roomName.Equals("Spálňa") && !roomName.Equals("Spalna")) return false;
+            if (!roomName.Equals("Spálňa") && !roomName.Equals("Spalna") && !roomName.Equals("Obývačka") && !roomName.Equals("Obyvacka")) return false;
             if (sekvCount > 3) return false;
               SettingsController.SleepTime = new TimeSpan(0, 20, 0, 0).ToString();
               string wakeTime = new TimeSpan(0, 7, 0, 0).ToString();
@@ -39,7 +39,12 @@ namespace Xamarin.Forms_EFCore.Helpers
 
                 if (a.Upozornenie > 0)
                 {
-                    return false;
+                    if (a.Sekvencia > 60)
+                    {
+                        return false;
+
+                    }
+
                 }
             }
 
@@ -63,7 +68,7 @@ namespace Xamarin.Forms_EFCore.Helpers
         public Boolean DetectSleepSeq(DatabaseContext context, String roomName, DateTime start, DateTime close, int sekvCount)
         {
 
-            if (!roomName.Equals("Spálňa") && !roomName.Equals("Spalna")) return false;
+            if ((!roomName.Equals("Spálňa") && !roomName.Equals("Spalna")) || (!roomName.Equals("Obývačka") && !roomName.Equals("Obyvacka"))) return false;
             if (sekvCount > 3) return false;
             SettingsController.SleepTime = new TimeSpan(0, 20, 0, 0).ToString();
             string wakeTime = new TimeSpan(0, 7, 0, 0).ToString();
@@ -87,7 +92,12 @@ namespace Xamarin.Forms_EFCore.Helpers
                 {
                     if (a.Upozornenie > 0)
                     {
-                        return false;
+                        if (a.Sekvencia > 60)
+                        {
+                            return false;
+
+                        }
+
                     }
 
                 }

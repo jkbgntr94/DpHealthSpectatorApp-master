@@ -13,7 +13,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -44,16 +44,33 @@
                 
                     <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="3" Grid.Column="0" Text="Názov"/>
 
-                    <Entry VerticalOptions="Center"
+                <Picker x:Name="SexPicker" SelectedIndex="{Binding RoomPicker}" Grid.Column="0"  Grid.Row="4" HorizontalOptions="FillAndExpand" WidthRequest="250">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Chodba</x:String>
+                            <x:String>Kuchyňa</x:String>
+                            <x:String>Kúpeľňa</x:String>
+                            <x:String>Spálňa</x:String>
+                            <x:String>Obývačka</x:String>
+                            <x:String>Detská</x:String>
+                            <x:String>Toaleta</x:String>
+                            <x:String>Šatník</x:String>
+                            <x:String>Iná</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+
+                <Entry VerticalOptions="Center"
                            WidthRequest="250" Text="{Binding NameRoom}"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            Placeholder="Názov"
-                           Grid.Row="4" Grid.Column="0"/>
+                           Grid.Row="5" Grid.Column="0" IsVisible="False"/>
 
-                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="5" Grid.Column="0" Text="Ľavá dolná poloha"/>
+                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="6" Grid.Column="0" Text="Ľavá dolná poloha"/>
 
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="6" Grid.Column="0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="7" Grid.Column="0">
                         <Entry VerticalOptions="Center"
                    WidthRequest="50" Text="{Binding LeftDownX}"
                    HorizontalOptions="Center"
@@ -67,9 +84,9 @@
 
                     </StackLayout>
 
-                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="7" Grid.Column="0" Text="Pravá horná poloha"/>
+                    <Label XAlign="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" Grid.Row="8" Grid.Column="0" Text="Pravá horná poloha"/>
 
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="8" Grid.Column="0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="9" Grid.Column="0">
                         <Entry VerticalOptions="Center"
                    WidthRequest="50" Text="{Binding RightUpX}"
                    HorizontalOptions="Center"
@@ -83,16 +100,16 @@
 
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Center" Grid.Row="9" Grid.Column="0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="10" Grid.Column="0">
 
-                        <Button VerticalOptions="Center"
+                        <Button VerticalOptions="Start"
                    HorizontalOptions="Center" Text="Pridaj" Command="{Binding Add}"/>
-                    <Button VerticalOptions="Center"
+                    <Button VerticalOptions="End"
                    HorizontalOptions="Center" Text="Hotovo" Command="{Binding Finish}"/>
                 </StackLayout>
 
 
-                    <ListView x:Name="RoomsList" Grid.Row="10" ItemsSource="{Binding Rooms}" Margin="0,0,0,80">
+                    <ListView x:Name="RoomsList" Grid.Row="11" ItemsSource="{Binding Rooms}" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding }"/>

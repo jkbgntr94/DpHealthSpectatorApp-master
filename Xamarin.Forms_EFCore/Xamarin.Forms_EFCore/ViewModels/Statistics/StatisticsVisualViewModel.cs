@@ -143,14 +143,14 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
             Boolean cook = cookDetection.DetectCooking(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
             if (cook)
             {
-                ActivityName = "Varenie";
+                ActivityName = "Pohyb";
             }
 
             OutsideRestDetection outsideRestDetection = new OutsideRestDetection();
             Boolean outside = outsideRestDetection.DetectOutsideRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
             if (outside)
             {
-                ActivityName = "Oddych vonku";
+                ActivityName = "Oddych";
             }
             RestDetection restDetection = new RestDetection();
             Boolean rest = restDetection.DetectRest(_context, _roomStatistics.RoomName, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst);
@@ -435,7 +435,9 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private async void toBack()
         {
+            Application.Current.MainPage.Navigation.PopModalAsync();
             await Application.Current.MainPage.Navigation.PushAsync(new DashboardPage());
+            
 
         }
     }

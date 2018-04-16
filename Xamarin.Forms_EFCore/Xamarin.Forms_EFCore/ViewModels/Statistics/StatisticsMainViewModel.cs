@@ -81,8 +81,9 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
         private void HandleSelectedItem()
         {
             //System.Diagnostics.Debug.WriteLine("Selected item: " + SelectedSequence.RoomName + " " + SelectedSequence.StartTime);
+            Application.Current.MainPage.Navigation.PopModalAsync();
 
-            Application.Current.MainPage.Navigation.PushAsync(new StatisticVisualPage(SelectedSequence));
+            Application.Current.MainPage.Navigation.PushModalAsync(new StatisticVisualPage(SelectedSequence));
         }
 
         private async void LoadData()

@@ -23,13 +23,13 @@ namespace Xamarin.Forms_EFCore.Views
             base.OnAppearing();
             //tempimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
 
-            alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
+            //alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
             timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-start.png");
             timeIconEnd.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-close.png");
             valueIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.value.png");
             durationIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.duration.png");
 
-
+            tempimageDef.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
             dashboardImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.home.png");

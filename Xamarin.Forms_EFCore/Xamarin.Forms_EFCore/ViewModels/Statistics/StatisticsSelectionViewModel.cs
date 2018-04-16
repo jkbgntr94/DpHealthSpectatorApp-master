@@ -28,7 +28,9 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
 
         private async void toMainStats()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new StatisticsMainPage());
+           
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new StatisticsMainPage());
 
 
         }

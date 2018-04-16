@@ -117,6 +117,17 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             }
         }
 
+        private int roomPicker;
+        public int RoomPicker
+        {
+            get { return roomPicker; }
+            set
+            {
+                roomPicker = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<string> rooms = new ObservableCollection<string>();
         public ObservableCollection<string> Rooms
         {
@@ -216,7 +227,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             Izby izbaNova = new Izby()
             {
                 IzbaID = index,
-                Nazov = NameRoom,
+                Nazov = FindRoomName(),
                 LavaXhodnota = float.Parse(LeftDownX, CultureInfo.InvariantCulture.NumberFormat),
                 LavaYhodnota = float.Parse(LeftDownY, CultureInfo.InvariantCulture.NumberFormat),
                 PravaXhodnota = float.Parse(RightUpX, CultureInfo.InvariantCulture.NumberFormat),
@@ -237,6 +248,41 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
 
             Rooms.Add(NameRoom);
 
+
+        }
+
+        private String FindRoomName()
+        {
+            String name = "";
+            switch (RoomPicker)
+            {
+                case 0: name = "Chodba";
+                        break;
+                case 1:
+                    name = "Kuchyňa";
+                    break;
+                case 2:
+                    name = "Kúpeľňa";
+                    break;
+                case 3:
+                    name = "Spálňa";
+                    break;
+                case 4:
+                    name = "Obývačka";
+                    break;
+                case 5:
+                    name = "Detská";
+                    break;
+                case 6:
+                    name = "Toaleta";
+                    break;
+                case 7:
+                    name = "Šatník";
+                    break;
+                default: name = "Iná";
+                    break;
+            }
+            return name;
 
         }
 

@@ -24,12 +24,13 @@ namespace Xamarin.Forms_EFCore.Views
             //pulseimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
 
 
-            alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
+            //alertIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
             timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-start.png");
             timeIconEnd.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-close.png");
             valueIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.value.png");
             durationIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.duration.png");
 
+            pulseimageDef.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
 
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");

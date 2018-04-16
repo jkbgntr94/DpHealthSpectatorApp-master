@@ -46,7 +46,7 @@
                     </StackLayout>
                 </Frame>
 
-                <Image x:Name="pulseimage" VerticalOptions="Center" Source="{Binding PulseImageSource}"
+                <Image x:Name="pulseimageDef" VerticalOptions="Center"
                    HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="70">
                 </Image>
 
@@ -67,7 +67,9 @@
             <BoxView BackgroundColor="#DCDCDC" Grid.Row="1"></BoxView>
 
             <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                <Image x:Name="alertIcon" HeightRequest="30"></Image>
+                <Image x:Name="pulseimage" VerticalOptions="Center" Source="{Binding PulseImageSource}"
+                   HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="30">
+                </Image>
                 <Label x:Name="PulseAlert" FontSize="18" Text="{Binding PulseAlert}"/>
             </StackLayout>
 
