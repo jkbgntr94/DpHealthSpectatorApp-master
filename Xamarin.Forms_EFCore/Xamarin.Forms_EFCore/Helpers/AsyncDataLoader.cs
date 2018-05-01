@@ -74,7 +74,7 @@ namespace Xamarin.Forms_EFCore.Helpers
             {
                 System.Timers.Timer tempTimer = new System.Timers.Timer();
                 tempTimer.Elapsed += new ElapsedEventHandler(OnTempTimeEvent);
-                tempTimer.Interval = 10000;
+                tempTimer.Interval = 20000;
                 tempTimer.Enabled = true;
 
                 //Thread.Sleep(5000);
@@ -90,7 +90,7 @@ namespace Xamarin.Forms_EFCore.Helpers
                 movementTimer.Elapsed += new ElapsedEventHandler(OnMovementTimeEvent);
                 movementTimer.Interval = 20000;
                 movementTimer.Enabled = true;
-
+                
                // Thread.Sleep(5000);
 
                 System.Timers.Timer fallTimer = new System.Timers.Timer();
@@ -116,8 +116,8 @@ namespace Xamarin.Forms_EFCore.Helpers
 
         private void OnPulseTimeEvent(object source, ElapsedEventArgs e)
         {
-            loadPulse.readFileByLines();
-            //loadPulse.readLineFromDatasetFile();
+            //loadPulse.readFileByLines();
+            loadPulse.readLineFromDatasetFile();
 
             DatabaseContext seqContext = new DatabaseContext();
 
@@ -126,8 +126,8 @@ namespace Xamarin.Forms_EFCore.Helpers
         }
         private void OnMovementTimeEvent(object source, ElapsedEventArgs e)
         {
-            loadMovement.GenerateMovementOneSample();
-            //loadMovement.readLineFromDatasetFile();
+            //loadMovement.GenerateMovementOneSample();
+            loadMovement.readLineFromDatasetFile();
 
 
             DatabaseContext seqContext = new DatabaseContext();

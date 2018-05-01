@@ -16,6 +16,7 @@
     <None Remove="heat-map.png" />
     <None Remove="home.png" />
     <None Remove="id_card.png" />
+    <None Remove="initDataset.txt" />
     <None Remove="initializationValues.txt" />
     <None Remove="login2.png" />
     <None Remove="movement.png" />
@@ -63,6 +64,7 @@
     <Content Include="geodata.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="initDataset.txt" />
     <EmbeddedResource Include="initializationValues.txt" />
     <EmbeddedResource Include="login2.png" />
     <EmbeddedResource Include="movement.png" />

@@ -146,7 +146,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
             PriebStatsClick = new Command(priebStats);
             RoomStatsClick = new Command(roomsStats);
 
-            controlledMeasurementStart();
+            //controlledMeasurementStart();
+
 
             /* PulseValue = 10.ToString();
              TempValue = 15.ToString();
@@ -684,8 +685,8 @@ namespace Xamarin.Forms_EFCore.ViewModels
                 /* LoadRooms loadRooms = new LoadRooms();
                  loadRooms.LoadRoomsData();*/
 
-                TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
-                testDataDbFiller.loadMandatoryData();
+               /* TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
+                testDataDbFiller.loadMandatoryData();*/
                 asyncDataLoader.LoadData();
 
             }

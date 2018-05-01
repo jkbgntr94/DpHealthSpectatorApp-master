@@ -32,6 +32,9 @@ namespace Xamarin.Forms_EFCore.Views
 
             CreateTopHalf(homeVisualFall);
 
+            timeImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-start.png");
+
+
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
             dashboardImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.home.png");
@@ -210,9 +213,15 @@ namespace Xamarin.Forms_EFCore.Views
                 ViewCreated = HandleViewCreatedPoints
             };
             // We'll add it to the top half (row 0)
+            try
+            {
+                homeVisualFall.Children.Clear();
+                homeVisualFall.Children.Add(gameView);
+            }catch(Exception e)
+            {
 
-            homeVisualFall.Children.Clear();
-            homeVisualFall.Children.Add(gameView);
+            }
+           
 
         }
 

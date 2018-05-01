@@ -23,9 +23,15 @@
                    HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" HeightRequest="200">
 
             </StackLayout>
+            
+            <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="timeImage" VerticalOptions="Center" Source="{Binding TemperatureImageSource}"
+                   HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" HeightRequest="30">
+                </Image>
+                <Label x:Name="FallTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding FallTime}"/>
+            </StackLayout>
 
 
-            <Label x:Name="FallTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding FallTime}"/>
 
             <StackLayout Grid.Row="3" Grid.Column="0">
                 <ListView x:Name="Falls" ItemsSource="{Binding FallList}" SelectedItem="{Binding SelectedFall}" >

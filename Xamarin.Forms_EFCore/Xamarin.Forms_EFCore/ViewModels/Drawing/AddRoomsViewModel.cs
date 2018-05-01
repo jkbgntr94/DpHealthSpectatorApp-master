@@ -159,8 +159,8 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
             Finish = new Command(finish);
             Add = new Command(add);
 
-            MaxX = SettingsController.MaxX;
-            MaxY = SettingsController.MaxY;
+            MaxX = SettingsController.MaxX/10;
+            MaxY = SettingsController.MaxY/10;
 
             var rooms = _context.Rooms.ToList();
 
@@ -246,7 +246,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Drawing
                 System.Diagnostics.Debug.WriteLine("****************************** " + e.ToString());
             }
 
-            Rooms.Add(NameRoom);
+            Rooms.Add(izbaNova.Nazov);
 
 
         }

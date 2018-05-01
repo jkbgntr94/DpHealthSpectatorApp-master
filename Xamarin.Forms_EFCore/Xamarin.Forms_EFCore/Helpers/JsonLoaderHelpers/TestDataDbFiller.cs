@@ -49,6 +49,8 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
         public void loadMandatoryData()
         {
             _context = new DatabaseContext();
+            SettingsController.MaxX = 150;
+            SettingsController.MaxY = 150;
             Helpers.JsonLoaderHelpers.LoadLimits loaderL = new Helpers.JsonLoaderHelpers.LoadLimits();
             loaderL.LoadPulseLimits(_context);
             loaderL.LoadTemperatureLimits(_context);

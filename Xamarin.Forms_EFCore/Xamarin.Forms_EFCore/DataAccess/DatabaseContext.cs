@@ -65,7 +65,8 @@ namespace Xamarin.Forms_EFCore.DataAccess {
             SettingsController.AlertLow = false;
             SettingsController.AlertMiddle = false;
             SettingsController.AlertHigh = false;
-            
+            SettingsController.MaxX = 0;
+            SettingsController.MaxY = 0;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {

@@ -124,6 +124,7 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
         private void FindActivity()
         {
             ActivityName = "Neznáma";
+            
 
             CleaningDetection cleaningDetection = new CleaningDetection();
             Boolean cleaning = cleaningDetection.DetectCleaning(_context, StartdateTime, StopdateTime, _roomStatistics.Sekvencie.Count, tepListConst, teplotaListConst);
@@ -157,6 +158,11 @@ namespace Xamarin.Forms_EFCore.ViewModels.Statistics
             if (rest)
             {
                 ActivityName = "Oddych";
+            }
+
+            if (fallList.Any() && !ActivityName.Equals("Pohyb"))
+            {
+                ActivityName = "Neznáma";
             }
             System.Diagnostics.Debug.WriteLine("************ ACTIVITY sleep: " + sleep.ToString() + " cook: " + cook);
         }

@@ -34,6 +34,13 @@ namespace Xamarin.Forms_EFCore.Views
 
             CreateTopHalf(homeVisual);
 
+            timeIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.date-time-start.png");
+            alertimage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.Risk.png");
+            roomIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.home.png");
+            durationIcon.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.duration.png");
+
+
+
             tempImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.temperature.png");
             pulseImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.pulse.png");
             dashboardImage.Source = ImageSource.FromResource("Xamarin.Forms_EFCore.home.png");
@@ -230,10 +237,14 @@ namespace Xamarin.Forms_EFCore.Views
                 ViewCreated = HandleViewCreatedPoints
             };
             // We'll add it to the top half (row 0)
+            try
+            {
+                homeVisual.Children.Clear();
+                homeVisual.Children.Add(gameView);
+            }catch(Exception e)
+            {
 
-            homeVisual.Children.Clear();
-            homeVisual.Children.Add(gameView);
-
+            }
         }
 
         private void HandleViewCreatedPoints(object sender, EventArgs e)

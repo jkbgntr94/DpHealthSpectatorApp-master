@@ -38,6 +38,7 @@ namespace Xamarin.Forms_EFCore.Helpers.ActivityDetection
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("cleaning detection pulse" + e.ToString());
+                return false;
 
             }
 

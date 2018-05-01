@@ -16,10 +16,10 @@
             <Entry Placeholder="" Text="{Binding Username}"/>
             <Label VerticalOptions="Center"
                    HorizontalOptions="Center" FontSize="Medium" Text="Heslo"/>
-            <Entry Placeholder="" Text="{Binding Password}"/>
+            <Entry Placeholder="" Text="{Binding Password}" IsPassword="True"/>
             <Label VerticalOptions="Center"
                    HorizontalOptions="Center" FontSize="Medium" Text="Opakované heslo"/>
-            <Entry Placeholder="" Text="{Binding RepeatedPassword}"/>
+            <Entry Placeholder="" Text="{Binding RepeatedPassword}" IsPassword="True"/>
 
 
             <Image x:Name="registerimage" VerticalOptions="Center"

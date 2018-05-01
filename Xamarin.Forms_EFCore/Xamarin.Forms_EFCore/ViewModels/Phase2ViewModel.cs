@@ -175,33 +175,33 @@ namespace Xamarin.Forms_EFCore.ViewModels
 
         private void storeActivityToDb()
         {
-           /* int index = 1;
+            /* int index = 1;
+             try
+             {
+                 var maxAct = _context.Activities.FirstOrDefault(r => r.ActivityId == _context.Activities.Max(o => o.ActivityId));
+                 index = maxAct.ActivityId;
+
+             }
+             catch (Exception e)
+             {
+                 System.Diagnostics.Debug.WriteLine("EXCEPTION GETTING MAX ID OF ACTIVITY " + e.ToString());
+
+             }*/
             try
             {
-                var maxAct = _context.Activities.FirstOrDefault(r => r.ActivityId == _context.Activities.Max(o => o.ActivityId));
-                index = maxAct.ActivityId;
-
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("EXCEPTION GETTING MAX ID OF ACTIVITY " + e.ToString());
-
-            }*/
-
-            Activities act = currentAct;
+                Activities act = currentAct;
             act.Value = measuredValuesForDb;
             //act.ActivityId = index;
             _context.Activities.Add(act);
 
-            try
-            {
+            
                 _context.SaveChanges();
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.ToString());
             }
-            System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++ activity " + act.Name + " " +act.ActivityId + " " + act.ActSwitchIsChecked + " " + act.Value + " " + act.StressIsChecked);
+           // System.Diagnostics.Debug.WriteLine("++++++++++++++++++++++ activity " + act.Name + " " +act.ActivityId + " " + act.ActSwitchIsChecked + " " + act.Value + " " + act.StressIsChecked);
             
 
         }

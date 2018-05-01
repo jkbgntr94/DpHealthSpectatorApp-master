@@ -17,9 +17,12 @@ namespace Xamarin.Forms_EFCore.Helpers
             var assembly = typeof(Measurement).GetTypeInfo().Assembly;
 
             /*Definovanie cesty suboru*/
-            Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initializationValues.txt");
+            // Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initializationValues.txt");
+            Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initDataset.txt");
+
             DatabaseContext databaseContext = new DatabaseContext();
-            List<Json> objects = new List<Json>();
+            //List<Json> objects = new List<Json>();
+            List<DatasetJson> objects = new List<DatasetJson>();
 
             /*nahranie dat a sparsovanie*/
             int i = 0;
@@ -40,12 +43,20 @@ namespace Xamarin.Forms_EFCore.Helpers
             {
                 while (sr.Peek() >= 0)
                 {
-                    Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
+                   /* Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
                     objects.Add(obj);
-                    //System.Diagnostics.Debug.WriteLine(i++ +" --- " + obj.body.heart_rate.value + " -- " + Convert.ToInt32(obj.body.heart_rate.value));
-
+                
                     String create_date = obj.header.creation_date_time;
                     float value = obj.body.heart_rate.value;
+                    */
+
+                    DatasetJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetJson>(sr.ReadLine());
+                    objects.Add(obj);
+                    
+                    String create_date = obj.timestamp.ToString();
+                   
+                    float value = obj.value;
+
 
                     Tep tep = new Tep
                     {
@@ -66,9 +77,9 @@ namespace Xamarin.Forms_EFCore.Helpers
             }
             catch (Exception e)
             {
-                throw e;
+                System.Diagnostics.Debug.WriteLine("measurement load values* " );
             }
-            
+
             var all = databaseContext.Pulse.ToList();
             foreach (var a in all)
             {
@@ -84,19 +95,24 @@ namespace Xamarin.Forms_EFCore.Helpers
             var assembly = typeof(Measurement).GetTypeInfo().Assembly;
 
             /*Definovanie cesty suboru*/
-            Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initializationValues.txt");
+            //Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initializationValues.txt");
+            Stream stream = assembly.GetManifestResourceStream("Xamarin.Forms_EFCore.initDataset.txt");
+
             DatabaseContext databaseContext = new DatabaseContext();
-            List<Json> objects = new List<Json>();
+           // List<Json> objects = new List<Json>();
+            List<DatasetJson> objects = new List<DatasetJson>();
+
             List<int> occurs = new List<int>();
             using (StreamReader sr = new StreamReader(stream))
             {
                 while (sr.Peek() >= 0)
                 {
-                    Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
+                    /*Json obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Json>(sr.ReadLine());
+                    objects.Add(obj);                    
+                    occurs.Add(Convert.ToInt32(obj.body.heart_rate.value));*/
+                    DatasetJson obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetJson>(sr.ReadLine());
                     objects.Add(obj);
-                    //System.Diagnostics.Debug.WriteLine(i++ +" --- " + obj.body.heart_rate.value + " -- " + Convert.ToInt32(obj.body.heart_rate.value));
-                    
-                    occurs.Add(Convert.ToInt32(obj.body.heart_rate.value));
+                    occurs.Add(Convert.ToInt32(obj.value));
 
                 }
 
@@ -166,7 +182,8 @@ namespace Xamarin.Forms_EFCore.Helpers
                 {
                     //pom = "false";
                     //Console.WriteLine("seruuuusssssssssssss {0} {1} {2}", occurrDicta.ElementAt(i).Key, occurrDicta.ElementAt(i).Count(), pom);
-                    slabe_min = occurrDicta.ElementAt(i).Key;
+                    slabe_min = Convert.ToInt32(occurrDicta.ElementAt(i).Key*0.9);
+                    if (slabe_min < 50) slabe_min = 50;
                     break;
                 }
             }
@@ -174,14 +191,17 @@ namespace Xamarin.Forms_EFCore.Helpers
             /*
              K najcastejsej pripocitaj rozdiel so slabe_min
              */
-
-            slabe_max = maxOccKey + (maxOccKey - slabe_min);
+            int low = maxOccKey + (maxOccKey - slabe_min);
+            slabe_max = Convert.ToInt32(maxOccKey + ((maxOccKey - slabe_min)*0.5));
 
             foreach (var grp in occurrDicta)
             {
-                if ((grp.Key > slabe_max) && (grp.Count() > 1))
+                if ((grp.Key > low) && (grp.Count() > 2))
                 {
-                    slabe_max = grp.Key;
+                    int tmpPom = grp.Key - slabe_max;
+
+                    low = Convert.ToInt32(grp.Key + tmpPom*0.3);
+                    slabe_max = low;
                 }
 
             }

@@ -16,26 +16,25 @@ namespace Xamarin.Forms_EFCore {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.DashboardPage());
+            MainPage = new NavigationPage(new Xamarin.Forms_EFCore.Views.LoginPage());
         }
 
         protected override void OnStart() {
             //TODO: START HERE IF EXIST PROFILE/ ELSE START ON INIT FINISH
             
-            new DatabaseContext(999);
+           // new DatabaseContext(999);
             DatabaseContext context = new DatabaseContext();
+            
+            //SettingsController.MeasurementRunning = 1;
+            //AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
 
 
-            SettingsController.MeasurementRunning = 1;
-           // AsyncDataLoader asyncDataLoader = new AsyncDataLoader();
-
-
-             LoadRooms loadRooms = new LoadRooms();
+            /* LoadRooms loadRooms = new LoadRooms();
              loadRooms.LoadRoomsData();
 
              TestDataDbFiller testDataDbFiller = new TestDataDbFiller();
              testDataDbFiller.loadMandatoryData();
-
+             
             LoadPulse loader = new LoadPulse();
             loader.LoadPulseDataset(context);
 
@@ -50,13 +49,13 @@ namespace Xamarin.Forms_EFCore {
             sequenceCreator.PulseSequencer(seqContext);
             sequenceCreator.TemperatureSequencer(seqContext);
             sequenceCreator.MovementSequencer(seqContext);
-
             
+            */
 
-           // asyncDataLoader.LoadData();
+            //asyncDataLoader.LoadData();
 
-            /*SettingsController.MeasurementRunning = 0;
-              if (context.Profiles.Any())
+            SettingsController.MeasurementRunning = 0;
+          /*    if (context.Profiles.Any())
             {
                 SettingsController.MeasurementRunning = 1;
                 AsyncDataLoader asyncDataLoader = new AsyncDataLoader();

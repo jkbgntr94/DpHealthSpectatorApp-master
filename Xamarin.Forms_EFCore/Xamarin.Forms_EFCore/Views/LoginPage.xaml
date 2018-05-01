@@ -29,7 +29,7 @@
                    HorizontalOptions="Center"
                    Text="Heslo"
                    FontSize="Medium"/>
-            <Entry Placeholder="" Text="{Binding Password}"/>
+            <Entry Placeholder="" Text="{Binding Password}" IsPassword="True"/>
 
             <Image x:Name="loginimage" VerticalOptions="Center"
                    HorizontalOptions="Center" HeightRequest="40">

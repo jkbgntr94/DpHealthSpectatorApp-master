@@ -42,15 +42,30 @@
             </Image>
 -->
 
-            <Label x:Name="MovAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="2" Grid.Column="0" Text="{Binding MovAlert}"/>
+            
+            <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="alertimage" VerticalOptions="Center" Source="{Binding TemperatureImageSource}"
+                   HorizontalOptions="Center" HeightRequest="30">
+                </Image>
+                <Label x:Name="MovAlert" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding MovAlert}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="3" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="timeIcon" HeightRequest="30"></Image>
+                <Label x:Name="MovTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding MovTime}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="4" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="roomIcon" HeightRequest="30"></Image>
+                <Label x:Name="RoomValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding RoomValue}"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="5" Grid.Column="0" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Image x:Name="durationIcon" HeightRequest="30"></Image>
+                <Label x:Name="MovDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Text="{Binding MovDuration}"/>
+            </StackLayout>
 
 
-            <Label x:Name="MovTime" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="3" Grid.Column="0" Text="{Binding MovTime}"/>
-
-
-            <Label x:Name="RoomValue" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="4" Grid.Column="0" Text="{Binding RoomValue}"/>
-
-            <Label x:Name="MovDuration" XAlign="Center" HorizontalOptions="Center" FontSize="18" Grid.Row="5" Grid.Column="0" Text="{Binding MovDuration}"/>
 
             <StackLayout Grid.Row="6" Grid.Column="0">
                 <ListView x:Name="Sequences" ItemsSource="{Binding SequenceList}" SelectedItem="{Binding SelectedSequence}" >

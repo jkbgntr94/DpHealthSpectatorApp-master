@@ -219,7 +219,15 @@ namespace Xamarin.Forms_EFCore.ViewModels
             MovAlert = mo.Alert;
             RoomValue = mo.RoomName;
             MovTime = mo.LongDate + " " + mo.Time;
-            MovDuration = mo.Duration;
+            if (mo.Duration.Equals(""))
+            {
+                MovDuration = "0 min";
+            }
+            else
+            {
+                MovDuration = mo.Duration + " min";
+
+            }
 
             MyEvent?.Invoke(mo.xValue, mo.yValue);
 

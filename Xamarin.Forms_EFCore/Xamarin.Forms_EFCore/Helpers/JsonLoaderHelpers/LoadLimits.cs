@@ -11,16 +11,26 @@ namespace Xamarin.Forms_EFCore.Helpers.JsonLoaderHelpers
         public void LoadPulseLimits(DatabaseContext context)
         {
             HelpMethods helpm = new HelpMethods();
-                      
-                        Hranice_Tep tep_limit = new Hranice_Tep
-                        {
-                            Hranica_Slabe_Min = 50,
-                            Hranica_Slabe_Max = 90,
-                            Hranica_Stredne = 100,
-                            Hranica_Vysoke = 120,
-                            TimeStamp = DateTime.Now.ToShortTimeString()
 
-                        };
+            /* Hranice_Tep tep_limit = new Hranice_Tep
+             {
+                 Hranica_Slabe_Min = 50,
+                 Hranica_Slabe_Max = 90,
+                 Hranica_Stredne = 100,
+                 Hranica_Vysoke = 120,
+                 TimeStamp = DateTime.Now.ToShortTimeString()
+
+             };*/
+            Hranice_Tep tep_limit = new Hranice_Tep
+            {
+                Hranica_Slabe_Min = 60,
+                Hranica_Slabe_Max = 106,
+                Hranica_Stredne = 117,
+                Hranica_Vysoke = 127,
+                TimeStamp = DateTime.Now.ToShortTimeString()
+
+            };
+            
             context.PulseLimit.Add(tep_limit);
 
             try
